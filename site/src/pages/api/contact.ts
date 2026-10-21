@@ -21,7 +21,13 @@ const limited = (key: string) => {
   return list.length > 5;
 };
 
-export const POST: APIRoute = async ({ request, clientAddress, url }) => {
+/** Adresse du visiteur, seulement pour limiter les envois en rafale (jamais enregistrée). */
+const visitorKey = (request: Request) =>
+  request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+  request.headers.get('x-real-ip') ||
+  'inconnu';
+
+export const POST: APIRoute = async ({ request, url }) => {
   const raw = await request.text();
   if (raw.length > 20_000) return json({ ok: false, error: 'too_large' }, 413);
   let body: unknown;
@@ -36,7 +42,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
 
   // Robots : on fait comme si tout allait bien, sans rien enregistrer.
   if (v.website || Date.now() - v.startedAt < 3000) return json({ ok: true });
-  if (limited(clientAddress ?? 'inconnu')) return json({ ok: false, error: 'rate_limited' }, 429);
+  if (limited(visitorKey(request))) return json({ ok: false, error: 'rate_limited' }, 429);
 
   const needsPhone = channels[v.channel].needs === 'phone';
   const contact = needsPhone ? normalizePhone(v.contact)! : v.contact.trim().toLowerCase();

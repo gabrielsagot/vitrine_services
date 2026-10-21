@@ -177,7 +177,7 @@ export async function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     // Cadrage : le téléphone tient en hauteur, ou en largeur sur les écrans étroits.
-    const fit = (bh * 1.1) / (2 * Math.tan((camera.fov * Math.PI) / 360));
+    const fit = (bh * 1.03) / (2 * Math.tan((camera.fov * Math.PI) / 360));
     const fitW = (bw * 1.9) / (2 * Math.tan((camera.fov * Math.PI) / 360) * camera.aspect);
     camera.position.z = Math.max(fit, fitW);
     camera.updateProjectionMatrix();
