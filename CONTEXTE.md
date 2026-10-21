@@ -171,7 +171,7 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 | **Typographie** | **Serif élégante pour les titres** (esprit magazine haut de gamme) + **sans-serif simple et lisible pour le texte** |
 | **Valeurs** (en plus du sur-mesure) | **Écoute** · **Simplicité** · **Accompagnement durable** |
 | **Nom** | ⏸️ **Mis de côté volontairement.** Le porteur de projet veut prendre le temps de la réflexion, car le nom est très important. Il n'est plus sûr de vouloir un nom inventé. |
-| **Mascotte** | ✅ Oui, ni ringarde ni étrange. Pistes visuelles à proposer. |
+| **Mascotte** | ✅ **Le fil** : un fil vivant avec une perle en tête, qui coud, trace et démêle (le sur-mesure en mouvement). **Sans effet de lueur appuyé** : le rendu doit rester sobre et net. Les croquis d'exploration sont dans `explorations/mascotte.html`. Les détails restent à affiner (visage ou non, trait, rôle sur le site). |
 
 ---
 
