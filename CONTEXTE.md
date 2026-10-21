@@ -168,7 +168,7 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 | **Émotions recherchées** | **Confiance et sérénité** + **proximité et chaleur** |
 | **Personnalité** | **L'expert élégant** : sobre, raffiné, précis. Peu de mots, beaucoup de classe. Équilibre visé : élégance experte **et** chaleur rassurante, une marque « haut de gamme accessible ». |
 | **Palette** | Blanc cassé `#F7F6F2` (fond) · Bleu nuit `#16213E` (principal) · Bleu ardoise `#5B6B8C` (secondaire) · Ambre `#E0A54A` (accent) |
-| **Typographie** | **Serif élégante pour les titres** (esprit magazine haut de gamme) + **sans-serif simple et lisible pour le texte** |
+| **Typographie** | ✅ **Instrument Serif pour les titres** (fine, élégante, trait net ; Fraunces écartée car « trop tremblante ») + **sans-serif simple et lisible pour le texte** |
 | **Valeurs** (en plus du sur-mesure) | **Écoute** · **Simplicité** · **Accompagnement durable** |
 | **Nom** | ⏸️ **Mis de côté volontairement.** Le porteur de projet veut prendre le temps de la réflexion, car le nom est très important. Il n'est plus sûr de vouloir un nom inventé. |
 | **Accroche principale** | ✅ « **Votre quotidien, sur mesure.** » |
