@@ -12,13 +12,13 @@ npm install
 npm run dev            # http://localhost:4321
 ```
 
-| Commande | Rôle |
-|---|---|
-| `npm run dev` | Serveur de développement |
-| `npm run build` | Compilation pour Vercel (`.vercel/output`) + en-têtes de sécurité |
-| `npm run check` | Vérification des types (TypeScript strict) |
-| `npm test` | Tests (moteur de tournée, liens de parrainage) |
-| `npm run format` | Mise en forme (Prettier) |
+| Commande         | Rôle                                                              |
+| ---------------- | ----------------------------------------------------------------- |
+| `npm run dev`    | Serveur de développement                                          |
+| `npm run build`  | Compilation pour Vercel (`.vercel/output`) + en-têtes de sécurité |
+| `npm run check`  | Vérification des types (TypeScript strict)                        |
+| `npm test`       | Tests (moteur de tournée, liens de parrainage)                    |
+| `npm run format` | Mise en forme (Prettier)                                          |
 
 Ajoute `?effets=low`, `?effets=mid` ou `?effets=high` à une adresse pour forcer un niveau d'effets.
 
