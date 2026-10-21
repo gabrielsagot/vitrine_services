@@ -17,7 +17,8 @@ export default defineConfig({
   trailingSlash: 'never',
   prefetch: false,
   devToolbar: { enabled: false },
-  build: { inlineStylesheets: 'auto' },
+  // Une seule vraie page : les styles sont intégrés au HTML (pas de requête bloquante avant l'affichage).
+  build: { inlineStylesheets: 'always' },
   env: {
     schema: {
       PUBLIC_SUPABASE_URL: envField.string({ context: 'client', access: 'public', optional: true }),
