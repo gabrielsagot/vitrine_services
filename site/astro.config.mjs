@@ -35,6 +35,8 @@ export default defineConfig({
     },
   },
   vite: {
+    // Vieux téléphones : on vise aussi Safari 14 (iPhone 6s, 7, 8…) et les Chrome Android d'il y a quelques années.
+    build: { target: ['safari14', 'chrome87', 'firefox78', 'edge88'] },
     ssr: { external: ['@resvg/resvg-js'] },
     optimizeDeps: { exclude: ['@resvg/resvg-js'] },
   },

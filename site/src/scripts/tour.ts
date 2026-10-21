@@ -46,6 +46,7 @@ export function initTour() {
     return { id: stop.id, at: along[bestI]! / total };
   });
 
+  ghost.setAttribute('d', routePath(model, 1));
   let lastT = -1;
   let lastCaption = -1;
   const isMobile = () => window.matchMedia('(max-width: 959px)').matches;

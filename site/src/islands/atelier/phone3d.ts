@@ -5,7 +5,7 @@ import {
   Group,
   Mesh,
   MeshBasicMaterial,
-  MeshPhysicalMaterial,
+  MeshStandardMaterial,
   PerspectiveCamera,
   PlaneGeometry,
   PMREMGenerator,
@@ -28,11 +28,20 @@ export interface Phone {
 
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
+const idle = () =>
+  new Promise<void>((resolve) => {
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    if (w.requestIdleCallback) w.requestIdleCallback(() => resolve(), { timeout: 400 });
+    else setTimeout(resolve, 60);
+  });
+
 /**
  * Un téléphone en 3D (Three.js) : coque métal bleu nuit, reflets doux, écran vivant.
  * Il suit le doigt ou la souris, et on peut le faire tourner.
+ * Tout ce qui est coûteux (éclairage précalculé, shaders) est préparé pendant les temps morts,
+ * pour ne jamais saccader le défilement.
  */
-export function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Phone {
+export async function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Promise<Phone> {
   const renderer = new WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.outputColorSpace = SRGBColorSpace;
@@ -42,8 +51,9 @@ export function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Pho
   host.appendChild(renderer.domElement);
 
   const scene = new Scene();
+  await idle();
   const pmrem = new PMREMGenerator(renderer);
-  const env = pmrem.fromScene(new RoomEnvironment(), 0.04);
+  const env = pmrem.fromScene(new RoomEnvironment(), 0, 0.1, 100, { size: 64 });
   scene.environment = env.texture;
 
   const camera = new PerspectiveCamera(26, 1, 0.1, 40);
@@ -59,13 +69,7 @@ export function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Pho
   const phone = new Group();
   scene.add(phone);
 
-  const frame = new MeshPhysicalMaterial({
-    color: 0x1b2647,
-    metalness: 0.62,
-    roughness: 0.28,
-    clearcoat: 1,
-    clearcoatRoughness: 0.12,
-  });
+  const frame = new MeshStandardMaterial({ color: 0x1b2647, metalness: 0.62, roughness: 0.26 });
   const body = new Mesh(new RoundedBoxGeometry(bw, bh, depth, 8, 0.115), frame);
   phone.add(body);
 
@@ -83,7 +87,7 @@ export function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Pho
   // Vitre : un voile très léger qui accroche la lumière
   const glass = new Mesh(
     roundedPlane(sw, sh, 0.085),
-    new MeshPhysicalMaterial({
+    new MeshStandardMaterial({
       color: 0xffffff,
       metalness: 0,
       roughness: 0.04,
@@ -96,7 +100,7 @@ export function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Pho
   phone.add(glass);
 
   // Boutons latéraux et bloc photo au dos
-  const metal = new MeshPhysicalMaterial({ color: 0x24305a, metalness: 0.8, roughness: 0.25 });
+  const metal = new MeshStandardMaterial({ color: 0x24305a, metalness: 0.8, roughness: 0.25 });
   for (const [y, h] of [
     [0.32, 0.16],
     [0.12, 0.1],
@@ -111,12 +115,7 @@ export function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Pho
   const camBlock = new Mesh(new RoundedBoxGeometry(0.28, 0.28, 0.02, 4, 0.06), frame);
   camBlock.position.set(-bw / 2 + 0.2, bh / 2 - 0.2, -depth / 2 - 0.008);
   phone.add(camBlock);
-  const lensMat = new MeshPhysicalMaterial({
-    color: 0x0a0f1e,
-    metalness: 0.2,
-    roughness: 0.05,
-    clearcoat: 1,
-  });
+  const lensMat = new MeshStandardMaterial({ color: 0x0a0f1e, metalness: 0.2, roughness: 0.05 });
   for (const [x, y] of [
     [-0.06, 0.06],
     [0.06, -0.06],
@@ -190,7 +189,14 @@ export function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Pho
     visible = entries.some((e) => e.isIntersecting);
     if (visible) loop();
   });
-  io.observe(host);
+
+  // Shaders compilés en parallèle quand le navigateur le permet : pas de gel au premier affichage.
+  try {
+    await renderer.compileAsync(scene, camera);
+  } catch {
+    /* sinon, compilation classique au premier rendu */
+  }
+  await idle();
 
   let raf = 0;
   const started = performance.now();
@@ -219,6 +225,7 @@ export function createPhone3D(host: HTMLElement, screen: HTMLCanvasElement): Pho
     renderer.render(scene, camera);
     loop();
   };
+  io.observe(host);
   loop();
 
   return {

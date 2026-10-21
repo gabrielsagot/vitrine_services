@@ -53,11 +53,10 @@ const imageUrl = new URL(image, origin).href;
         var d = document.documentElement;
         d.classList.add('js');
         var n = navigator;
-        var mem = n.deviceMemory || 4;
-        var cores = n.hardwareConcurrency || 4;
         var c = n.connection;
-        var save = !!(c && c.saveData);
-        var tier = save || mem <= 2 || cores <= 2 ? 'low' : mem <= 4 || cores <= 4 ? 'mid' : 'high';
+        // Seuls les signaux fiables comptent ici (Safari ne donne ni la mémoire ni le vrai nombre de cœurs) :
+        // la puissance réelle est mesurée ensuite, après le premier affichage.
+        var tier = (c && c.saveData) || (n.deviceMemory && n.deviceMemory <= 2) ? 'low' : 'mid';
         // ?effets=low|mid|high force un niveau (pratique pour tester ou montrer les deux versions).
         var forced = /[?&]effets=(low|mid|high)\b/.exec(location.search);
         if (forced) {

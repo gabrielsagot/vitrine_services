@@ -44,7 +44,12 @@ export default function Atelier() {
         try {
           const { createPhone3D } = await import('./atelier/phone3d');
           if (disposed) return;
-          phoneRef.current = createPhone3D(threeHostRef.current, screen.canvas);
+          const phone = await createPhone3D(threeHostRef.current, screen.canvas);
+          if (disposed) {
+            phone.dispose();
+            return;
+          }
+          phoneRef.current = phone;
           next = '3d';
         } catch {
           next = 'css';
