@@ -179,11 +179,57 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 | **Compétences** | ✅ Présentées **par verbes d'action** (ex. Organiser · Suivre · Facturer · Se déplacer), avec une ligne d'explication chacun. |
 | **Âge** | ✅ **Mentionné simplement** dans la présentation, sans insister. |
 | **Bouton principal** | ✅ « **Parlons de votre projet** », avec en dessous « *Le devis est offert, sans aucune obligation.* » |
+| **Structure du site** | ✅ **Une seule page** qu'on fait défiler, dans cet ordre : 0. bandeau de parrainage (si lien) → 1. **Accueil** → 2. **Démo A (la tournée)** → 3. **Ce que je peux faire** (verbes) → 3 bis. **Réalisation** (courte, anonymisée) → 4. **Comment ça se passe** (4 étapes) → 5. **Qui je suis** → 6. **Démo B (l'atelier)** → 7. **Contact en conversation** → 8. Pied de page (mentions légales). Le bouton « Parlons de votre projet » reste fixé en bas sur mobile. |
+| **Section Réalisation** | ✅ **Oui, courte et 100 % anonymisée** : « Pour une praticienne en soins équins », 2 ou 3 écrans avec des données fictives, 3 bénéfices concrets. Emplacement proposé : juste après les verbes (la preuve après la promesse). |
 | **Mascotte** | ✅ **Le fil** : un fil vivant avec une perle en tête, qui coud, trace et démêle (le sur-mesure en mouvement). **Sans effet de lueur appuyé** : le rendu doit rester sobre et net. Les croquis d'exploration sont dans `explorations/mascotte.html`. Détails retenus : **yeux à certains moments seulement** (le fil reste abstrait, puis la perle « ouvre les yeux » aux moments clés : accueil, démo réussie, contact) · **trait calligraphique** (épaisseur variable, façon plume) · **couleur selon le fond** (bleu nuit sur fond clair, ambre sur fond sombre) · rôle de **fil conducteur** (il traverse la page au défilement, relie les sections, démêle la tournée, coud l'app et mène au contact, avec un dosage selon la puissance de l'appareil). |
 
 ---
 
-## 8. Points à approfondir (prochaines étapes)
+## 8. Référence : l'application de soins équins (synthèse pour le site)
+
+> Étudiée en lecture seule depuis le dépôt privé de l'application. **Tout ce qui apparaîtra sur le site sera anonymisé** : ni nom, ni client, ni donnée réelle.
+
+### Le problème de départ
+- Les demandes arrivaient **en vrac** (WhatsApp, Messenger, SMS).
+- Les tournées étaient construites **à la main, sur papier**, par secteur, ce qui prenait **des heures chaque mois**.
+- Les relances (« à revoir dans 3 mois ») **s'oubliaient**.
+- Le terrain est contraignant : prés en **zone blanche** (pas de réseau), usage **à une main**, **en plein soleil**.
+
+### Ce que fait l'application, rangé par verbes (matière pour la section « Ce que je peux faire »)
+| Verbe | Ce que l'app fait concrètement |
+|---|---|
+| **Organiser** | Propose automatiquement les tournées du mois, avec 3 priorités au choix (moins de journées, équilibré, moins de route). Tout se modifie au glisser-déposer. L'agenda pro et perso remplace l'agenda papier. Résumé du jour. Les horaires se recalculent en cascade en cas de retard. « Trouver un créneau » propose les 3 meilleures options pour une nouvelle demande. |
+| **Suivre** | Fiches clients et animaux avec photos et historique. Comptes rendus de séance. Relances « à revoir dans X mois ». Messages clients prêts à copier (fourchette d'arrivée, modèles modifiables). Tableau de bord mensuel. |
+| **Facturer** | Factures conformes (numérotation légale, mentions obligatoires), paiements (dont virement par QR code), avoirs, cartes de séances, dépenses, bénéfices, aide aux déclarations URSSAF et impôts, relance des impayés, exports. |
+| **Se déplacer** | Tournées optimisées sur le **coût réel du trajet** (consommation × distance × prix du carburant + péages). **Prix du carburant récupéré automatiquement** aux stations proches. Carte de la clientèle et itinéraire du jour. Respect des règles métier : 1h30 de route au plus entre deux étapes, rendez-vous avant le coucher du soleil pour les prés sans lumière. **Fonctionne sans réseau**, puis se synchronise. |
+
+### Le savoir-faire qu'elle prouve (arguments pour le site, en langage simple)
+- **L'écoute** : un vrai recueil de besoin formalisé avant de coder, puis des améliorations guidées par la façon dont la cliente réorganise elle-même ses tournées.
+- **Le sur-mesure poussé** : des règles propres à son métier (prés sans lumière, clients bavards, chevaux, chiens et humains, durées de séance, jours de repos), toutes réglables.
+- **La fiabilité sur le terrain** : l'app marche sans réseau, avec de grandes zones tactiles, et reste lisible en plein soleil.
+- **L'accompagnement durable** : des dizaines de versions livrées au fil des retours, avec un historique des nouveautés visible dans l'app.
+- **Le soin du détail** : une identité propre (le fer à cheval comme signature, un sceau qui se dessine à la fin d'une séance), des transitions d'écran douces et le respect du réglage « réduire les animations ».
+
+### Matière pour les démos
+- **Démo A (la tournée)** : on peut s'appuyer sur des contraintes réalistes pour la crédibilité, par exemple :
+  - 5 rendez-vous au plus par jour ;
+  - pas plus d'1h30 de route entre deux étapes ;
+  - « pré sans lumière : avant 16h10 » ;
+  - un coût calculé en carburant et en péages.
+- **Démo B (l'atelier)** : les modules réels (planning, fiches clients, factures, carte, relances, comptes rendus) servent de « pièces » à assembler.
+- **Section Réalisation** : avant / après en 3 bénéfices, par exemple :
+  - « Des heures de planning papier → les tournées du mois proposées en un geste » ;
+  - « Une compta complète et conforme » ;
+  - « Fonctionne même au milieu des prés, sans réseau ».
+
+### Goûts du porteur de projet observés dans l'application (à respecter sur le site)
+- **Sobre, jamais gadget** : **aucun émoji**, aucune icône « magique » qui fait IA (étincelles, baguette).
+- La police **Fraunces** a été essayée dans l'app puis **écartée (« trop tremblante »)**. Pour les titres serif du site, il faut **choisir une autre serif**.
+- Il apprécie les **animations de tracé** (sceau qui se dessine) et les **transitions douces et rapides**, ce qui est cohérent avec le fil.
+
+---
+
+## 9. Points à approfondir (prochaines étapes)
 
 - [ ] **Trouver le nom et l'identité visuelle** de l'activité (chantier prioritaire : le design du site en dépend).
 - [ ] Choisir entre une niche précise ou une offre généraliste.
