@@ -237,7 +237,24 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 
 ---
 
-## 9. Points à approfondir (prochaines étapes)
+## 9. Choix techniques
+
+| Sujet | Choix | Pourquoi |
+|---|---|---|
+| **Base du site** | **Astro + îlots React** (choix délégué) | La page est livrée en HTML statique très léger : le texte et le bouton de contact s'affichent tout de suite, même sur un vieux téléphone. Seuls les éléments interactifs (démos, contact, espace admin) chargent du JavaScript, en React (déjà maîtrisé). Astro permet aussi des pages calculées côté serveur quand il le faut (aperçus de parrainage, admin). |
+| **Animations au défilement** | **GSAP** (ScrollTrigger), gratuit | La référence pour le fil conducteur et la démo A, très optimisé pour les petits appareils. |
+| **Mascotte (fil calligraphique)** | **SVG** animé (forme pleine révélée progressivement) | Net sur tous les écrans, léger. |
+| **3D de la démo B** | ✅ **Three.js sur les appareils puissants + repli en 3D CSS** sur les autres | Un vrai téléphone 3D (matières, lumière, rotation au doigt) quand l'appareil le permet, sans pénaliser les vieux téléphones. Three.js n'est chargé que si nécessaire. |
+| **Détection de l'appareil** | Puissance estimée (mémoire, processeur, réglage « réduire les animations ») | Elle choisit la version riche ou allégée des effets. |
+| **Base de données** | **Supabase** | Parrains (prénom, lien), demandes de contact, connexion à l'espace admin. |
+| **Hébergement** | **Vercel** (gratuit) | Déjà utilisé. Il permet les fonctions serveur nécessaires (aperçus personnalisés, envoi des alertes). |
+| **Aperçu de lien** | ✅ **Personnalisé par parrain** | Dans le SMS, la carte d'aperçu affiche déjà « *Prénom* pense que je peux vous aider ». La page `/prenom` est calculée côté serveur pour que l'aperçu contienne le prénom. |
+| **Alertes de nouvelle demande** | ✅ **E-mail + notification téléphone + espace admin** | E-mail via un service d'envoi (ex. Resend, offre gratuite). Notification via une app gratuite (ex. ntfy ou bot Telegram, à choisir). Toutes les demandes sont listées dans l'espace admin avec leur parrain. |
+| **Nom de domaine** | Plus tard | Une fois le nom de la marque trouvé. |
+
+---
+
+## 10. Points à approfondir (prochaines étapes)
 
 - [ ] **Trouver le nom et l'identité visuelle** de l'activité (chantier prioritaire : le design du site en dépend).
 - [ ] Choisir entre une niche précise ou une offre généraliste.
