@@ -1,0 +1,62 @@
+---
+import Mark from './Mark.astro';
+import { site } from '../config/site';
+---
+
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="/">
+      <Mark class="brand-mark" />
+      <span class="brand-text">
+        <strong>{site.brand.name}</strong> <small>{site.brand.tagline}</small>
+      </span>
+    </a>
+    <a class="btn btn--ghost btn--small" href="#contact">
+      Parlons-en
+    </a>
+  </div>
+</header>
+
+<style>
+  .top {
+    position: relative;
+    z-index: 3;
+  }
+  .top-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--night);
+  }
+  .brand-text {
+    display: grid;
+    line-height: 1.1;
+  }
+  .brand-text strong {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 25px;
+    letter-spacing: -0.01em;
+  }
+  .brand-text small {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--slate);
+  }
+
+  @media (max-width: 359px) {
+    .brand-text small {
+      display: none;
+    }
+  }
+</style>

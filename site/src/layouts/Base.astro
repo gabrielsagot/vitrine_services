@@ -1,0 +1,81 @@
+---
+import '../styles/global.css';
+import serifUrl from '@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2?url';
+import sansUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import { site } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Chemin de l'image d'aperçu (ex. `/og.png`). */
+  image?: string;
+  noindex?: boolean;
+}
+
+const { title, description, image = '/og.png', noindex = false } = Astro.props;
+// Pages calculées à la demande (liens de parrainage) : on prend l'adresse réellement visitée.
+const origin = Astro.isPrerendered ? (Astro.site ?? Astro.url) : new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, origin).href;
+const imageUrl = new URL(image, origin).href;
+---
+
+<!doctype html>
+<html lang="fr" data-tier="mid">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#f7f6f2" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {/* use-credentials : sans cela, l'aperçu privé de Vercel refuserait le manifeste (pas de cookie). */}
+    <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials" />
+    <link rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={sansUrl} as="font" type="font/woff2" crossorigin />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={`${site.brand.name} · ${site.brand.tagline}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script is:inline>
+      // Estime la puissance de l'appareil avant le premier affichage, pour doser les effets.
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        var n = navigator;
+        var c = n.connection;
+        // Seuls les signaux fiables comptent ici (Safari ne donne ni la mémoire ni le vrai nombre de cœurs) :
+        // la puissance réelle est mesurée ensuite, après le premier affichage.
+        var tier = (c && c.saveData) || (n.deviceMemory && n.deviceMemory <= 2) ? 'low' : 'mid';
+        // ?effets=low|mid|high force un niveau (pratique pour tester ou montrer les deux versions).
+        var forced = /[?&]effets=(low|mid|high)\b/.exec(location.search);
+        if (forced) {
+          tier = forced[1];
+          d.setAttribute('data-tier-forced', '');
+        }
+        d.setAttribute('data-tier', tier);
+        if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)
+          d.classList.add('reduced');
+      })();
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">
+      Aller au contenu
+    </a>
+    <slot />
+  </body>
+</html>

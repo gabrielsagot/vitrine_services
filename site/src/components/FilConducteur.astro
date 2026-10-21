@@ -1,0 +1,93 @@
+---
+/** Calque du fil conducteur : il couvre toute la page, derrière le contenu. */
+---
+
+<svg class="fil" data-fil-svg aria-hidden="true" focusable="false" preserveAspectRatio="none">
+  <defs>
+    <linearGradient
+      id="fil-ink"
+      gradientUnits="userSpaceOnUse"
+      x1="0"
+      y1="0"
+      x2="0"
+      y2="1000"
+    ></linearGradient>
+  </defs>
+  <g data-fil-paths></g>
+  <g class="fil-pearl" data-fil-pearl>
+    <circle class="pearl-body" r="7"></circle>
+    <circle class="pearl-shine" cx="-2.2" cy="-2.4" r="2"></circle>
+    <g class="pearl-eyes">
+      <ellipse cx="-2.6" cy="-0.4" rx="1.2" ry="1.7"></ellipse>
+      <ellipse cx="2.6" cy="-0.4" rx="1.2" ry="1.7"></ellipse>
+    </g>
+  </g>
+</svg>
+
+<script>
+  import { initFil } from '../scripts/fil';
+  initFil();
+</script>
+
+<style>
+  .fil {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  :global(.fil-ready) .fil {
+    opacity: 1;
+  }
+
+  .fil-pearl {
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .pearl-body {
+    fill: var(--amber);
+    stroke: var(--cream);
+    stroke-width: 2.5;
+  }
+
+  .pearl-shine {
+    fill: #fff;
+    opacity: 0.55;
+  }
+
+  .pearl-eyes {
+    fill: var(--night);
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scaleY(0.08);
+    transition: transform 0.35s var(--ease-spring);
+  }
+
+  .fil-pearl:global(.is-awake) .pearl-eyes {
+    transform: scaleY(1);
+    animation: blink 4.6s 1.2s infinite;
+  }
+
+  .fil-pearl:global(.is-awake) .pearl-shine {
+    opacity: 0;
+  }
+
+  @keyframes blink {
+    0%,
+    93%,
+    100% {
+      transform: scaleY(1);
+    }
+    96% {
+      transform: scaleY(0.1);
+    }
+  }
+</style>

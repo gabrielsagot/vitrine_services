@@ -1,0 +1,474 @@
+---
+import Icon from '../Icon.astro';
+
+const changes = [
+  {
+    before: 'Des heures, chaque mois, à bâtir les tournées sur papier.',
+    after: 'Les tournées du mois proposées en un geste, au meilleur trajet.',
+  },
+  {
+    before: 'Des demandes éparpillées entre SMS, WhatsApp et Messenger.',
+    after: 'Chaque client, chaque cheval, chaque relance au même endroit.',
+  },
+  {
+    before: 'Les factures et la comptabilité, le soir, à la main.',
+    after: 'Factures, paiements et déclarations prêts en quelques gestes.',
+  },
+];
+---
+
+<section class="work" aria-labelledby="work-title">
+  <span class="fil-a fil-m fil-gut" data-fil="40" style="top:24px" aria-hidden="true"></span>
+  <span class="fil-a fil-m fil-gut" data-fil="41" style="bottom:24px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-l" data-fil="40" style="top:40px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-l" data-fil="41" style="bottom:40px" aria-hidden="true"></span>
+  <div class="wrap work-grid">
+    <header class="work-head" data-reveal>
+      <p class="eyebrow">Une réalisation</p>
+      <h2 id="work-title" class="section-title">
+        Déjà au travail, <em>sur le terrain.</em>
+      </h2>
+      <p class="section-lead">
+        Pour une praticienne en soins équins qui se déplace chez ses clients : une application pensée pour ses
+        tournées, ses chevaux et sa comptabilité. Même au milieu des prés, sans réseau.
+      </p>
+    </header>
+
+    <div class="work-shots" data-reveal aria-hidden="true">
+      <div class="shot shot--a">
+        <p class="s-title">Tournées proposées</p>
+        <p class="s-sub">Octobre · 4 journées</p>
+        <ul class="s-days">
+          <li>
+            <i style="--c:#a7c4a0"></i>
+            <b>Lun. 13</b>
+            <span>4 visites · 61 km</span>
+          </li>
+          <li>
+            <i style="--c:#f0c9a3"></i>
+            <b>Mar. 14</b>
+            <span>5 visites · 48 km</span>
+          </li>
+          <li>
+            <i style="--c:#b9cde6"></i>
+            <b>Jeu. 16</b>
+            <span>3 visites · 72 km</span>
+          </li>
+          <li>
+            <i style="--c:#e3b8c8"></i>
+            <b>Ven. 17</b>
+            <span>5 visites · 39 km</span>
+          </li>
+        </ul>
+        <p class="s-btn">Valider les 4 tournées</p>
+      </div>
+      <div class="shot shot--b">
+        <p class="s-title">Fiche cheval</p>
+        <div class="s-horse">
+          <span class="s-avatar">T</span>
+          <span>
+            <b>Tornade</b>
+            <small>Selle français · 12 ans</small>
+          </span>
+        </div>
+        <dl class="s-facts">
+          <div>
+            <dt>Dernière séance</dt>
+            <dd>2 octobre</dd>
+          </div>
+          <div>
+            <dt>À revoir dans</dt>
+            <dd>3 mois</dd>
+          </div>
+          <div>
+            <dt>Pré sans lumière</dt>
+            <dd>Avant 16h10</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="shot shot--c">
+        <p class="s-title">Facture F-2026-042</p>
+        <ul class="s-lines">
+          <li>
+            <span>Séance de shiatsu</span>
+            <b>65 €</b>
+          </li>
+          <li>
+            <span>Déplacement · 12 km</span>
+            <b>6 €</b>
+          </li>
+        </ul>
+        <p class="s-total">
+          <span>Total</span>
+          <b>71 €</b>
+        </p>
+        <p class="s-paid">Payée par virement</p>
+      </div>
+    </div>
+
+    <ol class="work-changes">
+      {changes.map((c, i) => (
+        <li data-reveal style={`--reveal-delay:${i * 100}`}>
+          <span class="before">{c.before}</span>
+          <span class="after">
+            <Icon name="arrow" size={20} stroke={1.8} />
+            {c.after}
+          </span>
+        </li>
+      ))}
+    </ol>
+
+    <ul class="work-facts" data-reveal>
+      <li>
+        <strong>99</strong>
+        <span>versions livrées en deux semaines, au fil de ses retours</span>
+      </li>
+      <li>
+        <strong>20</strong>
+        <span>modules taillés pour son métier</span>
+      </li>
+      <li>
+        <strong>0</strong>
+        <span>réseau nécessaire pour travailler</span>
+      </li>
+    </ul>
+    <p class="work-note" data-reveal>
+      Son application a ses couleurs. La vôtre aura les vôtres.
+      <small>Écrans recréés avec des données fictives.</small>
+    </p>
+  </div>
+</section>
+
+<style>
+  .work {
+    position: relative;
+    padding: 72px 0 96px;
+  }
+
+  .work-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 40px;
+  }
+
+  /* ——— Trois écrans, dans le style de son application (sauge, crème, police arrondie) ——— */
+  .work-shots {
+    --sage: #6f9a72;
+    position: relative;
+    display: flex;
+    gap: 14px;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 12px var(--gutter) 22px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    font-family: ui-rounded, 'SF Pro Rounded', 'Nunito', 'Quicksand', var(--sans);
+  }
+
+  .work-shots::-webkit-scrollbar {
+    display: none;
+  }
+
+  .shot {
+    flex: none;
+    width: 236px;
+    padding: 18px 16px;
+    border-radius: 26px;
+    background: #fbf7ef;
+    color: #2f3a2f;
+    scroll-snap-align: center;
+    box-shadow:
+      inset 0 0 0 1px rgb(60 80 60 / 0.08),
+      var(--shadow-lift);
+  }
+
+  .s-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .s-sub {
+    margin: 2px 0 12px;
+    font-size: 13px;
+    color: #7a8476;
+  }
+
+  .s-days {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .s-days li {
+    display: grid;
+    grid-template-columns: 10px auto 1fr;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 14px;
+    background: #fff;
+    font-size: 13px;
+  }
+
+  .s-days i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--c);
+  }
+
+  .s-days span {
+    justify-self: end;
+    color: #7a8476;
+    font-size: 12px;
+  }
+
+  .s-btn {
+    margin: 14px 0 0;
+    padding: 11px;
+    border-radius: 14px;
+    background: var(--sage);
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .s-horse {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 14px 0;
+  }
+
+  .s-horse b {
+    display: block;
+    font-size: 17px;
+  }
+
+  .s-horse small {
+    font-size: 12.5px;
+    color: #7a8476;
+  }
+
+  .s-avatar {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    background: #dfe9d9;
+    color: var(--sage);
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .s-facts {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .s-facts div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: 14px;
+    background: #fff;
+    font-size: 13px;
+  }
+
+  .s-facts dt {
+    color: #7a8476;
+  }
+
+  .s-facts dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .s-lines {
+    display: grid;
+    gap: 8px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+  }
+
+  .s-lines li,
+  .s-total {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .s-total {
+    margin: 12px 0 0;
+    padding-top: 12px;
+    border-top: 1.5px dashed #d8d2c4;
+    font-size: 16px;
+  }
+
+  .s-paid {
+    display: inline-block;
+    margin: 14px 0 0;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #dfe9d9;
+    color: #4d7a50;
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+
+  .work-changes {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .work-changes li {
+    display: grid;
+    gap: 6px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .before {
+    color: var(--slate);
+    text-decoration: line-through;
+    text-decoration-color: rgb(91 107 140 / 0.6);
+    text-decoration-thickness: 1.5px;
+  }
+
+  .after {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 550;
+    line-height: 1.4;
+  }
+
+  .after :global(svg) {
+    flex: none;
+    margin-top: 4px;
+    color: var(--amber-ink);
+  }
+
+  .work-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .work-facts li {
+    display: grid;
+    align-content: start;
+    gap: 4px;
+  }
+
+  .work-facts strong {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(48px, 13vw, 72px);
+    line-height: 1;
+    color: var(--night);
+  }
+
+  .work-facts span {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--slate);
+  }
+
+  .work-note {
+    margin: 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 26px;
+    line-height: 1.25;
+  }
+
+  .work-note small {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 13px;
+    color: var(--slate);
+  }
+
+  @media (min-width: 960px) {
+    .work {
+      padding: 120px 0 140px;
+    }
+
+    .work-grid {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 72px;
+      row-gap: 48px;
+      align-items: start;
+    }
+
+    .work-head {
+      grid-column: 1;
+    }
+
+    .work-shots {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      margin: 0;
+      padding: 30px 0 0;
+      overflow: visible;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .shot {
+      width: auto;
+    }
+
+    .shot--a {
+      grid-row: span 2;
+      transform: translateY(40px) rotate(-2deg);
+    }
+
+    .shot--b {
+      transform: rotate(2.5deg);
+    }
+
+    .shot--c {
+      transform: translateY(12px) rotate(-1deg);
+    }
+
+    .work-changes {
+      grid-column: 1;
+    }
+
+    .work-facts,
+    .work-note {
+      grid-column: 1 / -1;
+    }
+
+    .work-facts {
+      margin-top: 24px;
+      gap: 40px;
+    }
+
+    .work-facts span {
+      font-size: 16px;
+    }
+  }
+</style>

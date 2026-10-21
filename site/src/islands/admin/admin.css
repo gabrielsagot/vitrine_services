@@ -1,0 +1,272 @@
+.adm {
+  display: grid;
+  gap: 20px;
+}
+
+.adm-muted {
+  color: var(--slate);
+  font-size: 15px;
+}
+
+.adm-card {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 24px;
+  background: var(--paper);
+  box-shadow:
+    inset 0 0 0 1px var(--line),
+    var(--shadow-soft);
+}
+
+.adm-card h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.adm-card label {
+  display: grid;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.adm-card label small {
+  font-weight: 400;
+  color: var(--slate);
+}
+
+.adm-card input,
+.adm select {
+  min-height: 50px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  font-size: 17px;
+}
+
+.adm-card input:focus,
+.adm select:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--night);
+}
+
+.adm-login {
+  max-width: 420px;
+}
+
+.adm-slug {
+  display: flex;
+  align-items: center;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  overflow: hidden;
+}
+
+.adm-slug span {
+  padding-left: 14px;
+  font-weight: 400;
+  color: var(--slate);
+  white-space: nowrap;
+}
+
+.adm-slug input {
+  flex: 1;
+  min-width: 0;
+  padding-left: 2px;
+  box-shadow: none !important;
+}
+
+.adm-preview {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 20px;
+}
+
+.adm-error {
+  margin: 0;
+  color: #a2412b;
+  font-weight: 500;
+}
+
+.adm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.adm-btn--primary {
+  background: var(--night);
+  color: var(--cream);
+  box-shadow: none;
+}
+
+.adm-btn:disabled {
+  opacity: 0.45;
+}
+
+.adm-link {
+  border: 0;
+  background: none;
+  padding: 8px 4px;
+  font-size: 15px;
+  color: var(--slate);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.adm-danger {
+  color: #a2412b;
+}
+
+.adm-tabs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.adm-tabs [role='tab'] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(22 33 62 / 0.06);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.adm-tabs [role='tab'].is-on {
+  background: var(--night);
+  color: var(--cream);
+}
+
+.adm-tabs .adm-link {
+  margin-left: auto;
+}
+
+.adm-badge {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--amber);
+  color: var(--night);
+  font-size: 13px;
+}
+
+.adm-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.adm-item {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 22px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.adm-item.is-nouvelle {
+  box-shadow:
+    inset 0 0 0 2px var(--amber),
+    var(--shadow-soft);
+}
+
+.adm-item.is-off {
+  opacity: 0.6;
+}
+
+.adm-item p {
+  margin: 0;
+}
+
+.adm-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.adm-item-head strong {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 26px;
+}
+
+.adm-item blockquote {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--amber);
+  border-radius: 0 12px 12px 0;
+  background: #fff;
+}
+
+.adm-tag {
+  justify-self: start;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(224 165 74 / 0.18);
+  color: var(--amber-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.adm-url {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.adm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.adm-grid {
+  display: grid;
+  gap: 20px;
+}
+
+@media (min-width: 960px) {
+  .adm-grid {
+    grid-template-columns: 380px 1fr;
+    align-items: start;
+  }
+}
+
+.adm-card code {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}

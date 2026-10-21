@@ -1,0 +1,380 @@
+.atelier {
+  display: grid;
+  gap: 28px;
+}
+
+.atelier-zone {
+  position: relative;
+}
+
+.atelier-sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* ——— Scène du téléphone ——— */
+.atelier-stage {
+  position: relative;
+  perspective: 1200px;
+  touch-action: pan-y;
+}
+
+.atelier-stage [data-fil='71'] {
+  left: 50%;
+  top: 55%;
+}
+
+.three-host {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.phone3d-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  cursor: grab;
+  animation: phone-in 1s var(--ease-out) both;
+}
+
+.phone3d-canvas:active {
+  cursor: grabbing;
+}
+
+@keyframes phone-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+.stage-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -30px;
+  z-index: 3;
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--slate);
+  pointer-events: none;
+}
+
+.css-phone {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  --rx: 0deg;
+  --ry: 0deg;
+}
+
+.css-phone-body {
+  position: relative;
+  height: 100%;
+  min-width: 0;
+  aspect-ratio: 400 / 854;
+  padding: 10px;
+  border-radius: 13% / 6%;
+  background: linear-gradient(145deg, #2a3a66, var(--night) 55%, #0f1830);
+  box-shadow:
+    inset 0 0 0 1.5px rgb(255 255 255 / 0.1),
+    0 40px 70px -30px rgb(22 33 62 / 0.55),
+    0 16px 30px -18px rgb(22 33 62 / 0.4);
+  transform: rotateX(var(--rx)) rotateY(var(--ry));
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-out);
+}
+
+:root[data-tier='mid'] .css-phone-body,
+:root[data-tier='high'] .css-phone-body {
+  animation: css-float 7s ease-in-out infinite;
+}
+
+@keyframes css-float {
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+.is-spinning .css-phone-body {
+  animation: css-spin 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@keyframes css-spin {
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.css-screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 11% / 5.2%;
+  background: #fcfbf8;
+}
+
+.css-screen canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.is-3d .css-phone {
+  display: none;
+}
+
+/* ——— Réglages ——— */
+.atelier-controls {
+  display: grid;
+  gap: 26px;
+}
+
+.a-step {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.a-step legend,
+.a-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 0;
+  font-weight: 650;
+  font-size: 18px;
+}
+
+.a-label small {
+  font-weight: 450;
+  color: var(--slate);
+}
+
+.a-num {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--night);
+  color: var(--cream);
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 16px 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s,
+    transform 0.3s var(--ease-spring);
+}
+
+.chip svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+
+.chip:active {
+  transform: scale(0.96);
+}
+
+.chip.is-on {
+  background: var(--night);
+  color: var(--cream);
+  box-shadow: none;
+}
+
+.chip.is-on svg {
+  opacity: 1;
+  stroke: var(--amber);
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: box-shadow 0.25s;
+}
+
+.swatch-dot {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
+  transition: transform 0.35s var(--ease-spring);
+}
+
+.swatch.is-on {
+  box-shadow: inset 0 0 0 2px var(--night);
+}
+
+.swatch.is-on .swatch-dot {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 0 3px var(--paper),
+    0 0 0 5px var(--c);
+}
+
+.a-input {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1.5px var(--line);
+  font-size: 18px;
+  transition: box-shadow 0.25s;
+}
+
+.a-input:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--night);
+}
+
+.a-cta {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.a-cta p {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 21px;
+  color: var(--slate);
+}
+
+/* Téléphone : le téléphone reste visible en haut pendant qu'on fait ses choix (comme un configurateur).
+   Au repos, il flotte sur la page ; une fois collé en haut, il prend un fond pour que les choix glissent dessous. */
+@media (max-width: 959px) {
+  .atelier-stage {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    height: min(46vh, 400px);
+    min-height: 320px;
+    margin: 0 calc(var(--gutter) * -1) 10px;
+    padding: 10px var(--gutter) 18px;
+  }
+
+  .atelier-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--cream);
+    box-shadow: 0 18px 22px -20px rgb(22 33 62 / 0.4);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .atelier-stage.is-stuck::before {
+    opacity: 1;
+  }
+
+  .three-host,
+  .css-phone {
+    inset: 10px var(--gutter) 24px;
+  }
+
+  .stage-hint {
+    bottom: 2px;
+  }
+
+  /* Quand le clavier s'ouvre, le champ se place sous le téléphone collant, pas derrière. */
+  .atelier-controls :is(input, button, a) {
+    scroll-margin-top: calc(min(46vh, 400px) + 16px);
+  }
+}
+
+/* Grand écran : réglages à gauche, téléphone à droite, centré sur les réglages et le bouton. */
+@media (min-width: 960px) {
+  .atelier {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto auto 1fr;
+    gap: 0 64px;
+  }
+
+  .atelier-zone {
+    display: contents;
+  }
+
+  .atelier-stage {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: center;
+    height: 640px;
+    margin-bottom: 30px;
+  }
+
+  .atelier-controls {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .a-cta {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 30px;
+  }
+
+  .swatches {
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+  }
+}

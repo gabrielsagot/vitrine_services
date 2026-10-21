@@ -1,0 +1,57 @@
+---
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <Header />
+  <main id="contenu" class="legal wrap">
+    <h1 class="section-title">{title}</h1>
+    <div class="prose">
+      <slot />
+    </div>
+    <p>
+      <a class="btn btn--ghost btn--small" href="/">
+        Retour à l'accueil
+      </a>
+    </p>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    max-width: 760px;
+    padding-top: 32px;
+    padding-bottom: 96px;
+  }
+
+  .prose {
+    margin: 32px 0 40px;
+  }
+
+  .prose :global(h2) {
+    margin: 36px 0 8px;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 30px;
+  }
+
+  .prose :global(p),
+  .prose :global(li) {
+    color: #2e3a57;
+  }
+
+  .prose :global(.todo) {
+    padding: 1px 6px;
+    border-radius: 6px;
+    background: rgb(224 165 74 / 0.2);
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+import { pitch } from '../config/site';
+---
+
+<div class="sticky-cta" data-sticky-cta>
+  <a class="btn btn--amber" href="#contact">
+    <span>{pitch.cta}</span>
+    <span class="btn-pearl" aria-hidden="true"></span>
+  </a>
+</div>
+
+<script>
+  // Le bouton apparaît sous l'accueil, et s'efface sur la démo, l'atelier (qui a le sien), le contact et le pied de page.
+  const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  const hero = document.querySelector('.hero');
+  if (bar && hero && 'IntersectionObserver' in window) {
+    let pastHero = false;
+    const hiding = new Set<Element>();
+    const sync = () => bar.classList.toggle('is-on', pastHero && hiding.size === 0);
+    new IntersectionObserver(([e]) => {
+      pastHero = !e!.isIntersecting && e!.boundingClientRect.top < 0;
+      sync();
+    }).observe(hero);
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) hiding.add(e.target);
+        else hiding.delete(e.target);
+      }
+      sync();
+    });
+    document.querySelectorAll('[data-sticky-hide]').forEach((el) => io.observe(el));
+  }
+</script>
+
+<style>
+  .sticky-cta {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: center;
+    padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+    pointer-events: none;
+    transform: translateY(120%);
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  .sticky-cta::before {
+    content: '';
+    position: absolute;
+    inset: -20px 0 0;
+    background: linear-gradient(to top, rgb(247 246 242 / 0.96) 40%, rgb(247 246 242 / 0));
+    z-index: -1;
+  }
+
+  .sticky-cta :global(.btn) {
+    width: 100%;
+    max-width: 420px;
+    pointer-events: auto;
+  }
+
+  .sticky-cta:global(.is-on) {
+    transform: none;
+  }
+
+  @media (min-width: 960px) {
+    .sticky-cta {
+      display: none;
+    }
+  }
+</style>

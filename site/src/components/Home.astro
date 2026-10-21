@@ -1,0 +1,76 @@
+---
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import StickyCta from './StickyCta.astro';
+import FilConducteur from './FilConducteur.astro';
+import Hero from './sections/Hero.astro';
+import DemoTournee from './sections/DemoTournee.astro';
+import Verbes from './sections/Verbes.astro';
+import Realisation from './sections/Realisation.astro';
+import Etapes from './sections/Etapes.astro';
+import Apropos from './sections/Apropos.astro';
+import AtelierSection from './sections/AtelierSection.astro';
+import ContactSection from './sections/ContactSection.astro';
+
+interface Props {
+  referrer?: { slug: string; name: string } | null;
+}
+const { referrer = null } = Astro.props;
+---
+
+<Header />
+<main id="contenu" class="page" data-fil-root>
+  <FilConducteur />
+  <Hero referrer={referrer} />
+  <DemoTournee />
+  <Verbes />
+  <Realisation />
+  <Etapes />
+  <Apropos />
+  <AtelierSection />
+  <ContactSection referrer={referrer} />
+</main>
+<Footer />
+<StickyCta />
+
+{referrer && <span hidden data-visit={referrer.slug}></span>}
+
+<script>
+  // Apparitions douces au défilement.
+  const items = document.querySelectorAll<HTMLElement>('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      },
+      { rootMargin: '0px 0px -12% 0px' },
+    );
+    items.forEach((el) => io.observe(el));
+  } else {
+    items.forEach((el) => el.classList.add('is-in'));
+  }
+
+  // Une visite par lien de parrainage (les robots d'aperçu n'exécutent pas ce code).
+  const visit = document.querySelector<HTMLElement>('[data-visit]')?.dataset['visit'];
+  if (visit) {
+    const key = `visit:${visit}`;
+    try {
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, '1');
+        navigator.sendBeacon?.('/api/visit', JSON.stringify({ slug: visit }));
+      }
+    } catch {
+      /* stockage indisponible : on ne compte pas */
+    }
+  }
+</script>
+
+<style>
+  .page {
+    position: relative;
+  }
+</style>
