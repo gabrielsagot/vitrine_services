@@ -142,7 +142,7 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 | **Zone géographique** | Aucune limite : les applications (PWA) se font à distance, partout. |
 | **Témoignage de la belle-mère** | **Pas sur le site**, ou alors **100 % anonymisé**. Son témoignage passe d'abord **de vive voix**, quand elle parle de lui à son réseau. |
 | **Photo et âge** | ✅ La photo **et** l'âge du porteur de projet seront affichés. |
-| **Moyens de contact** | ✅ Bouton d'appel ou de SMS **et** formulaire très court (nom, métier, téléphone). |
+| **Moyens de contact** | Remplacé par les lignes « Contact » ci-dessous (conversation + SMS, WhatsApp, e-mail). |
 | **Style visuel** | Un **mélange de clair et premium et de chaleureux, façon atelier**. Inspiration : les **belles applications mobiles modernes**, parfois de niche (références : **refero.design**, **Duolingo**). Il faut des **éléments qui sortent du lot** (3D, micro-animations…) et une vraie **identité**, quelque chose de **personnel**. |
 | **Domaine de la démo** | La **planification de journées** et la **gestion centralisée des clients**. |
 | **Démos retenues** | ✅ **Deux démos, adaptées à la puissance de l'appareil.** **A, « La tournée qui se démêle »** : un trajet emmêlé entre des rendez-vous se démêle en une boucle optimisée, et les rendez-vous se rangent dans un planning (km économisés). **B, « L'atelier »** : le visiteur assemble son application en quelques étapes (activité, besoins, couleurs), en 3D sur les appareils puissants, et ses choix pré-remplissent le contact. |
@@ -185,6 +185,10 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 | **Démo A : résultat** | ✅ **Le planning rangé** : une fois le trajet démêlé, les rendez-vous viennent se ranger dans une journée heure par heure (avec des contraintes réalistes : pré sans lumière, temps de route…). |
 | **Démo B : étapes** | ✅ **Besoins → couleur** (pas d'étape « métier ») : le visiteur coche ce qui lui prend du temps, puis choisit sa couleur, et l'app se coud pièce par pièce. |
 | **Démo B : nom de l'app** | ✅ **Facultatif** : un nom par défaut est proposé, que le visiteur peut remplacer. Ce nom s'affiche alors dans le téléphone (écran d'accueil, icône). |
+| **Contact : questions** | ✅ Prénom + **moyen et moment préférés** pour être recontacté (SMS, WhatsApp, e-mail… ; matin, midi, soir) + **message libre** facultatif. Les choix de la démo B et le prénom du parrain sont **joints automatiquement** à la demande, sans question supplémentaire (proposition). |
+| **Contact : canaux directs** | ✅ **SMS**, **WhatsApp** et **e-mail** (pas de bouton d'appel). |
+| **Liens de parrainage : gestion** | ✅ **Un petit espace admin privé** : créer un lien en quelques secondes depuis le téléphone et voir qui a recommandé qui. Il faut une base de données (Supabase, déjà maîtrisé). |
+| **Liens de parrainage : format** | ✅ **`tonsite.fr/prenom`** (ex. `tonsite.fr/sylvie`). À prévoir : réserver les noms de pages du site (ex. `mentions-legales`, `admin`) et gérer les homonymes (ex. `sylvie-m`). |
 | **Mascotte** | ✅ **Le fil** : un fil vivant avec une perle en tête, qui coud, trace et démêle (le sur-mesure en mouvement). **Sans effet de lueur appuyé** : le rendu doit rester sobre et net. Les croquis d'exploration sont dans `explorations/mascotte.html`. Détails retenus : **yeux à certains moments seulement** (le fil reste abstrait, puis la perle « ouvre les yeux » aux moments clés : accueil, démo réussie, contact) · **trait calligraphique** (épaisseur variable, façon plume) · **couleur selon le fond** (bleu nuit sur fond clair, ambre sur fond sombre) · rôle de **fil conducteur** (il traverse la page au défilement, relie les sections, démêle la tournée, coud l'app et mène au contact, avec un dosage selon la puissance de l'appareil). |
 
 ---
