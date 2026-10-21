@@ -263,11 +263,12 @@ Le code est dans `site/` (voir `site/README.md`). Le guide de mise en ligne est 
 | Accueil (téléphone « cousu » dont l'application change de métier : paysagiste, coiffeur, infirmière) | ✅ |
 | Démo A, « Votre journée, démêlée » : vrai calcul du meilleur ordre (155 km → 73 km), fil emmêlé qui se défait, trajet tracé, planning rangé | ✅ |
 | Ce que je peux faire · Réalisation (anonymisée) · Comment ça se passe · Qui je suis | ✅ |
-| Démo B, « L'atelier » : besoins, couleur et nom, téléphone 3D (Three.js) ou 3D CSS | ✅ |
+| Démo B, « L'atelier » : besoins, couleur et nom, téléphone 3D (Three.js) ou 3D CSS ; l'écran se compose (grande carte de couleur, cartes, liste « Aujourd'hui ») ; sur téléphone, il reste visible en haut pendant les choix | ✅ |
 | Contact en conversation, pré-rempli par l'atelier et le parrainage + SMS, WhatsApp et e-mail directs | ✅ |
 | Fil conducteur calligraphique sur toute la page, perle qui ouvre les yeux à la fin | ✅ |
-| Liens `/prenom`, aperçu de lien personnalisé, espace `/admin`, alertes (e-mail + notification + admin) | ✅ (à brancher sur Supabase, Resend et ntfy) |
-| Mentions légales, confidentialité, page 404 | ✅ (à compléter : nom, adresse, SIRET) |
+| Liens `/prenom`, aperçu de lien personnalisé, espace `/admin`, alertes (e-mail + notification + admin) | ✅ (Supabase branché ; Resend et ntfy à brancher) |
+| Mentions légales, confidentialité, page 404 (le fil perdu) | ✅ (à compléter : nom, adresse, SIRET) |
+| Manifeste d'application : nom et icône propres quand on ajoute le site à l'écran d'accueil | ✅ |
 | Performances : téléphone simulé 6 fois plus lent → défilement ~55 images/s, affichage principal ≈ 1,6 s, aucun décalage de mise en page | ✅ |
 
 **À fournir par le porteur de projet :**
@@ -285,5 +286,5 @@ Le code est dans `site/` (voir `site/README.md`). Le guide de mise en ligne est 
 - [ ] Préparer la création de la micro-entreprise (démarches, statut, compatibilité avec l'alternance).
 - [ ] Présenter l'application de soins équins comme étude de cas / portfolio.
 - [x] Définir le contenu du site vitrine.
-- [ ] Brancher Supabase, Resend, ntfy et Vercel (voir `docs/mise-en-ligne.md`).
+- [ ] Finir de brancher Supabase (clé secrète, compte admin), Resend et ntfy ; Vercel est prêt en aperçu privé (voir `docs/mise-en-ligne.md`).
 - [ ] Construire une stratégie de démarchage.
