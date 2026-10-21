@@ -1,6 +1,12 @@
 ---
 import Mark from './Mark.astro';
 import { site } from '../config/site';
+
+interface Props {
+  /** Sur les pages sans section de contact (mentions légales, 404…), le bouton ramène à celle de l'accueil. */
+  contactHref?: string;
+}
+const { contactHref = '#contact' } = Astro.props;
 ---
 
 <header class="top">
@@ -11,7 +17,7 @@ import { site } from '../config/site';
         <strong>{site.brand.name}</strong> <small>{site.brand.tagline}</small>
       </span>
     </a>
-    <a class="btn btn--ghost btn--small" href="#contact">
+    <a class="btn btn--ghost btn--small" href={contactHref}>
       Parlons-en
     </a>
   </div>

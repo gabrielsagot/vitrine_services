@@ -166,6 +166,10 @@ export function initTour() {
       return;
     }
     const [{ gsap }, { ScrollTrigger }] = await Promise.all([import('gsap'), import('gsap/ScrollTrigger')]);
+    // Arrivée par une ancre (ex. /#contact depuis les mentions légales) : l'épinglage va allonger la page
+    // et repousser l'ancre ; si on la regarde encore, on s'y recale ensuite.
+    const anchor = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+    const onAnchor = !!anchor && Math.abs(anchor.getBoundingClientRect().top) < 120;
     gsap.registerPlugin(ScrollTrigger);
     ScrollTrigger.config({ ignoreMobileResize: true });
     section.classList.add('tour-pinned');
@@ -191,6 +195,7 @@ export function initTour() {
     });
     measure();
     window.dispatchEvent(new Event('fil:relayout'));
+    if (onAnchor) anchor?.scrollIntoView();
   });
 }
 
