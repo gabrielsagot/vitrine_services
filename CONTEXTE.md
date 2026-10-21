@@ -106,8 +106,36 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 - **Accessibilité et confort** : respecter `prefers-reduced-motion` et garder des textes lisibles sur petit écran.
 - **Tester sur un mobile modeste**, ou en simulant un téléphone lent, en plus des appareils récents.
 
-### Contenu du site
-- *À compléter : le porteur de projet va préciser le contenu souhaité.*
+### Contenu du site (souhaits du porteur de projet)
+
+**Impression recherchée : beauté, simplicité, originalité.**
+
+#### Message central : le sur-mesure
+- C'est **LA** caractéristique de l'activité, et il faut jouer dessus **au maximum**.
+- Il faut le **dire** et surtout le **montrer** :
+  - chaque application est **entièrement développée pour un client, et uniquement pour lui** ;
+  - l'adaptation au **métier** et à la **demande** est **totale (100 %)**.
+
+#### Un résumé des compétences
+- Un **beau résumé** de ce que le porteur de projet sait faire et peut faire.
+- Présenté de manière **originale**, mais **sans perdre le visiteur** : il peut être **âgé** ou **peu à l'aise avec la technologie**.
+
+#### Léger en contenu
+- **Pas de blabla interminable.**
+- **Aucun prix affiché.**
+
+#### Devis gratuit, à mettre en avant
+- Pour connaître le prix, le visiteur **contacte** le porteur de projet.
+- Le **devis est 100 % gratuit et sans condition** : si la proposition ne convient pas, le client n'a **aucune obligation** de commander, et le devis ne lui est **pas facturé**.
+- Cet argument doit être **mis en avant** sur le site.
+
+### Pistes proposées (à valider, rien n'est encore décidé)
+- **Démo interactive « Choisissez votre métier »** : un téléphone affiché à l'écran, dont l'application se transforme (nom, couleurs, fonctions) selon le métier choisi. Le sur-mesure est ainsi montré plutôt qu'expliqué.
+- **Lien de parrainage personnalisé** : par exemple, un lien qui affiche « *Prénom* vous recommande ». Il permet aussi de savoir qui a recommandé qui.
+- **Étude de cas « soins équins »** : captures réelles (avec des données fictives), bénéfices exprimés en langage concret, témoignage de la cliente.
+- **Parcours en 3 ou 4 étapes**, avec le devis gratuit mis en avant : on discute, devis gratuit, création, accompagnement.
+- **Contact très accessible** : bouton fixe « Devis gratuit » sur mobile, appel ou SMS en un geste, formulaire très court.
+- **Ton** : vouvoiement, aucun jargon technique, textes grands et lisibles.
 
 ---
 
