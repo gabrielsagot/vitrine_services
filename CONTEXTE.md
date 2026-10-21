@@ -145,12 +145,15 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 | **Moyens de contact** | ✅ Bouton d'appel ou de SMS **et** formulaire très court (nom, métier, téléphone). |
 | **Style visuel** | Un **mélange de clair et premium et de chaleureux, façon atelier**. Inspiration : les **belles applications mobiles modernes**, parfois de niche (références : **refero.design**, **Duolingo**). Il faut des **éléments qui sortent du lot** (3D, micro-animations…) et une vraie **identité**, quelque chose de **personnel**. |
 | **Domaine de la démo** | La **planification de journées** et la **gestion centralisée des clients**. |
+| **Démos retenues** | ✅ **Deux démos, adaptées à la puissance de l'appareil.** **A, « La tournée qui se démêle »** : un trajet emmêlé entre des rendez-vous se démêle en une boucle optimisée, et les rendez-vous se rangent dans un planning (km économisés). **B, « L'atelier »** : le visiteur assemble son application en quelques étapes (activité, besoins, couleurs), en 3D sur les appareils puissants, et ses choix pré-remplissent le contact. |
+| **Mascotte** | ✅ **Oui**, mais **ni ringarde ni étrange**. |
+| **Contact conversationnel** | Piste retenue avec les démos : un formulaire en forme de conversation, une question par écran, pré-rempli par la démo B et par le lien de parrainage. |
+| **Ordre de travail** | 1. Identité (nom, univers, mascotte) → 2. Concept et maquette, avec un prototype de la démo → 3. Développement du site. |
 | **Cible** | **Un peu tout le monde** (pros, indépendants, particuliers). |
 | **Hébergement / nom de domaine** | ⏳ À décider, selon la qualité du résultat. |
 | **Micro-entreprise** | **Pas encore créée** : le porteur de projet attend d'avoir des **promesses de clients** avant de la lancer. |
 
 ### Pistes en discussion
-- **Démo interactive** : la première idée, « Choisissez votre métier », **n'a pas convaincu**. Le porteur de projet craint qu'une technique trop légère donne un résultat basique, voire moche. Le concept est à retravailler et à prouver par un prototype.
 - **Étude de cas « soins équins »** : seulement sous forme **anonymisée** (captures avec des données fictives, bénéfices concrets).
 - **Parcours en 3 ou 4 étapes**, avec le devis gratuit mis en avant : on discute, devis gratuit, création, accompagnement.
 - **Contact accessible** : bouton fixe « Devis gratuit » sur mobile.
