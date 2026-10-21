@@ -11,7 +11,7 @@ import { getTier, prefersReduced } from '../lib/tier';
 
 interface Segment {
   stroke: Stroke;
-  /** Plus grande hauteur atteinte jusqu'à chaque point : le fil avance avec le défilement. */
+  /** Défilement nécessaire pour atteindre chaque point (croissant) : le fil avance avec le défilement. */
   reach: Float32Array;
   el: SVGPathElement;
   drawn: number;
@@ -19,6 +19,13 @@ interface Segment {
 }
 
 const NS = 'http://www.w3.org/2000/svg';
+
+/** Hauteur de la tête du fil dans l'écran (0 = en haut, 1 = en bas). */
+const HEAD_AT = 0.68;
+/** Défilement par pixel de trait dans les montées et les boucles : 0,4 = le fil va 2,5 fois plus vite que le défilement. */
+const DRAW_PACE = 0.4;
+/** Retard le plus grand de la tête sur le défilement, en fraction d'écran : elle reste toujours visible. */
+const MAX_LAG = 0.5;
 
 export function initFil() {
   const root = document.querySelector<HTMLElement>('[data-fil-root]');
@@ -74,6 +81,9 @@ export function initFil() {
     if (run.length) runs.push(run);
 
     const mobile = width < 720;
+    const viewport = window.innerHeight;
+    // Position la plus basse que la tête puisse atteindre : page défilée jusqu'en bas.
+    const lastTarget = document.documentElement.scrollHeight - viewport - rootTop + viewport * HEAD_AT;
     group.replaceChildren();
     segments = runs
       .filter((r) => r.length > 1)
@@ -87,11 +97,21 @@ export function initFil() {
           taperEnd: 40,
           taperHead: 34,
         });
+        // Défilement qu'il faut pour atteindre chaque point. Le fil suit sa hauteur quand il descend ;
+        // quand il remonte ou file à l'horizontale (moitié gauche d'un cercle, boucle, grande courbe),
+        // chaque pixel de trait demande aussi un peu de défilement, sinon ce morceau apparaîtrait d'un coup.
+        // Ce retard est borné (et se résorbe en douceur) : la tête reste à l'écran, et le fil finit avant le bas de la page.
         const reach = new Float32Array(line.length);
-        let max = -Infinity;
+        let top = line[0]!.y;
+        let key = top;
         line.forEach((p, i) => {
-          max = Math.max(max, p.y);
-          reach[i] = max;
+          const prev = line[i - 1];
+          const step = prev ? Math.hypot(p.x - prev.x, p.y - prev.y) : 0;
+          top = Math.max(top, p.y);
+          const room = Math.min(viewport * MAX_LAG, Math.max(0, lastTarget - top));
+          const slack = room > 0 ? Math.max(0, 1 - (key - top) / room) : 0;
+          key = Math.max(top, key + step * DRAW_PACE * slack);
+          reach[i] = key;
         });
         const el = document.createElementNS(NS, 'path');
         el.setAttribute('fill', 'url(#fil-ink)');
@@ -104,7 +124,7 @@ export function initFil() {
   const update = (force = false) => {
     queued = false;
     if (!segments.length) return;
-    const target = live ? window.scrollY - rootTop + window.innerHeight * 0.68 : Infinity;
+    const target = live ? window.scrollY - rootTop + window.innerHeight * HEAD_AT : Infinity;
     let head: { seg: Segment; index: number } | null = null;
     for (const seg of segments) {
       const n = seg.reach.length;
