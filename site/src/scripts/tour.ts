@@ -159,7 +159,9 @@ export function initTour() {
   frame(0);
 
   getTier().then(async (tier) => {
-    if (tier === 'low') {
+    // Écran court (iPhone SE…) : le planning ne tiendrait pas sous la carte épinglée, on joue la démo telle quelle.
+    const shortScreen = isMobile() && window.innerHeight < 700;
+    if (tier === 'low' || shortScreen) {
       playOnce(section, frame);
       return;
     }
