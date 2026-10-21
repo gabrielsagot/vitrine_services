@@ -356,6 +356,11 @@ select {
   }
 }
 
+/* Le temps d'une mesure du fil, les éléments collants reprennent leur place d'origine. */
+.fil-measuring [data-fil-sticky] {
+  position: relative !important;
+}
+
 @media (min-width: 960px) {
   .fil-m {
     display: none;

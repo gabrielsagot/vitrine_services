@@ -23,7 +23,9 @@ export default function Atelier() {
   const [name, setName] = useState('');
   const [mode, setMode] = useState<Mode>('pending');
   const [spinning, setSpinning] = useState(false);
+  const [stuck, setStuck] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
+  const sentinelRef = useRef<HTMLSpanElement>(null);
   const threeHostRef = useRef<HTMLDivElement>(null);
   const screenHostRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<Screen | null>(null);
@@ -64,6 +66,17 @@ export default function Atelier() {
       screen.dispose();
       phoneRef.current?.dispose();
     };
+  }, []);
+
+  // Sur téléphone, le téléphone reste en haut pendant les choix : on lui donne un fond dès qu'il est « collé ».
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(([e]) =>
+      setStuck(!e!.isIntersecting && e!.boundingClientRect.top < 0),
+    );
+    io.observe(sentinel);
+    return () => io.disconnect();
   }, []);
 
   useEffect(() => {
@@ -143,115 +156,119 @@ export default function Atelier() {
 
   return (
     <div class="atelier">
-      <div
-        class={`atelier-stage is-${mode}${spinning ? ' is-spinning' : ''}`}
-        ref={stageRef}
-        onPointerMove={tilt}
-        aria-hidden="true"
-      >
-        <span class="fil-a fil-m fil-gut-in" data-fil="70.5" style={{ top: '8%' }} />
-        <span class="fil-a" data-fil="71" />
-        <span class="fil-a fil-m fil-gut-in" data-fil="72" style={{ bottom: '-12px' }} />
-        <span class="fil-a fil-d fil-seam-r-in" data-fil="70.5" style={{ top: '38%' }} />
-        <span class="fil-a fil-d fil-seam-r-in" data-fil="72" style={{ bottom: '0' }} />
-        <div class="three-host" ref={threeHostRef} />
-        {mode !== '3d' && (
-          <div class="css-phone">
-            <div class="css-phone-body">
-              <div class="css-screen" ref={screenHostRef} />
+      <div class="atelier-zone">
+        <span class="atelier-sentinel" ref={sentinelRef} aria-hidden="true" />
+        <div
+          class={`atelier-stage is-${mode}${spinning ? ' is-spinning' : ''}${stuck ? ' is-stuck' : ''}`}
+          ref={stageRef}
+          onPointerMove={tilt}
+          data-fil-sticky
+          aria-hidden="true"
+        >
+          <span class="fil-a fil-m fil-gut" data-fil="70.5" style={{ top: '8%' }} />
+          <span class="fil-a" data-fil="71" />
+          <span class="fil-a fil-m fil-gut" data-fil="72" style={{ bottom: '-12px' }} />
+          <span class="fil-a fil-d fil-seam-r-in" data-fil="70.5" style={{ top: '38%' }} />
+          <span class="fil-a fil-d fil-seam-r-in" data-fil="72" style={{ bottom: '0' }} />
+          <div class="three-host" ref={threeHostRef} />
+          {mode !== '3d' && (
+            <div class="css-phone">
+              <div class="css-phone-body">
+                <div class="css-screen" ref={screenHostRef} />
+              </div>
             </div>
+          )}
+          {mode === '3d' && <p class="stage-hint">Faites-le tourner du bout du doigt</p>}
+        </div>
+        <p class="visually-hidden" aria-live="polite">
+          Aperçu de l'application « {summary.appName} », couleur {summary.color}
+          {summary.names.length ? `, avec : ${summary.names.join(', ')}` : ''}.
+        </p>
+
+        <div class="atelier-controls">
+          <fieldset class="a-step">
+            <legend>
+              <span class="a-num">1</span>Ce qui vous prend du temps
+            </legend>
+            <div class="chips">
+              {modules.map((m) => {
+                const on = picked.includes(m.id);
+                return (
+                  <button
+                    type="button"
+                    class={`chip${on ? ' is-on' : ''}`}
+                    aria-pressed={on}
+                    onClick={() => toggle(m.id)}
+                  >
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                      <path d={iconPaths[m.icon]} />
+                    </svg>
+                    {m.label}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          <fieldset class="a-step">
+            <legend>
+              <span class="a-num">2</span>Votre couleur
+            </legend>
+            <div
+              class="swatches"
+              role="radiogroup"
+              aria-label="Couleur de l'application"
+              onKeyDown={onColorKey}
+            >
+              {swatches.map((s) => {
+                const on = s.id === color;
+                return (
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={on}
+                    tabIndex={on ? 0 : -1}
+                    data-swatch={s.id}
+                    class={`swatch${on ? ' is-on' : ''}`}
+                    style={{ '--c': s.hex }}
+                    onClick={() => pickColor(s.id)}
+                  >
+                    <span class="swatch-dot" />
+                    <span class="swatch-name">{s.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          <div class="a-step">
+            <label class="a-label" for="atelier-name">
+              <span class="a-num">3</span>Son nom <small>(facultatif)</small>
+            </label>
+            <input
+              id="atelier-name"
+              class="a-input"
+              type="text"
+              inputMode="text"
+              autoComplete="off"
+              maxLength={24}
+              placeholder={defaultAppName}
+              value={name}
+              onInput={(e) => {
+                touch();
+                setName((e.currentTarget as HTMLInputElement).value);
+              }}
+            />
           </div>
-        )}
-        {mode === '3d' && <p class="stage-hint">Faites-le tourner du bout du doigt</p>}
+        </div>
       </div>
-      <p class="visually-hidden" aria-live="polite">
-        Aperçu de l'application « {summary.appName} », couleur {summary.color}
-        {summary.names.length ? `, avec : ${summary.names.join(', ')}` : ''}.
-      </p>
 
-      <div class="atelier-controls">
-        <fieldset class="a-step">
-          <legend>
-            <span class="a-num">1</span>Ce qui vous prend du temps
-          </legend>
-          <div class="chips">
-            {modules.map((m) => {
-              const on = picked.includes(m.id);
-              return (
-                <button
-                  type="button"
-                  class={`chip${on ? ' is-on' : ''}`}
-                  aria-pressed={on}
-                  onClick={() => toggle(m.id)}
-                >
-                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-                    <path d={iconPaths[m.icon]} />
-                  </svg>
-                  {m.label}
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
-
-        <fieldset class="a-step">
-          <legend>
-            <span class="a-num">2</span>Votre couleur
-          </legend>
-          <div
-            class="swatches"
-            role="radiogroup"
-            aria-label="Couleur de l'application"
-            onKeyDown={onColorKey}
-          >
-            {swatches.map((s) => {
-              const on = s.id === color;
-              return (
-                <button
-                  type="button"
-                  role="radio"
-                  aria-checked={on}
-                  tabIndex={on ? 0 : -1}
-                  data-swatch={s.id}
-                  class={`swatch${on ? ' is-on' : ''}`}
-                  style={{ '--c': s.hex }}
-                  onClick={() => pickColor(s.id)}
-                >
-                  <span class="swatch-dot" />
-                  <span class="swatch-name">{s.name}</span>
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
-
-        <div class="a-step">
-          <label class="a-label" for="atelier-name">
-            <span class="a-num">3</span>Son nom <small>(facultatif)</small>
-          </label>
-          <input
-            id="atelier-name"
-            class="a-input"
-            type="text"
-            inputMode="text"
-            autoComplete="off"
-            maxLength={24}
-            placeholder={defaultAppName}
-            value={name}
-            onInput={(e) => {
-              touch();
-              setName((e.currentTarget as HTMLInputElement).value);
-            }}
-          />
-        </div>
-
-        <div class="a-cta">
-          <a class="btn btn--amber" href="#contact" onClick={send}>
-            <span>Parlons-en avec ce modèle</span>
-            <span class="btn-pearl" aria-hidden="true" />
-          </a>
-          <p>Ce n'est qu'un aperçu&nbsp;: la vraie sera encore plus à vous.</p>
-        </div>
+      <div class="a-cta">
+        <a class="btn btn--amber" href="#contact" onClick={send}>
+          <span>Parlons-en avec ce modèle</span>
+          <span class="btn-pearl" aria-hidden="true" />
+        </a>
+        <p>Ce n'est qu'un aperçu&nbsp;: la vraie sera encore plus à vous.</p>
       </div>
     </div>
   );

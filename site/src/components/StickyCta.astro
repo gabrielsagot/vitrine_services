@@ -10,7 +10,7 @@ import { pitch } from '../config/site';
 </div>
 
 <script>
-  // Le bouton apparaît sous l'accueil, et s'efface sur la démo, le contact et le pied de page.
+  // Le bouton apparaît sous l'accueil, et s'efface sur la démo, l'atelier (qui a le sien), le contact et le pied de page.
   const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
   const hero = document.querySelector('.hero');
   if (bar && hero && 'IntersectionObserver' in window) {

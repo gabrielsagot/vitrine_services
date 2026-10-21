@@ -49,10 +49,15 @@ export function initFil() {
       .filter((el) => el.getClientRects().length > 0 || el.offsetParent !== null)
       .sort((a, b) => Number(a.dataset['fil']) - Number(b.dataset['fil']));
 
+    // Un élément collant (position: sticky) se mesure à sa place d'origine, pas là où le défilement l'a poussé.
+    root.classList.add('fil-measuring');
+    const places = anchors.map((el) => position(el, root));
+    root.classList.remove('fil-measuring');
+
     const runs: Pt[][] = [];
     let run: Pt[] = [];
-    for (const el of anchors) {
-      const { x, y, w } = position(el, root);
+    for (const [i, el] of anchors.entries()) {
+      const { x, y, w } = places[i]!;
       if (el.hasAttribute('data-fil-break') && run.length) {
         runs.push(run);
         run = [];
