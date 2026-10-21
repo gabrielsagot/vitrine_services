@@ -289,6 +289,34 @@
   color: var(--slate);
 }
 
+/* Téléphone : le téléphone reste visible en haut pendant qu'on fait ses choix (comme un configurateur). */
+@media (max-width: 959px) {
+  .atelier-stage {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    height: min(46vh, 400px);
+    min-height: 320px;
+    margin: 0 calc(var(--gutter) * -1) 10px;
+    padding: 10px var(--gutter) 18px;
+    background: linear-gradient(to bottom, var(--cream) 82%, rgb(247 246 242 / 0));
+  }
+
+  .three-host,
+  .css-phone {
+    inset: 10px var(--gutter) 24px;
+  }
+
+  .stage-hint {
+    bottom: 2px;
+  }
+
+  /* Quand le clavier s'ouvre, le champ se place sous le téléphone collant, pas derrière. */
+  .atelier-controls :is(input, button, a) {
+    scroll-margin-top: calc(min(46vh, 400px) + 16px);
+  }
+}
+
 @media (min-width: 960px) {
   .atelier {
     grid-template-columns: 1fr 1fr;
