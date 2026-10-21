@@ -32,6 +32,8 @@ const imageUrl = new URL(image, origin).href;
     <meta name="color-scheme" content="light" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {/* use-credentials : sans cela, l'aperçu privé de Vercel refuserait le manifeste (pas de cookie). */}
+    <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials" />
     <link rel="preload" href={serifUrl} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={sansUrl} as="font" type="font/woff2" crossorigin />
 
