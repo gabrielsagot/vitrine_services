@@ -171,7 +171,7 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 | **Typographie** | **Serif élégante pour les titres** (esprit magazine haut de gamme) + **sans-serif simple et lisible pour le texte** |
 | **Valeurs** (en plus du sur-mesure) | **Écoute** · **Simplicité** · **Accompagnement durable** |
 | **Nom** | ⏸️ **Mis de côté volontairement.** Le porteur de projet veut prendre le temps de la réflexion, car le nom est très important. Il n'est plus sûr de vouloir un nom inventé. |
-| **Mascotte** | ✅ **Le fil** : un fil vivant avec une perle en tête, qui coud, trace et démêle (le sur-mesure en mouvement). **Sans effet de lueur appuyé** : le rendu doit rester sobre et net. Les croquis d'exploration sont dans `explorations/mascotte.html`. Les détails restent à affiner (visage ou non, trait, rôle sur le site). |
+| **Mascotte** | ✅ **Le fil** : un fil vivant avec une perle en tête, qui coud, trace et démêle (le sur-mesure en mouvement). **Sans effet de lueur appuyé** : le rendu doit rester sobre et net. Les croquis d'exploration sont dans `explorations/mascotte.html`. Détails retenus : **yeux à certains moments seulement** (le fil reste abstrait, puis la perle « ouvre les yeux » aux moments clés : accueil, démo réussie, contact) · **trait calligraphique** (épaisseur variable, façon plume) · **couleur selon le fond** (bleu nuit sur fond clair, ambre sur fond sombre) · rôle de **fil conducteur** (il traverse la page au défilement, relie les sections, démêle la tournée, coud l'app et mène au contact, avec un dosage selon la puissance de l'appareil). |
 
 ---
 
