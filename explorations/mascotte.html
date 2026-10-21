@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pistes de mascotte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F6F2;
+    --night: #16213E;
+    --slate: #5B6B8C;
+    --amber: #E0A54A;
+    --amber-deep: #C98A2B;
+    --line: rgba(22, 33, 62, .1);
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Inter", system-ui, -apple-system, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--night);
+    font: 17px/1.6 var(--sans);
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 56px 0 32px; }
+  .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--amber-deep); margin: 0 0 12px;
+  }
+  h1 {
+    font: 600 clamp(34px, 8vw, 56px)/1.08 var(--serif);
+    margin: 0 0 16px; letter-spacing: -.01em;
+  }
+  h2 { font: 600 clamp(26px, 5vw, 36px)/1.15 var(--serif); margin: 0 0 8px; }
+  h3 { font: 600 22px/1.25 var(--serif); margin: 0 0 6px; }
+  .lead { color: var(--slate); max-width: 60ch; margin: 0; }
+
+  .swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .swatch {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--slate);
+    padding: 6px 12px 6px 6px; border: 1px solid var(--line); border-radius: 999px;
+  }
+  .swatch i { width: 20px; height: 20px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.08); }
+
+  section { padding: 40px 0; }
+  .section-head { margin-bottom: 24px; }
+
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+  .card {
+    border-radius: 24px; overflow: hidden;
+    background: #fff; border: 1px solid var(--line);
+    display: flex; flex-direction: column;
+  }
+  .stage {
+    position: relative; aspect-ratio: 4 / 3;
+    display: grid; place-items: center;
+    background: #FBFAF7;
+  }
+  .card--night .stage {
+    background: radial-gradient(120% 90% at 50% 40%, #1E2B4F 0%, var(--night) 70%);
+  }
+  .stage svg { width: 100%; height: 100%; display: block; }
+  .card-body { padding: 18px 20px 22px; }
+  .tag {
+    display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .06em;
+    color: var(--amber-deep); background: rgba(224,165,74,.12);
+    padding: 2px 10px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .card-body p { margin: 0; color: var(--slate); font-size: 16px; }
+
+  .faces {
+    margin-top: 16px; border-radius: 24px; padding: 20px;
+    background: radial-gradient(120% 120% at 50% 0%, #1E2B4F 0%, var(--night) 70%);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  }
+  .face { text-align: center; color: rgba(247,246,242,.75); font-size: 13px; }
+  .face svg { width: 100%; max-width: 96px; display: block; margin: 0 auto 4px; }
+
+  .note {
+    margin-top: 16px; padding: 18px 20px; border-radius: 18px;
+    border: 1px dashed rgba(201,138,43,.5); background: rgba(224,165,74,.07);
+    font-size: 16px;
+  }
+  .note strong { font-family: var(--serif); font-weight: 600; }
+
+  /* Guide interactif */
+  #guide-stage { cursor: pointer; touch-action: manipulation; overflow: hidden; }
+  .guide-cta {
+    position: absolute; right: 16px; bottom: 16px;
+    background: var(--amber); color: var(--night);
+    font: 600 15px/1 var(--sans); padding: 12px 18px; border-radius: 999px;
+    box-shadow: 0 6px 20px rgba(224,165,74,.35);
+  }
+  .guide-hint {
+    position: absolute; left: 16px; top: 14px;
+    font-size: 13px; color: rgba(247,246,242,.6);
+  }
+  .guide-bug { position: absolute; left: 0; top: 0; width: 64px; height: 64px; margin: -32px 0 0 -32px; will-change: transform; }
+  .guide-bug svg { width: 100%; height: 100%; }
+
+  footer { padding: 24px 0 64px; color: var(--slate); font-size: 15px; }
+
+  /* Animations */
+  .float, .halo, .blink, .wing, .spark { transform-box: fill-box; transform-origin: center; }
+  .float { animation: float 5s ease-in-out infinite; }
+  .float--b { animation-duration: 3.6s; }
+  .halo { animation: pulse 3.2s ease-in-out infinite; }
+  .blink { animation: blink 5.5s infinite; }
+  .wing { transform-box: view-box; }
+  .wing-l { transform-origin: 96px 96px; animation: flapL .2s ease-in-out infinite alternate; }
+  .wing-r { transform-origin: 104px 96px; animation: flapR .2s ease-in-out infinite alternate; }
+  .spark { animation: spark 2.4s ease-out infinite; opacity: 0; }
+  .spark:nth-of-type(2) { animation-delay: .8s; }
+  .spark:nth-of-type(3) { animation-delay: 1.6s; }
+
+  @keyframes float { 0%, 100% { transform: translateY(-5px); } 50% { transform: translateY(5px); } }
+  @keyframes pulse { 0%, 100% { opacity: .7; transform: scale(.92); } 50% { opacity: 1; transform: scale(1.05); } }
+  @keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+  @keyframes flapL { from { transform: rotate(0deg); } to { transform: rotate(-16deg); } }
+  @keyframes flapR { from { transform: rotate(0deg); } to { transform: rotate(16deg); } }
+  @keyframes spark { 0% { opacity: 0; transform: translate(0, 0) scale(1); } 20% { opacity: .9; } 100% { opacity: 0; transform: translate(-18px, 10px) scale(.3); } }
+
+  .is-paused * { animation-play-state: paused !important; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Dégradés partagés par toutes les illustrations -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="g-core" cx="40%" cy="36%" r="68%">
+      <stop offset="0" stop-color="#FFF6E0"/>
+      <stop offset=".45" stop-color="#F5C46E"/>
+      <stop offset="1" stop-color="#E0A54A"/>
+    </radialGradient>
+    <radialGradient id="g-halo">
+      <stop offset="0" stop-color="#F5C46E" stop-opacity=".55"/>
+      <stop offset=".4" stop-color="#E0A54A" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#E0A54A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g-pearl" cx="35%" cy="32%" r="72%">
+      <stop offset="0" stop-color="#FFF1D2"/>
+      <stop offset=".5" stop-color="#E9B460"/>
+      <stop offset="1" stop-color="#C98A2B"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Identité · Exploration n°1</p>
+    <h1>Pistes de mascotte</h1>
+    <p class="lead">Deux familles de concepts : la luciole et le fil, plus une piste qui les combine. Tout est animé en SVG et en CSS, sans librairie : c'est léger et fluide, même sur un vieux téléphone.</p>
+    <div class="swatches" aria-label="Palette retenue">
+      <span class="swatch"><i style="background:#F7F6F2"></i>Blanc cassé</span>
+      <span class="swatch"><i style="background:#16213E"></i>Bleu nuit</span>
+      <span class="swatch"><i style="background:#5B6B8C"></i>Ardoise</span>
+      <span class="swatch"><i style="background:#E0A54A"></i>Ambre</span>
+    </div>
+  </header>
+
+  <!-- ============ LUCIOLE ============ -->
+  <section>
+    <div class="section-head">
+      <h2>La luciole</h2>
+      <p class="lead">Une petite lumière ambrée qui guide le visiteur dans la nuit bleue. Elle rassure, accompagne et s'illumine quand quelque chose réussit.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card card--night">
+        <div class="stage">
+          <svg viewBox="0 0 200 150" role="img" aria-label="Luciole lueur, une boule de lumière avec deux yeux">
+            <g class="float">
+              <circle class="halo" cx="100" cy="75" r="62" fill="url(#g-halo)"/>
+              <circle cx="100" cy="75" r="22" fill="url(#g-core)"/>
+              <g class="blink">
+                <ellipse cx="92.5" cy="74" rx="2.6" ry="3.6" fill="#16213E"/>
+                <ellipse cx="107.5" cy="74" rx="2.6" ry="3.6" fill="#16213E"/>
+              </g>
+            </g>
+            <circle class="spark" cx="70" cy="60" r="1.6" fill="#F5C46E"/>
+            <circle class="spark" cx="132" cy="96" r="1.4" fill="#F5C46E"/>
+            <circle class="spark" cx="128" cy="48" r="1.2" fill="#F5C46E"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="tag">L1</span>
+          <h3>Lueur</h3>
+          <p>La version la plus épurée : une boule de lumière, deux yeux, et c'est tout. Elle est élégante, intemporelle et ne vieillira jamais.</p>
+        </div>
+      </article>
+
+      <article class="card card--night">
+        <div class="stage">
+          <svg viewBox="0 0 200 150" role="img" aria-label="Luciole ailée, avec des ailes translucides et des antennes">
+            <g class="float float--b">
+              <circle class="halo" cx="100" cy="82" r="58" fill="url(#g-halo)"/>
+              <g class="wing wing-l"><ellipse cx="84" cy="62" rx="12" ry="21" transform="rotate(-30 84 62)" fill="rgba(247,246,242,.18)" stroke="rgba(247,246,242,.55)" stroke-width="1"/></g>
+              <g class="wing wing-r"><ellipse cx="116" cy="62" rx="12" ry="21" transform="rotate(30 116 62)" fill="rgba(247,246,242,.18)" stroke="rgba(247,246,242,.55)" stroke-width="1"/></g>
+              <path d="M95 66 Q91 54 85 50" fill="none" stroke="rgba(247,246,242,.6)" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M105 66 Q109 54 115 50" fill="none" stroke="rgba(247,246,242,.6)" stroke-width="1.4" stroke-linecap="round"/>
+              <circle cx="85" cy="50" r="2" fill="#F5C46E"/>
+              <circle cx="115" cy="50" r="2" fill="#F5C46E"/>
+              <circle cx="100" cy="84" r="19" fill="url(#g-core)"/>
+              <g class="blink">
+                <ellipse cx="93.5" cy="83" rx="2.4" ry="3.3" fill="#16213E"/>
+                <ellipse cx="106.5" cy="83" rx="2.4" ry="3.3" fill="#16213E"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="tag">L2</span>
+          <h3>Ailée</h3>
+          <p>Avec ses ailes translucides et ses antennes, on reconnaît une vraie luciole. Elle est plus vivante et expressive, tout en restant sobre.</p>
+        </div>
+      </article>
+
+      <article class="card card--night">
+        <div class="stage" id="guide-stage" aria-label="Zone interactive : la luciole suit votre doigt">
+          <span class="guide-hint">Touchez la zone ↓</span>
+          <span class="guide-cta">Demander un devis</span>
+          <div class="guide-bug" aria-hidden="true">
+            <svg viewBox="0 0 80 80">
+              <circle class="halo" cx="40" cy="40" r="36" fill="url(#g-halo)"/>
+              <circle cx="40" cy="40" r="14" fill="url(#g-core)"/>
+              <g class="blink">
+                <ellipse cx="35" cy="39.5" rx="1.8" ry="2.5" fill="#16213E"/>
+                <ellipse cx="45" cy="39.5" rx="1.8" ry="2.5" fill="#16213E"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <span class="tag">L3 · Interactif</span>
+          <h3>Le guide</h3>
+          <p>La luciole suit votre doigt, puis revient se poser près du bouton « Devis ». Sur le site, elle guiderait discrètement le visiteur vers le contact.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="faces" role="img" aria-label="Quatre expressions de la luciole : sereine, ravie, curieuse, concentrée">
+      <div class="face">
+        <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="url(#g-halo)"/><circle cx="40" cy="40" r="15" fill="url(#g-core)"/>
+          <ellipse cx="35" cy="39" rx="1.9" ry="2.7" fill="#16213E"/><ellipse cx="45" cy="39" rx="1.9" ry="2.7" fill="#16213E"/></svg>
+        Sereine
+      </div>
+      <div class="face">
+        <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="url(#g-halo)"/><circle cx="40" cy="40" r="15" fill="url(#g-core)"/>
+          <path d="M32.5 40.5 q2.5 -3.5 5 0 M42.5 40.5 q2.5 -3.5 5 0" fill="none" stroke="#16213E" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Ravie
+      </div>
+      <div class="face">
+        <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="url(#g-halo)"/><g transform="rotate(-10 40 40)"><circle cx="40" cy="40" r="15" fill="url(#g-core)"/>
+          <ellipse cx="35" cy="39.5" rx="1.8" ry="2.5" fill="#16213E"/><ellipse cx="45.5" cy="38.5" rx="2.4" ry="3.3" fill="#16213E"/></g></svg>
+        Curieuse
+      </div>
+      <div class="face">
+        <svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="34" fill="url(#g-halo)"/><circle cx="40" cy="40" r="15" fill="url(#g-core)"/>
+          <path d="M32.5 39.5 h5 M42.5 39.5 h5" fill="none" stroke="#16213E" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Concentrée
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FIL ============ -->
+  <section>
+    <div class="section-head">
+      <h2>Le fil</h2>
+      <p class="lead">Un fil ambré vivant, avec une perle en tête. Il coud, trace et démêle : c'est le sur-mesure en mouvement.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="stage">
+          <svg viewBox="0 0 300 160" role="img" aria-label="Un fil qui trace une boucle élégante" data-still="3.2">
+            <g>
+              <path id="f1-path" d="M20 120 C 70 120, 90 40, 130 50 C 170 60, 150 125, 120 112 C 90 100, 120 30, 175 40 C 220 50, 235 110, 280 80"
+                    pathLength="1" fill="none" stroke="#C98A2B" stroke-width="3" stroke-linecap="round"
+                    stroke-dasharray="1" stroke-dashoffset="1">
+                <animate attributeName="stroke-dashoffset" values="1;0;0" keyTimes="0;.6;1" dur="5s" repeatCount="indefinite"/>
+              </path>
+              <g>
+                <circle r="13" fill="#E0A54A" opacity=".16"/>
+                <circle r="7" fill="url(#g-pearl)"/>
+                <animateMotion dur="5s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.6;1" calcMode="linear">
+                  <mpath href="#f1-path" xlink:href="#f1-path"/>
+                </animateMotion>
+              </g>
+              <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.8;.95;1" dur="5s" repeatCount="indefinite"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="tag">F1</span>
+          <h3>Le trait</h3>
+          <p>Le fil le plus pur, sans visage : une perle qui dessine une boucle comme une signature. C'est très élégant, presque un logo animé.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="stage">
+          <svg viewBox="0 0 300 170" role="img" aria-label="Un fil emmêlé qui se démêle en une courbe fluide" data-still="3.6">
+            <circle cx="30" cy="80" r="4.5" fill="#16213E"/>
+            <path d="M30 80 C 120 10, 60 150, 150 70 C 230 0, 80 0, 150 110 C 220 170, 260 20, 180 60 C 120 90, 280 140, 270 80"
+                  fill="none" stroke="#8A93A8" stroke-width="3" stroke-linecap="round">
+              <animate attributeName="d" dur="6s" repeatCount="indefinite" calcMode="spline"
+                       keyTimes="0;.25;.5;.85;1" keySplines=".4 0 .2 1;.4 0 .2 1;.4 0 .2 1;.4 0 .2 1"
+                       values="M30 80 C 120 10, 60 150, 150 70 C 230 0, 80 0, 150 110 C 220 170, 260 20, 180 60 C 120 90, 280 140, 270 80;
+                               M30 80 C 120 10, 60 150, 150 70 C 230 0, 80 0, 150 110 C 220 170, 260 20, 180 60 C 120 90, 280 140, 270 80;
+                               M30 80 C 55 55, 80 55, 105 80 C 130 105, 155 105, 180 80 C 200 60, 220 60, 240 80 C 250 90, 262 88, 270 80;
+                               M30 80 C 55 55, 80 55, 105 80 C 130 105, 155 105, 180 80 C 200 60, 220 60, 240 80 C 250 90, 262 88, 270 80;
+                               M30 80 C 120 10, 60 150, 150 70 C 230 0, 80 0, 150 110 C 220 170, 260 20, 180 60 C 120 90, 280 140, 270 80"/>
+              <animate attributeName="stroke" dur="6s" repeatCount="indefinite" calcMode="spline"
+                       keyTimes="0;.25;.5;.85;1" keySplines=".4 0 .2 1;.4 0 .2 1;.4 0 .2 1;.4 0 .2 1"
+                       values="#8A93A8;#8A93A8;#C98A2B;#C98A2B;#8A93A8"/>
+            </path>
+            <g transform="translate(270 80)">
+              <circle r="15" fill="#E0A54A" opacity=".16"/>
+              <circle r="9" fill="url(#g-pearl)"/>
+              <g class="blink">
+                <ellipse cx="-3" cy="-1" rx="1.4" ry="2" fill="#16213E"/>
+                <ellipse cx="3" cy="-1" rx="1.4" ry="2" fill="#16213E"/>
+              </g>
+            </g>
+            <g opacity="0">
+              <rect x="112" y="132" width="76" height="26" rx="13" fill="#16213E"/>
+              <text x="150" y="150" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#F5C46E">−38 km</text>
+              <animate attributeName="opacity" dur="6s" repeatCount="indefinite"
+                       values="0;0;1;1;0;0" keyTimes="0;.42;.52;.8;.88;1"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="tag">F2</span>
+          <h3>Le nœud qui se démêle</h3>
+          <p>La perle, avec un visage, transforme un nœud en courbe fluide. C'est un avant-goût direct de la démo « La tournée qui se démêle ».</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="stage">
+          <svg viewBox="0 0 300 180" role="img" aria-label="Un fil qui coud le contour d'un téléphone puis valide" data-still="4.3">
+            <g>
+              <path id="f3-path" d="M150 18 H178 Q194 18 194 34 V146 Q194 162 178 162 H122 Q106 162 106 146 V34 Q106 18 122 18 Z"
+                    pathLength="1" fill="none" stroke="#C98A2B" stroke-width="3" stroke-linejoin="round"
+                    stroke-dasharray="1" stroke-dashoffset="1">
+                <animate attributeName="stroke-dashoffset" values="1;0;0" keyTimes="0;.45;1" dur="6s" repeatCount="indefinite"/>
+              </path>
+              <g stroke="#16213E" stroke-opacity=".22" stroke-width="7" stroke-linecap="round" fill="none">
+                <path d="M124 48 H176" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1">
+                  <animate attributeName="stroke-dashoffset" values="1;1;0;0" keyTimes="0;.45;.53;1" dur="6s" repeatCount="indefinite"/>
+                </path>
+                <path d="M124 66 H162" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1">
+                  <animate attributeName="stroke-dashoffset" values="1;1;0;0" keyTimes="0;.5;.58;1" dur="6s" repeatCount="indefinite"/>
+                </path>
+                <path d="M124 84 H170" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1">
+                  <animate attributeName="stroke-dashoffset" values="1;1;0;0" keyTimes="0;.55;.63;1" dur="6s" repeatCount="indefinite"/>
+                </path>
+              </g>
+              <g opacity="0">
+                <circle cx="150" cy="122" r="16" fill="#E0A54A"/>
+                <path d="M142.5 122 l5.5 5.5 l10 -11" fill="none" stroke="#16213E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.64;.7;1" dur="6s" repeatCount="indefinite"/>
+              </g>
+              <g>
+                <circle r="13" fill="#E0A54A" opacity=".16"/>
+                <circle r="8" fill="url(#g-pearl)"/>
+                <ellipse cx="-2.6" cy="-1" rx="1.2" ry="1.8" fill="#16213E"/>
+                <ellipse cx="2.6" cy="-1" rx="1.2" ry="1.8" fill="#16213E"/>
+                <animateMotion dur="6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.45;1" calcMode="linear">
+                  <mpath href="#f3-path" xlink:href="#f3-path"/>
+                </animateMotion>
+              </g>
+              <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.85;.96;1" dur="6s" repeatCount="indefinite"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="tag">F3</span>
+          <h3>Le couturier</h3>
+          <p>La perle coud le contour d'un téléphone, l'application se remplit, puis elle valide. Elle raconte le métier en 4 secondes : « je fabrique votre app ».</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ HYBRIDE ============ -->
+  <section>
+    <div class="section-head">
+      <h2>La piste hybride</h2>
+      <p class="lead">Et si la luciole laissait derrière elle un fil de lumière ? On garde la chaleur de l'une et le sens de l'autre.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card card--night">
+        <div class="stage">
+          <svg viewBox="0 0 300 170" role="img" aria-label="Une luciole qui trace un fil de lumière ambré" data-still="3.6">
+            <g>
+              <path id="h-path" d="M20 130 C 60 130, 70 60, 110 60 C 150 60, 140 122, 175 110 C 210 98, 200 40, 240 45 C 265 48, 270 82, 285 72"
+                    pathLength="1" fill="none" stroke="#E0A54A" stroke-opacity=".16" stroke-width="10" stroke-linecap="round"
+                    stroke-dasharray="1" stroke-dashoffset="1">
+                <animate attributeName="stroke-dashoffset" values="1;0;0" keyTimes="0;.65;1" dur="6s" repeatCount="indefinite"/>
+              </path>
+              <path d="M20 130 C 60 130, 70 60, 110 60 C 150 60, 140 122, 175 110 C 210 98, 200 40, 240 45 C 265 48, 270 82, 285 72"
+                    pathLength="1" fill="none" stroke="#F5C46E" stroke-width="2" stroke-linecap="round"
+                    stroke-dasharray="1" stroke-dashoffset="1">
+                <animate attributeName="stroke-dashoffset" values="1;0;0" keyTimes="0;.65;1" dur="6s" repeatCount="indefinite"/>
+              </path>
+              <g>
+                <circle r="30" fill="url(#g-halo)"/>
+                <circle r="11" fill="url(#g-core)"/>
+                <ellipse cx="-3.6" cy="-1" rx="1.4" ry="2" fill="#16213E"/>
+                <ellipse cx="3.6" cy="-1" rx="1.4" ry="2" fill="#16213E"/>
+                <animateMotion dur="6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.65;1" calcMode="linear">
+                  <mpath href="#h-path" xlink:href="#h-path"/>
+                </animateMotion>
+              </g>
+              <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.85;.96;1" dur="6s" repeatCount="indefinite"/>
+            </g>
+          </svg>
+        </div>
+        <div class="card-body">
+          <span class="tag">H1</span>
+          <h3>Le fil de lumière</h3>
+          <p>La luciole est le personnage (rassurant, expressif), et son fil de lumière est le geste (tracer, coudre, démêler). Les deux démos et le logo peuvent en découler.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="note">
+      <strong>Mon avis :</strong> la piste hybride est la plus forte. La luciole apporte la chaleur et la confiance que tu as choisies, le fil apporte le sens (sur-mesure, couture, démêler une tournée). Et c'est un système cohérent : la mascotte, le logo (une perle et une boucle) et les démos parlent le même langage.
+    </div>
+  </section>
+
+  <footer>
+    Ce sont des croquis d'exploration, rien n'est définitif. Les formes, les proportions et les expressions s'affineront une fois la direction choisie.
+  </footer>
+</div>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Animations SMIL : figées sur une belle image si l'utilisateur réduit les animations
+  var smil = document.querySelectorAll('svg[data-still]');
+  if (reduced) {
+    smil.forEach(function (svg) {
+      svg.pauseAnimations();
+      svg.setCurrentTime(parseFloat(svg.getAttribute('data-still')));
+    });
+  }
+
+  // Met en pause ce qui n'est pas à l'écran, pour épargner les petits processeurs
+  if (!reduced && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        var svg = e.target.querySelector('svg[data-still]');
+        e.target.classList.toggle('is-paused', !e.isIntersecting);
+        if (svg) e.isIntersecting ? svg.unpauseAnimations() : svg.pauseAnimations();
+      });
+    });
+    document.querySelectorAll('.stage').forEach(function (s) { io.observe(s); });
+  }
+
+  // Luciole guide : suit le doigt puis revient près du bouton
+  var stage = document.getElementById('guide-stage');
+  var bug = stage.querySelector('.guide-bug');
+  var cta = stage.querySelector('.guide-cta');
+  var pos = { x: 0, y: 0 }, target = { x: 0, y: 0 };
+  var running = false, idleTimer = null;
+
+  function home() {
+    var s = stage.getBoundingClientRect(), c = cta.getBoundingClientRect();
+    return { x: c.left - s.left + 4, y: c.top - s.top - 24 };
+  }
+  function place() { bug.style.transform = 'translate(' + pos.x + 'px,' + pos.y + 'px)'; }
+  function tick() {
+    var dx = target.x - pos.x, dy = target.y - pos.y;
+    pos.x += dx * 0.08; pos.y += dy * 0.08;
+    place();
+    if (Math.abs(dx) + Math.abs(dy) > 0.5) requestAnimationFrame(tick);
+    else running = false;
+  }
+  function goTo(p) {
+    target = p;
+    if (reduced) { pos = { x: p.x, y: p.y }; place(); return; }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  }
+  function follow(e) {
+    var s = stage.getBoundingClientRect();
+    goTo({ x: e.clientX - s.left, y: e.clientY - s.top });
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function () { goTo(home()); }, 2200);
+  }
+
+  pos = home(); target = pos; place();
+  stage.addEventListener('pointerdown', follow);
+  stage.addEventListener('pointermove', function (e) { if (e.pointerType === 'mouse') follow(e); });
+  window.addEventListener('resize', function () { goTo(home()); });
+})();
+</script>
+</body>
+</html>
