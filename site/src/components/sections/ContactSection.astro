@@ -65,8 +65,10 @@ const direct = {
     gap: 36px;
   }
 
+  /* min-width: 0 : sans lui, la largeur naturelle du champ de saisie élargit la colonne et la carte déborde de l'écran. */
   .chat-wrap {
     position: relative;
+    min-width: 0;
   }
 
   .noscript-hint {
