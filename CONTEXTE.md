@@ -241,11 +241,11 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 
 | Sujet | Choix | Pourquoi |
 |---|---|---|
-| **Base du site** | **Astro + îlots React** (choix délégué) | La page est livrée en HTML statique très léger : le texte et le bouton de contact s'affichent tout de suite, même sur un vieux téléphone. Seuls les éléments interactifs (démos, contact, espace admin) chargent du JavaScript, en React (déjà maîtrisé). Astro permet aussi des pages calculées côté serveur quand il le faut (aperçus de parrainage, admin). |
+| **Base du site** | ✅ **Astro + îlots Preact** (choix délégué) | La page est livrée en HTML statique très léger : le texte et le bouton de contact s'affichent tout de suite, même sur un vieux téléphone. Seuls les éléments interactifs (atelier, contact, espace admin) chargent du JavaScript. Ils sont écrits avec **Preact**, la version ultra-légère de React (même façon d'écrire, environ dix fois plus léger). Astro calcule aussi certaines pages côté serveur (aperçus de parrainage, envoi des demandes). |
 | **Animations au défilement** | **GSAP** (ScrollTrigger), gratuit | La référence pour le fil conducteur et la démo A, très optimisé pour les petits appareils. |
 | **Mascotte (fil calligraphique)** | **SVG** animé (forme pleine révélée progressivement) | Net sur tous les écrans, léger. |
 | **3D de la démo B** | ✅ **Three.js sur les appareils puissants + repli en 3D CSS** sur les autres | Un vrai téléphone 3D (matières, lumière, rotation au doigt) quand l'appareil le permet, sans pénaliser les vieux téléphones. Three.js n'est chargé que si nécessaire. |
-| **Détection de l'appareil** | Puissance estimée (mémoire, processeur, réglage « réduire les animations ») | Elle choisit la version riche ou allégée des effets. |
+| **Détection de l'appareil** | ✅ **Mesure réelle** : un petit calcul chronométré, puis la fluidité des images. La mémoire n'est prise en compte que lorsque le navigateur la donne (Safari ne donne ni la mémoire ni le vrai nombre de cœurs). | Trois niveaux : `high` (3D Three.js et démo épinglée), `mid` (démo épinglée, téléphone 3D CSS), `low` (animations jouées une fois). « Réduire les animations » est toujours respecté. `?effets=low/mid/high` force un niveau. |
 | **Base de données** | **Supabase** | Parrains (prénom, lien), demandes de contact, connexion à l'espace admin. |
 | **Hébergement** | **Vercel** (gratuit) | Déjà utilisé. Il permet les fonctions serveur nécessaires (aperçus personnalisés, envoi des alertes). |
 | **Aperçu de lien** | ✅ **Personnalisé par parrain** | Dans le SMS, la carte d'aperçu affiche déjà « *Prénom* pense que je peux vous aider ». La page `/prenom` est calculée côté serveur pour que l'aperçu contienne le prénom. |
@@ -254,7 +254,29 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 
 ---
 
-## 10. Points à approfondir (prochaines étapes)
+## 10. Le site : état de la réalisation
+
+Le code est dans `site/` (voir `site/README.md`). Le guide de mise en ligne est dans `docs/mise-en-ligne.md`.
+
+| Élément | État |
+|---|---|
+| Accueil (téléphone « cousu » dont l'application change de métier : paysagiste, coiffeur, infirmière) | ✅ |
+| Démo A, « Votre journée, démêlée » : vrai calcul du meilleur ordre (155 km → 73 km), fil emmêlé qui se défait, trajet tracé, planning rangé | ✅ |
+| Ce que je peux faire · Réalisation (anonymisée) · Comment ça se passe · Qui je suis | ✅ |
+| Démo B, « L'atelier » : besoins, couleur et nom, téléphone 3D (Three.js) ou 3D CSS | ✅ |
+| Contact en conversation, pré-rempli par l'atelier et le parrainage + SMS, WhatsApp et e-mail directs | ✅ |
+| Fil conducteur calligraphique sur toute la page, perle qui ouvre les yeux à la fin | ✅ |
+| Liens `/prenom`, aperçu de lien personnalisé, espace `/admin`, alertes (e-mail + notification + admin) | ✅ (à brancher sur Supabase, Resend et ntfy) |
+| Mentions légales, confidentialité, page 404 | ✅ (à compléter : nom, adresse, SIRET) |
+| Performances : téléphone simulé 6 fois plus lent → défilement ~55 images/s, affichage principal ≈ 1,6 s, aucun décalage de mise en page | ✅ |
+
+**À fournir par le porteur de projet :**
+- numéro de téléphone et e-mail de contact ;
+- photo ;
+- nom complet (mentions légales) ;
+- plus tard : nom de marque, domaine et SIRET.
+
+## 11. Points à approfondir (prochaines étapes)
 
 - [ ] **Trouver le nom et l'identité visuelle** de l'activité (chantier prioritaire : le design du site en dépend).
 - [ ] Choisir entre une niche précise ou une offre généraliste.
@@ -262,5 +284,6 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 - [ ] Formaliser les conditions du parrainage (ce qui est demandé en échange du prix réduit).
 - [ ] Préparer la création de la micro-entreprise (démarches, statut, compatibilité avec l'alternance).
 - [ ] Présenter l'application de soins équins comme étude de cas / portfolio.
-- [ ] Définir le contenu du site vitrine.
+- [x] Définir le contenu du site vitrine.
+- [ ] Brancher Supabase, Resend, ntfy et Vercel (voir `docs/mise-en-ligne.md`).
 - [ ] Construire une stratégie de démarchage.

@@ -30,7 +30,9 @@ const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 
 
 const idle = () =>
   new Promise<void>((resolve) => {
-    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number };
+    const w = window as Window & {
+      requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number;
+    };
     if (w.requestIdleCallback) w.requestIdleCallback(() => resolve(), { timeout: 400 });
     else setTimeout(resolve, 60);
   });

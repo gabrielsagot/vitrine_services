@@ -76,7 +76,18 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
         })()
       : '',
   ].filter(Boolean);
-  await notify({ title: `Nouvelle demande : ${v.firstName}`, lines, url: new URL('/admin', url).href });
+  // La notification sur le téléphone reste discrète (pas de numéro ni de message) : le détail est dans
+  // l'e-mail et dans l'espace admin.
+  const pushLines = [
+    `${v.firstName} préfère être recontacté(e) ${channels[v.channel].phrase}.`,
+    referrer ? `De la part de ${referrer.name}.` : '',
+  ].filter(Boolean);
+  await notify({
+    title: `Nouvelle demande : ${v.firstName}`,
+    lines,
+    pushLines,
+    url: new URL('/admin', url).href,
+  });
 
   return json({ ok: true });
 };

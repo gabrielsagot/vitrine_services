@@ -9,6 +9,8 @@ import {
 export interface Notice {
   title: string;
   lines: string[];
+  /** Version courte pour la notification (sans données personnelles sensibles). */
+  pushLines?: string[];
   /** Lien vers l'espace admin. */
   url: string;
 }
@@ -50,7 +52,7 @@ async function sendEmail({ title, lines, url }: Notice): Promise<boolean> {
   return true;
 }
 
-async function sendPush({ title, lines, url }: Notice): Promise<boolean> {
+async function sendPush({ title, lines, pushLines, url }: Notice): Promise<boolean> {
   if (!NTFY_TOPIC) return false;
   const headers: Record<string, string> = {
     Title: encodeHeader(title),
@@ -61,7 +63,7 @@ async function sendPush({ title, lines, url }: Notice): Promise<boolean> {
   const res = await fetch(`https://ntfy.sh/${encodeURIComponent(NTFY_TOPIC)}`, {
     method: 'POST',
     headers,
-    body: lines.join('\n'),
+    body: (pushLines ?? lines).join('\n'),
     signal: AbortSignal.timeout(6000),
   });
   if (!res.ok) throw new Error(`ntfy ${res.status}`);
