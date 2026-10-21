@@ -34,6 +34,12 @@ const direct = {
       </p>
     </header>
     <div class="chat-wrap">
+      <noscript>
+        <p class="noscript-hint">
+          La conversation a besoin de JavaScript pour fonctionner. Écrivez-moi directement par SMS, WhatsApp
+          ou e-mail avec les boutons ci-dessous.
+        </p>
+      </noscript>
       <span class="fil-a fil-m fil-gut-in" data-fil="80.5" style="top:-60px" aria-hidden="true"></span>
       <span class="fil-a" data-fil="81" style="left:34px;top:-16px" aria-hidden="true"></span>
       <Contact
@@ -61,6 +67,14 @@ const direct = {
 
   .chat-wrap {
     position: relative;
+  }
+
+  .noscript-hint {
+    margin: 0 0 14px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: rgb(224 165 74 / 0.14);
+    font-weight: 500;
   }
 
   @media (min-width: 960px) {

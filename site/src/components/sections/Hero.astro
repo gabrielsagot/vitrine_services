@@ -374,6 +374,18 @@ const stitch =
     }
   }
 
+  /* Le titre sort de son masque, ligne par ligne */
+  .js .hero-title .hero-in {
+    animation: rise-line 1.15s cubic-bezier(0.19, 1, 0.22, 1) both;
+    animation-delay: calc(var(--i, 0) * 120ms + 60ms);
+  }
+
+  @keyframes rise-line {
+    from {
+      transform: translateY(108%);
+    }
+  }
+
   /* ——— Téléphone ——— */
   .hero-visual {
     display: grid;
@@ -704,7 +716,7 @@ const stitch =
   .date {
     margin: 4px 0 0;
     font-size: 13px;
-    color: #6b7488;
+    color: #646d82;
   }
 
   .stats {
@@ -736,7 +748,7 @@ const stitch =
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #8a91a3;
+    color: #646d82;
   }
 
   .agenda {
@@ -792,7 +804,7 @@ const stitch =
 
   .a-body small {
     font-size: 11px;
-    color: #727b8f;
+    color: #646d82;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -801,7 +813,7 @@ const stitch =
   .a-meta {
     font-size: 10.5px;
     font-weight: 600;
-    color: #8a91a3;
+    color: #646d82;
     padding-top: 2px;
   }
 
@@ -905,6 +917,14 @@ const stitch =
     .phone-stage {
       transform: scale(0.88);
       margin: -40px -20px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .phone-stage {
+      transform: scale(1.08);
+      transform-origin: 50% 0;
+      margin-bottom: 54px;
     }
   }
 

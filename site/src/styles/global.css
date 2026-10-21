@@ -96,9 +96,15 @@ select {
 }
 
 :focus-visible {
-  outline: 2px solid var(--amber);
+  outline: 2.5px solid var(--night);
   outline-offset: 3px;
   border-radius: 6px;
+}
+
+/* Sur fond sombre, l'anneau de focus passe en ambre */
+[data-fil-dark] :focus-visible,
+.foot :focus-visible {
+  outline-color: var(--amber);
 }
 
 ::selection {
