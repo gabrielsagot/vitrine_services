@@ -66,22 +66,32 @@ Pour rester discrète, la notification ne contient ni numéro ni message, seulem
 
 ## 4. Vercel (hébergement)
 
-1. Sur [vercel.com](https://vercel.com), **Add New → Project** et importe le dépôt `vitrine_services`.
-2. **Root Directory** : `site`. Vercel reconnaît Astro tout seul.
-3. **Environment Variables** : ajoute toutes les variables ci-dessous, puis **Deploy**.
+**Déjà fait :**
+- le projet **« vitrine »** est créé et relié au dépôt (dossier racine `site`) ;
+- les fonctions serveur tournent à **Paris** (`cdg1`), près de la base Supabase ;
+- `PUBLIC_SUPABASE_URL` et `PUBLIC_SUPABASE_PUBLISHABLE_KEY` sont renseignées ;
+- **toutes les adresses sont privées** (Vercel Authentication) : il faut être connecté à ton compte Vercel pour voir le site ;
+- chaque envoi sur la branche `feat/site-vitrine` crée un nouvel aperçu.
+
+Adresse qui suit toujours la dernière version de la branche :
+`https://vitrine-git-feat-site-vitrine-gabriels-projects-e0c9ddae.vercel.app`
+
+**Il te reste à ajouter**, dans **Project → Settings → Environment Variables** :
 
 | Variable | Rôle |
 |---|---|
-| `PUBLIC_SITE_URL` | Adresse définitive (ex. `https://ton-domaine.fr`), pour les aperçus de lien |
-| `PUBLIC_SUPABASE_URL` | Supabase : `https://siuizmfavxevfcpnzozk.supabase.co` |
-| `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase, clé publique (`sb_publishable_…`, visible dans Project Settings → API Keys) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase, clé secrète (`sb_secret_…`), serveur uniquement |
+| `SUPABASE_SERVICE_ROLE_KEY` | Clé secrète Supabase (`sb_secret_…`) : enregistrement des demandes |
 | `RESEND_API_KEY`, `CONTACT_EMAIL_FROM`, `CONTACT_EMAIL_TO` | Alerte e-mail |
-| `NTFY_TOPIC` (et `NTFY_TOKEN` si sujet protégé) | Notification |
+| `NTFY_TOPIC` (et `NTFY_TOKEN` si sujet protégé) | Notification sur le téléphone |
+| `PUBLIC_SITE_URL` | Adresse définitive, une fois le domaine choisi |
 
-Les variables qui commencent par `PUBLIC_` sont intégrées **au moment de la compilation** : après les avoir modifiées, il faut redéployer.
+Après chaque modification de variable, redéploie (bouton **Redeploy**).
 
-Par défaut, Vercel protège les déploiements d'aperçu : il faut être connecté à son compte Vercel pour les voir. C'est pratique pour tout vérifier sur ton téléphone avant d'ouvrir le site au public.
+**Le jour de l'ouverture au public :**
+1. Branche ton nom de domaine (étape suivante).
+2. Dans **Settings → Deployment Protection**, passe « Vercel Authentication » sur **Standard Protection** : ton domaine devient public, les aperçus restent privés.
+
+Tant que le site est privé, les aperçus de lien (SMS, WhatsApp) ne peuvent pas s'afficher, car les messageries n'ont pas accès au site. C'est normal.
 
 ## 5. Nom de domaine
 
