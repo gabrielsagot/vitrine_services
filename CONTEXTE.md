@@ -174,6 +174,10 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 | **Accroche principale** | ✅ « **Votre quotidien, sur mesure.** » |
 | **Voix** | ✅ À la **première personne (« je »)**, avec le **vouvoiement** pour le visiteur. |
 | **Métaphore de la couture** | ✅ **Clins d'œil discrets** seulement (« cousue main », « sur mesure »…). Le reste est en langage simple. |
+| **Sous-titre** | ✅ « *Une application pensée pour votre métier, conçue pour vous seul.* » |
+| **Accueil via parrainage** | ✅ « ***Prénom* pense que je peux vous aider.** » |
+| **Compétences** | ✅ Présentées **par verbes d'action** (ex. Organiser · Suivre · Facturer · Se déplacer), avec une ligne d'explication chacun. |
+| **Âge** | ✅ **Mentionné simplement** dans la présentation, sans insister. |
 | **Bouton principal** | ✅ « **Parlons de votre projet** », avec en dessous « *Le devis est offert, sans aucune obligation.* » |
 | **Mascotte** | ✅ **Le fil** : un fil vivant avec une perle en tête, qui coud, trace et démêle (le sur-mesure en mouvement). **Sans effet de lueur appuyé** : le rendu doit rester sobre et net. Les croquis d'exploration sont dans `explorations/mascotte.html`. Détails retenus : **yeux à certains moments seulement** (le fil reste abstrait, puis la perle « ouvre les yeux » aux moments clés : accueil, démo réussie, contact) · **trait calligraphique** (épaisseur variable, façon plume) · **couleur selon le fond** (bleu nuit sur fond clair, ambre sur fond sombre) · rôle de **fil conducteur** (il traverse la page au défilement, relie les sections, démêle la tournée, coud l'app et mène au contact, avec un dosage selon la puissance de l'appareil). |
 
