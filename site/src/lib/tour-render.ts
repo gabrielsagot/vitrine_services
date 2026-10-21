@@ -1,5 +1,5 @@
 import { buildStroke, strokePath, type Stroke } from './calligraphy';
-import { catmullRom, easeInOut, lerp, resample, ringPoints, seeded, type Pt } from './geometry';
+import { catmullRom, easeInOut, resample, ringPoints, seeded, type Pt } from './geometry';
 import {
   demoHome,
   demoSettings,
@@ -43,42 +43,48 @@ export function tourModel(): TourModel {
 }
 
 /**
- * Le trajet à l'instant `t` (0 = emmêlé, 1 = démêlé) : chaque étape glisse de sa place
- * dans l'ordre des messages vers sa place dans le meilleur ordre, et les nœuds se défont.
+ * Un trajet qui passe par `seq` dans l'ordre, avec des nœuds sur chaque tronçon.
+ * `knot` = 1 : bien emmêlé (boucles) ; `knot` = 0 : trajet net.
  */
-export function routePoints(model: TourModel, t: number, spacing = 1.6): Pt[] {
-  const e = easeInOut(t);
-  const seq = model.messySeq.map((p, i) => ({
-    x: lerp(p.x, model.bestSeq[i]!.x, e),
-    y: lerp(p.y, model.bestSeq[i]!.y, e),
-  }));
-  const knot = 1 - e;
+export function threadPoints(
+  seq: readonly Pt[],
+  loops: TourModel['loops'],
+  knot: number,
+  spacing = 1.6,
+): Pt[] {
+  const k = easeInOut(knot);
   const control: Pt[] = [seq[0]!];
   for (let i = 1; i < seq.length; i++) {
     const a = seq[i - 1]!;
     const b = seq[i]!;
-    const loop = model.loops[i - 1]!;
-    if (knot > 0.02) {
+    const loop = loops[i - 1];
+    if (loop && k > 0.02) {
       const dx = b.x - a.x;
       const dy = b.y - a.y;
       const len = Math.hypot(dx, dy) || 1;
       const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
-      const off = loop.side * loop.offset * knot;
+      const off = loop.side * loop.offset * k;
       const center = { x: mid.x + (-dy / len) * off, y: mid.y + (dx / len) * off };
-      control.push(...ringPoints(center, loop.radius * knot, a, loop.clockwise, 9).slice(0, -1));
+      control.push(...ringPoints(center, loop.radius * k, a, loop.clockwise, 9).slice(0, -1));
     }
     control.push(b);
   }
   return resample(catmullRom(control, 12), spacing);
 }
 
+/** Le trajet dans l'ordre des messages, plus ou moins emmêlé. */
+export const messyPoints = (model: TourModel, knot: number) =>
+  threadPoints(model.messySeq, model.loops, knot);
+
+/** Le meilleur trajet, net. */
+export const bestPoints = (model: TourModel, spacing = 1.6) => threadPoints(model.bestSeq, [], 0, spacing);
+
 export function routeStroke(points: Pt[]): Stroke {
   return buildStroke(points, { min: 1.3, max: 3.4, nib: -0.5, taperStart: 14, taperEnd: 14, taperHead: 10 });
 }
 
-export function routePath(model: TourModel, t: number): string {
-  return strokePath(routeStroke(routePoints(model, t)));
-}
+/** Contour du meilleur trajet complet (rendu serveur). */
+export const bestPath = (model: TourModel) => strokePath(routeStroke(bestPoints(model)));
 
 /** Courbes de niveau décoratives (carte « topographique »), déterministes. */
 export function contours(): string[] {

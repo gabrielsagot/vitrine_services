@@ -115,7 +115,7 @@ export const demoStops: Stop[] = [
     y: 226,
     duration: 60,
     latest: 9 * 60 + 30,
-    constraint: 'Le matin seulement',
+    constraint: 'Le matin',
   },
   { id: 'bernard', name: 'M. Bernard', place: 'Les Forges', x: 66, y: 118, duration: 60 },
   {
@@ -125,7 +125,7 @@ export const demoStops: Stop[] = [
     x: 176,
     y: 58,
     duration: 75,
-    constraint: 'Bavard · +15 min',
+    constraint: 'Bavard +15 min',
   },
   { id: 'okafor', name: 'Mme Okafor', place: 'Saint-Aubin', x: 304, y: 84, duration: 60 },
   {
@@ -136,7 +136,7 @@ export const demoStops: Stop[] = [
     y: 192,
     duration: 60,
     earliest: 14 * 60,
-    constraint: 'Pas avant 14h',
+    constraint: 'Dès 14h',
   },
   {
     id: 'lemoine',
@@ -146,7 +146,7 @@ export const demoStops: Stop[] = [
     y: 228,
     duration: 60,
     latest: 16 * 60 + 10,
-    constraint: 'Avant la nuit · 16h10',
+    constraint: 'Avant 16h10',
   },
 ];
 
