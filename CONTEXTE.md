@@ -103,6 +103,7 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 - **Aperçu de lien** : balises Open Graph et Twitter Card (`og:image`, `og:title`, `og:description`…), avec une image dédiée de bonne qualité mais légère.
 - **Légèreté** : peu ou pas de framework lourd, peu de JavaScript, images optimisées (WebP/AVIF, tailles adaptées, chargement différé).
 - **Animations qui coûtent peu** : surtout via CSS (`transform`, `opacity`), avec des effets plus riches activés seulement si l'appareil le permet (amélioration progressive).
+- **Expérience à deux niveaux** (piste) : une version riche (3D, animations avancées) chargée **uniquement** sur les appareils capables, et une version soignée mais allégée sur les appareils modestes. Le contenu essentiel s'affiche tout de suite, et les effets lourds se chargent ensuite.
 - **Accessibilité et confort** : respecter `prefers-reduced-motion` et garder des textes lisibles sur petit écran.
 - **Tester sur un mobile modeste**, ou en simulant un téléphone lent, en plus des appareils récents.
 
@@ -129,18 +130,37 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 - Le **devis est 100 % gratuit et sans condition** : si la proposition ne convient pas, le client n'a **aucune obligation** de commander, et le devis ne lui est **pas facturé**.
 - Cet argument doit être **mis en avant** sur le site.
 
-### Pistes proposées (à valider, rien n'est encore décidé)
-- **Démo interactive « Choisissez votre métier »** : un téléphone affiché à l'écran, dont l'application se transforme (nom, couleurs, fonctions) selon le métier choisi. Le sur-mesure est ainsi montré plutôt qu'expliqué.
-- **Lien de parrainage personnalisé** : par exemple, un lien qui affiche « *Prénom* vous recommande ». Il permet aussi de savoir qui a recommandé qui.
-- **Étude de cas « soins équins »** : captures réelles (avec des données fictives), bénéfices exprimés en langage concret, témoignage de la cliente.
+#### Contact « sur mesure » lui aussi
+- Les services sont sur mesure, donc **la façon de le joindre doit l'être aussi**.
+- Le **CTA de contact est l'élément le plus important** du site.
+
+### Décisions prises
+| Sujet | Décision |
+|---|---|
+| **Lien de parrainage personnalisé** | ✅ **Validé.** Un lien propre à chaque parrain affiche par exemple « *Prénom* vous recommande », et permet de savoir qui a recommandé qui. Les prénoms viennent d'une liste gérée par le porteur de projet, jamais du texte libre du lien (sécurité). |
+| **Nom, marque, univers visuel** | ⏳ **Rien n'existe encore** (ni nom, ni logo, ni univers). C'est un **chantier à part entière** : le porteur de projet veut quelque chose de **très travaillé et réfléchi**. |
+| **Zone géographique** | Aucune limite : les applications (PWA) se font à distance, partout. |
+| **Témoignage de la belle-mère** | **Pas sur le site**, ou alors **100 % anonymisé**. Son témoignage passe d'abord **de vive voix**, quand elle parle de lui à son réseau. |
+| **Photo et âge** | ✅ La photo **et** l'âge du porteur de projet seront affichés. |
+| **Moyens de contact** | ✅ Bouton d'appel ou de SMS **et** formulaire très court (nom, métier, téléphone). |
+| **Style visuel** | Un **mélange de clair et premium et de chaleureux, façon atelier**. Inspiration : les **belles applications mobiles modernes**, parfois de niche (références : **refero.design**, **Duolingo**). Il faut des **éléments qui sortent du lot** (3D, micro-animations…) et une vraie **identité**, quelque chose de **personnel**. |
+| **Domaine de la démo** | La **planification de journées** et la **gestion centralisée des clients**. |
+| **Cible** | **Un peu tout le monde** (pros, indépendants, particuliers). |
+| **Hébergement / nom de domaine** | ⏳ À décider, selon la qualité du résultat. |
+| **Micro-entreprise** | **Pas encore créée** : le porteur de projet attend d'avoir des **promesses de clients** avant de la lancer. |
+
+### Pistes en discussion
+- **Démo interactive** : la première idée, « Choisissez votre métier », **n'a pas convaincu**. Le porteur de projet craint qu'une technique trop légère donne un résultat basique, voire moche. Le concept est à retravailler et à prouver par un prototype.
+- **Étude de cas « soins équins »** : seulement sous forme **anonymisée** (captures avec des données fictives, bénéfices concrets).
 - **Parcours en 3 ou 4 étapes**, avec le devis gratuit mis en avant : on discute, devis gratuit, création, accompagnement.
-- **Contact très accessible** : bouton fixe « Devis gratuit » sur mobile, appel ou SMS en un geste, formulaire très court.
+- **Contact accessible** : bouton fixe « Devis gratuit » sur mobile.
 - **Ton** : vouvoiement, aucun jargon technique, textes grands et lisibles.
 
 ---
 
 ## 7. Points à approfondir (prochaines étapes)
 
+- [ ] **Trouver le nom et l'identité visuelle** de l'activité (chantier prioritaire : le design du site en dépend).
 - [ ] Choisir entre une niche précise ou une offre généraliste.
 - [ ] Définir les prestations et la grille tarifaire (tarif « parrainage » de lancement, puis tarif normal).
 - [ ] Formaliser les conditions du parrainage (ce qui est demandé en échange du prix réduit).
