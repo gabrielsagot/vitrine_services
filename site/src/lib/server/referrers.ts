@@ -1,5 +1,5 @@
 import { isValidSlug } from '../slug';
-import { serverClient } from './supabase';
+import { publicClient, serverClient } from './supabase';
 
 export interface Referrer {
   id: string | null;
@@ -12,28 +12,22 @@ const demoReferrers: Record<string, string> = { sylvie: 'Sylvie', marc: 'Marc' }
 
 export async function findReferrer(slug: string): Promise<Referrer | null> {
   if (!isValidSlug(slug)) return null;
-  const db = serverClient();
+  const db = serverClient() ?? publicClient();
   if (!db) {
     const name = demoReferrers[slug];
     return name ? { id: null, slug, name } : null;
   }
-  const { data, error } = await db
-    .from('referrers')
-    .select('id, slug, display_name')
-    .eq('slug', slug)
-    .eq('active', true)
-    .maybeSingle();
+  const { data, error } = await db.rpc('get_referrer', { p_slug: slug });
   if (error) {
     console.error('[parrainage] lecture impossible', error.message);
     return null;
   }
-  return data
-    ? { id: data.id as string, slug: data.slug as string, name: data.display_name as string }
-    : null;
+  const row = (data as { id: string; slug: string; display_name: string }[] | null)?.[0];
+  return row ? { id: row.id, slug: row.slug, name: row.display_name } : null;
 }
 
 export async function countVisit(slug: string): Promise<void> {
-  const db = serverClient();
+  const db = serverClient() ?? publicClient();
   if (!db || !isValidSlug(slug)) return;
   const { error } = await db.rpc('count_referrer_visit', { p_slug: slug });
   if (error) console.error('[parrainage] visite non comptée', error.message);

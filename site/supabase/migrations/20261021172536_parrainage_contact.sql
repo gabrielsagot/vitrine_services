@@ -2,8 +2,6 @@
 -- Toutes les lectures et écritures côté visiteur passent par le serveur (clé service_role) :
 -- le public n'a aucun accès direct aux tables. L'espace admin lit et écrit en tant qu'admin connecté.
 
-create extension if not exists pgcrypto;
-
 -- ——— Admins ———
 create table public.admins (
   user_id uuid primary key references auth.users (id) on delete cascade,
@@ -56,6 +54,7 @@ create index contact_requests_referrer_idx on public.contact_requests (referrer_
 create or replace function public.touch_updated_at()
 returns trigger
 language plpgsql
+set search_path = ''
 as $$
 begin
   new.updated_at = now();

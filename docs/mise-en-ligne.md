@@ -24,22 +24,27 @@ Fichier `site/src/config/site.ts` : tout ce qui est marqué **À COMPLÉTER**.
 
 ## 1. Supabase (parrains, demandes, espace admin)
 
-1. Sur [supabase.com](https://supabase.com), crée un projet (région **Paris, eu-west-3**) et note le mot de passe de la base.
-2. Ouvre **SQL Editor**, colle le contenu de `site/supabase/migrations/20261021000000_parrainage_contact.sql` et lance-le.
-3. Dans **Authentication → Providers → Email**, **désactive les inscriptions** (« Allow new users to sign up »).
+**Déjà fait :**
+- le projet **« Vitrine »** est créé (région Paris) ;
+- les trois migrations de `site/supabase/migrations/` sont appliquées (tables, sécurité par ligne, fonctions) ;
+- les contrôles de sécurité de Supabase sont au vert.
+
+**Il te reste à :**
+
+1. Dans **Authentication → Sign In / Providers → Email**, **désactive les inscriptions** (« Allow new users to sign up »).
    Seul ton compte doit exister.
-4. Dans **Authentication → Users → Add user**, crée ton compte (e-mail et mot de passe).
-5. Retourne dans **SQL Editor** pour donner les droits d'admin à ce compte :
+2. Dans **Authentication → Users → Add user**, crée ton compte (e-mail et mot de passe).
+3. Dans **SQL Editor**, donne les droits d'admin à ce compte :
    ```sql
    insert into public.admins (user_id)
    select id from auth.users where email = 'ton-email@exemple.fr';
    ```
-6. Dans **Project Settings → API**, récupère :
-   - l'**URL du projet** → `PUBLIC_SUPABASE_URL`
-   - la clé **publishable** (anciennement « anon ») → `PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-   - la clé **secret / service_role** → `SUPABASE_SERVICE_ROLE_KEY`
+4. Dans **Project Settings → API Keys**, copie la clé **secret** (`sb_secret_…`) dans la variable `SUPABASE_SERVICE_ROLE_KEY` sur Vercel.
+   Sans elle, le site reconnaît bien les liens de parrainage, mais les demandes de contact restent simulées.
+   Cette clé est secrète : elle ne va **que** dans Vercel, jamais dans le code.
+5. Dans `/admin`, supprime le lien d'essai **« essai »**. Il est déjà désactivé ; c'est un bon premier test de l'espace admin.
 
-   Cette dernière clé est secrète : elle ne va **que** dans Vercel, jamais dans le code.
+Pour recréer la base ailleurs : exécute les fichiers de `site/supabase/migrations/` **dans l'ordre**.
 
 Facultatif : pour effacer automatiquement les demandes de plus de 3 ans (comme l'annonce la page Confidentialité), active l'extension **pg_cron** et planifie `select public.purge_old_contact_requests();` une fois par mois.
 
@@ -68,9 +73,9 @@ Pour rester discrète, la notification ne contient ni numéro ni message, seulem
 | Variable | Rôle |
 |---|---|
 | `PUBLIC_SITE_URL` | Adresse définitive (ex. `https://ton-domaine.fr`), pour les aperçus de lien |
-| `PUBLIC_SUPABASE_URL` | Supabase |
-| `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase (clé publique) |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase (clé secrète, serveur uniquement) |
+| `PUBLIC_SUPABASE_URL` | Supabase : `https://siuizmfavxevfcpnzozk.supabase.co` |
+| `PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase, clé publique (`sb_publishable_…`, visible dans Project Settings → API Keys) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase, clé secrète (`sb_secret_…`), serveur uniquement |
 | `RESEND_API_KEY`, `CONTACT_EMAIL_FROM`, `CONTACT_EMAIL_TO` | Alerte e-mail |
 | `NTFY_TOPIC` (et `NTFY_TOKEN` si sujet protégé) | Notification |
 

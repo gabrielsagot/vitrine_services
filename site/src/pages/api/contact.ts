@@ -64,7 +64,7 @@ export const POST: APIRoute = async ({ request, url }) => {
       return json({ ok: false, error: 'storage' }, 500);
     }
   } else {
-    console.warn('[contact] mode démo : Supabase non configuré, la demande n’est pas enregistrée.', {
+    console.warn('[contact] mode démo : clé secrète Supabase absente, la demande n’est pas enregistrée.', {
       firstName: v.firstName,
       channel: v.channel,
     });
