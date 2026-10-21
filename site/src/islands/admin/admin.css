@@ -265,3 +265,8 @@
     align-items: start;
   }
 }
+
+.adm-card code {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
