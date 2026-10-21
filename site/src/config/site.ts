@@ -11,17 +11,16 @@ export const site = {
   },
   owner: {
     firstName: 'Gabriel',
-    /** À COMPLÉTER : nom complet, obligatoire dans les mentions légales. */
-    fullName: 'Gabriel [Nom]',
+    /** Nom complet, obligatoire dans les mentions légales. */
+    fullName: 'Gabriel Sagot',
     age: 19,
-    /** Chemin d'une photo dans `public/` (ex. `/images/portrait.jpg`), ou `null` en attendant. */
-    portrait: null as string | null,
+    /** Chemin d'une photo carrée dans `public/` (640 × 640 px conseillés), ou `null`. */
+    portrait: '/images/portrait.jpg' as string | null,
   },
   contact: {
-    /** À COMPLÉTER : numéro au format international, sans espaces (SMS et WhatsApp). */
-    phoneE164: '+33600000000',
-    /** À COMPLÉTER */
-    email: 'bonjour@exemple.fr',
+    /** Numéro au format international, sans espaces (SMS et WhatsApp). */
+    phoneE164: '+33769950436',
+    email: 'sagotgabrielpro@gmail.com',
   },
   legal: {
     /** À COMPLÉTER à la création de la micro-entreprise. */
