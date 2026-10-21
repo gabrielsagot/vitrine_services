@@ -1,0 +1,140 @@
+---
+import { site } from '../../config/site';
+const { firstName, age, portrait } = site.owner;
+---
+
+<section class="about" aria-labelledby="about-title">
+  <span class="fil-a fil-m fil-gut" data-fil="62" style="bottom:12px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-l" data-fil="62" style="bottom:20px" aria-hidden="true"></span>
+  <div class="wrap about-grid">
+    <figure class="portrait" data-reveal>
+      <span class="portrait-frame">
+        <span class="fil-a" data-fil="60" data-fil-ring="auto" aria-hidden="true"></span>
+        {portrait ? (
+          <img src={portrait} alt={`Portrait de ${firstName}`} width="320" height="320" loading="lazy" />
+        ) : (
+          <span
+            class="portrait-placeholder"
+            role="img"
+            aria-label={`Portrait de ${firstName} (photo à venir)`}
+          >
+            {firstName.charAt(0)}
+          </span>
+        )}
+      </span>
+    </figure>
+    <div class="about-copy" data-reveal style="--reveal-delay:120">
+      <span class="fil-a fil-m fil-gut-in" data-fil="61" style="top:-6px" aria-hidden="true"></span>
+      <p class="eyebrow">Qui je suis</p>
+      <h2 id="about-title" class="about-title">
+        Je m'appelle {firstName}, <em>j'ai {age} ans.</em>
+      </h2>
+      <p>
+        Je crée des applications sur mesure pour celles et ceux qui ont mieux à faire que de jongler entre
+        trois carnets et dix messages.
+      </p>
+      <p>
+        Avant d'écrire la moindre ligne de code, je prends le temps de comprendre votre métier&nbsp;: c'est
+        lui qui décide de tout le reste.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    position: relative;
+    padding: 64px 0 96px;
+  }
+
+  .about-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 36px;
+    justify-items: start;
+  }
+
+  .portrait {
+    margin: 0;
+    padding: 26px;
+  }
+
+  .portrait-frame {
+    position: relative;
+    display: block;
+    width: 188px;
+    height: 188px;
+  }
+
+  .portrait-frame .fil-a {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .about-copy {
+    position: relative;
+  }
+
+  .portrait img,
+  .portrait-placeholder {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--shadow-lift);
+  }
+
+  .portrait-placeholder {
+    background:
+      radial-gradient(circle at 30% 25%, rgb(255 255 255 / 0.14), transparent 50%),
+      linear-gradient(150deg, var(--night-3), var(--night));
+    color: var(--amber-soft);
+    font-family: var(--serif);
+    font-size: 96px;
+    line-height: 1;
+  }
+
+  .about-title {
+    margin: 14px 0 18px;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 10vw, 68px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+
+  .about-title em {
+    font-style: italic;
+    color: var(--slate);
+  }
+
+  .about-copy p:not(.eyebrow) {
+    max-width: 30em;
+    margin: 0 0 14px;
+    font-size: 19px;
+  }
+
+  @media (min-width: 960px) {
+    .about {
+      padding: 100px 0 140px;
+    }
+
+    .about-grid {
+      grid-template-columns: auto 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .portrait-frame {
+      width: 260px;
+      height: 260px;
+    }
+  }
+</style>

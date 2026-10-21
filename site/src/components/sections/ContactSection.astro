@@ -1,0 +1,82 @@
+---
+import Contact from '../../islands/Contact';
+import { site } from '../../config/site';
+
+interface Props {
+  referrer?: { slug: string; name: string } | null;
+}
+const { referrer = null } = Astro.props;
+
+const greeting = referrer
+  ? `Bonjour ${site.owner.firstName}, je viens de la part de ${referrer.name}. `
+  : `Bonjour ${site.owner.firstName}, `;
+const body = `${greeting}j'aimerais parler d'une application pour mon activité.`;
+const phone = site.contact.phoneE164;
+const direct = {
+  sms: `sms:${phone}?&body=${encodeURIComponent(body)}`,
+  whatsapp: `https://wa.me/${phone.replace('+', '')}?text=${encodeURIComponent(body)}`,
+  email: `mailto:${site.contact.email}?subject=${encodeURIComponent('Mon projet d’application')}&body=${encodeURIComponent(body)}`,
+};
+---
+
+<section class="contact" id="contact" data-sticky-hide aria-labelledby="contact-title">
+  <span class="fil-a fil-m fil-gut" data-fil="80" style="top:20px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-r" data-fil="80" style="top:24px" aria-hidden="true"></span>
+  <div class="wrap contact-grid">
+    <header class="contact-head" data-reveal>
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-title" class="section-title">
+        Parlons de <em>votre projet.</em>
+      </h2>
+      <p class="section-lead">
+        Une minute à peine, et je vous recontacte comme vous le préférez. Le devis est offert, sans aucune
+        obligation.
+      </p>
+    </header>
+    <div class="chat-wrap">
+      <span class="fil-a fil-m fil-gut-in" data-fil="80.5" style="top:-60px" aria-hidden="true"></span>
+      <span class="fil-a" data-fil="81" style="left:34px;top:-16px" aria-hidden="true"></span>
+      <Contact
+        client:visible={{ rootMargin: '300px' }}
+        owner={site.owner.firstName}
+        referrer={referrer}
+        direct={direct}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    position: relative;
+    padding: 72px 0 110px;
+  }
+
+  .contact-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 36px;
+  }
+
+  .chat-wrap {
+    position: relative;
+  }
+
+  @media (min-width: 960px) {
+    .contact {
+      padding: 120px 0 160px;
+    }
+
+    .contact-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-head {
+      position: sticky;
+      top: 80px;
+    }
+  }
+</style>

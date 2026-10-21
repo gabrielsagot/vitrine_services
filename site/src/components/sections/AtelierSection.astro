@@ -1,0 +1,59 @@
+---
+import Atelier from '../../islands/Atelier';
+---
+
+<section class="workshop" id="atelier" aria-labelledby="atelier-title">
+  <span class="fil-a fil-m fil-gut" data-fil="70" style="top:20px" aria-hidden="true"></span>
+  <span class="fil-a fil-m fil-gut" data-fil="73" style="bottom:16px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-l" data-fil="70" style="top:30px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-r" data-fil="70.2" style="top:70px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-r" data-fil="73" style="bottom:24px" aria-hidden="true"></span>
+  <div class="wrap workshop-inner">
+    <header class="workshop-head" data-reveal>
+      <p class="eyebrow">L'atelier</p>
+      <h2 id="atelier-title" class="section-title">
+        Et la vôtre, <em>elle ressemblerait à quoi&nbsp;?</em>
+      </h2>
+      <p class="section-lead">Composez-la en trois gestes, et regardez-la prendre forme.</p>
+    </header>
+    <Atelier client:visible={{ rootMargin: '400px' }} />
+  </div>
+</section>
+
+<style>
+  .workshop {
+    position: relative;
+    padding: 72px 0 96px;
+  }
+
+  .workshop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, rgb(22 33 62 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(22 33 62 / 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 40% at 50% 40%, #000 15%, transparent 72%);
+    mask-image: radial-gradient(ellipse 70% 40% at 50% 40%, #000 15%, transparent 72%);
+  }
+
+  .workshop-inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 28px;
+  }
+
+  @media (min-width: 960px) {
+    .workshop {
+      padding: 120px 0 140px;
+    }
+
+    .workshop::before {
+      -webkit-mask-image: radial-gradient(ellipse 40% 50% at 72% 60%, #000 15%, transparent 72%);
+      mask-image: radial-gradient(ellipse 40% 50% at 72% 60%, #000 15%, transparent 72%);
+    }
+  }
+</style>

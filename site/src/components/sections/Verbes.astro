@@ -1,0 +1,195 @@
+---
+import { iconPaths, type IconName } from '../../lib/icons';
+
+const verbs: { verb: string; text: string; icon: IconName }[] = [
+  {
+    verb: 'Organiser',
+    text: 'Vos rendez-vous, vos tournées et votre agenda, enfin au même endroit.',
+    icon: 'calendar',
+  },
+  {
+    verb: 'Suivre',
+    text: 'Chaque client, son historique, ses rappels : plus rien ne s’oublie.',
+    icon: 'users',
+  },
+  {
+    verb: 'Facturer',
+    text: 'Devis, factures et paiements en quelques gestes, et toujours en règle.',
+    icon: 'receipt',
+  },
+  {
+    verb: 'Se déplacer',
+    text: 'Le bon trajet au bon moment : moins de route, moins de carburant.',
+    icon: 'route',
+  },
+];
+---
+
+<section class="verbs" aria-labelledby="verbs-title">
+  <span class="fil-a fil-m fil-gut" data-fil="31" style="top:40px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-l" data-fil="31" style="top:60px" aria-hidden="true"></span>
+  <div class="wrap">
+    <header class="verbs-head" data-reveal>
+      <p class="eyebrow">Ce que je peux faire</p>
+      <h2 id="verbs-title" class="section-title">
+        Pour vous, <em>et rien que vous.</em>
+      </h2>
+      <p class="section-lead">
+        Quatre verbes, une seule application : la vôtre, construite autour de votre métier.
+      </p>
+    </header>
+
+    <div class="verb-list-wrap">
+      <span class="fil-a fil-m fil-gut-in" data-fil="31.5" style="top:-26px" aria-hidden="true"></span>
+      <span class="fil-a fil-m fil-gut-in" data-fil="36" style="bottom:-40px" aria-hidden="true"></span>
+      <span class="fil-a fil-d fil-seam-l-in" data-fil="31.5" style="top:-30px" aria-hidden="true"></span>
+      <span class="fil-a fil-d fil-seam-l-in" data-fil="36" style="bottom:-10px" aria-hidden="true"></span>
+      <ol class="verb-list">
+        {verbs.map((v, i) => (
+          <li class="verb" data-reveal style={`--reveal-delay:${i * 90}`}>
+            <span class="verb-bead">
+              <span class="fil-a" data-fil={32 + i} aria-hidden="true" />
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d={iconPaths[v.icon]} pathLength="1" />
+              </svg>
+            </span>
+            <span class="verb-text">
+              <strong class="verb-word">{v.verb}</strong>
+              <span class="verb-line">{v.text}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+    <p class="verbs-more" data-reveal>
+      …et tout ce dont votre métier a besoin. C'est vous qui décidez.
+    </p>
+  </div>
+</section>
+
+<style>
+  .verbs {
+    position: relative;
+    padding: 96px 0 72px;
+  }
+
+  .verbs .wrap {
+    position: relative;
+    z-index: 2;
+  }
+
+  .verb-list-wrap {
+    position: relative;
+    margin-top: 44px;
+  }
+
+  .verb-list {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .verb {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 18px;
+    align-items: start;
+    padding: 6px 0 18px;
+  }
+
+  .verb-bead {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--paper);
+    box-shadow:
+      inset 0 0 0 1px var(--line),
+      var(--shadow-soft);
+    color: var(--night);
+  }
+
+  .verb-bead .fil-a {
+    left: 50%;
+    top: 50%;
+  }
+
+  .verb-bead svg {
+    width: 26px;
+    height: 26px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .verb-bead path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+
+  :global(.js) .verb[data-reveal] path {
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.4s var(--ease-out);
+    transition-delay: calc(var(--reveal-delay, 0) * 1ms + 250ms);
+  }
+
+  :global(.js) .verb.is-in path {
+    stroke-dashoffset: 0;
+  }
+
+  .verb-text {
+    display: grid;
+    gap: 4px;
+  }
+
+  .verb-word {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(40px, 11vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .verb-line {
+    max-width: 24em;
+    color: var(--slate);
+  }
+
+  .verbs-more {
+    margin: 22px 0 0 76px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 24px;
+    color: var(--slate);
+  }
+
+  @media (min-width: 960px) {
+    .verbs {
+      padding: 150px 0 110px;
+    }
+
+    .verb-list {
+      grid-template-columns: 1fr 1fr;
+      gap: 34px 56px;
+    }
+
+    .verb-list-wrap {
+      margin-top: 64px;
+    }
+
+    .verb:nth-child(even) .fil-a {
+      display: none;
+    }
+
+    .verbs-more {
+      margin-left: 0;
+      margin-top: 40px;
+    }
+  }
+</style>

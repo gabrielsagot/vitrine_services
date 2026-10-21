@@ -1,0 +1,155 @@
+---
+const steps = [
+  {
+    title: 'On discute',
+    text: 'Vous me racontez votre métier, vos journées, ce qui vous fait perdre du temps. Simplement, sans jargon.',
+  },
+  {
+    title: 'Le devis est offert',
+    text: 'Je vous propose une solution et un prix. C’est gratuit, et vous restez libre : aucune obligation.',
+  },
+  {
+    title: 'Je crée votre application',
+    text: 'Cousue main, pour vous seul. Elle s’installe sur votre téléphone comme une vraie application, sans passer par un store.',
+  },
+  {
+    title: 'Je reste à vos côtés',
+    text: 'Une question, une idée, un besoin qui change ? Votre application évolue avec vous.',
+  },
+];
+---
+
+<section class="steps" aria-labelledby="steps-title">
+  <span class="fil-a fil-m fil-gut" data-fil="50" style="top:20px" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-l" data-fil="50" style="top:30px" aria-hidden="true"></span>
+  <span class="fil-a fil-d" data-fil="50.2" style="left:calc(50% + 10px);top:60px" aria-hidden="true"></span>
+  <div class="wrap steps-grid">
+    <header class="steps-head" data-reveal>
+      <p class="eyebrow">Comment ça se passe</p>
+      <h2 id="steps-title" class="section-title">
+        Simple, <em>du premier mot à la dernière retouche.</em>
+      </h2>
+    </header>
+    <div class="step-list-wrap">
+      <span class="fil-a fil-m fil-gut-in" data-fil="50.5" style="top:-28px" aria-hidden="true"></span>
+      <span class="fil-a fil-m fil-gut-in" data-fil="55" style="bottom:-44px" aria-hidden="true"></span>
+      <span class="fil-a fil-d" data-fil="55" style="left:29px;bottom:-60px" aria-hidden="true"></span>
+      <ol class="step-list">
+        {steps.map((s, i) => (
+          <li class="step" data-reveal style={`--reveal-delay:${i * 80}`}>
+            <span class="step-bead">
+              <span class="fil-a" data-fil={51 + i} aria-hidden="true" />
+              <span class="step-num">{i + 1}</span>
+            </span>
+            <span class="step-body">
+              <strong>{s.title}</strong>
+              <span>{s.text}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps {
+    position: relative;
+    padding: 72px 0 96px;
+  }
+
+  .steps-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 44px;
+  }
+
+  .step-list-wrap {
+    position: relative;
+  }
+
+  .step-list {
+    display: grid;
+    gap: 34px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+
+  .step-bead {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--night);
+    color: var(--cream);
+    box-shadow: 0 10px 24px -12px rgb(22 33 62 / 0.6);
+  }
+
+  .step:nth-child(2) .step-bead {
+    background: var(--amber);
+    color: var(--night);
+  }
+
+  .step-bead .fil-a {
+    left: 50%;
+    top: 50%;
+  }
+
+  .step-num {
+    font-family: var(--serif);
+    font-size: 30px;
+    line-height: 1;
+    transform: translateY(1px);
+  }
+
+  .step-body {
+    display: grid;
+    gap: 6px;
+    padding-top: 4px;
+  }
+
+  .step-body strong {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(30px, 8vw, 40px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  .step-body span {
+    color: var(--slate);
+    max-width: 30em;
+  }
+
+  @media (min-width: 960px) {
+    .steps {
+      padding: 120px 0 140px;
+    }
+
+    .steps-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .steps-head {
+      position: sticky;
+      top: 80px;
+    }
+
+    .step-list {
+      gap: 52px;
+    }
+  }
+</style>

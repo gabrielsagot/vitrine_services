@@ -1,0 +1,593 @@
+---
+import Icon from '../Icon.astro';
+import { contours, routePath, tourModel } from '../../lib/tour-render';
+import { demoHome, hhmm } from '../../lib/tour';
+
+const model = tourModel();
+const finalPath = routePath(model, 1);
+const messyKm = Math.round(model.messy.km);
+const bestKm = Math.round(model.best.km);
+const back = hhmm(model.best.backAt);
+const topo = contours();
+
+// Placement des étiquettes sur la carte (pour qu'aucune ne se chevauche).
+const labels: Record<string, { dx: number; dy: number; anchor: 'start' | 'middle' | 'end' }> = {
+  rossi: { dx: 0, dy: 22, anchor: 'middle' },
+  bernard: { dx: 0, dy: -14, anchor: 'middle' },
+  tilleuls: { dx: 0, dy: -14, anchor: 'middle' },
+  okafor: { dx: 0, dy: -14, anchor: 'middle' },
+  moulin: { dx: 0, dy: 23, anchor: 'middle' },
+  lemoine: { dx: 0, dy: 23, anchor: 'middle' },
+};
+const orderIndex = new Map(model.best.order.map((s, i) => [s.id, i + 1]));
+const durations = (m: number) => (m % 60 === 0 ? `${m / 60} h` : m > 60 ? `1 h ${m - 60}` : `${m} min`);
+---
+
+<section class="tour" id="demo-tournee" data-sticky-hide data-fil-dark aria-labelledby="tour-title">
+  <span class="fil-a fil-m fil-gut" data-fil="20" style="top:0" aria-hidden="true"></span>
+  <span class="fil-a fil-d fil-seam-l" data-fil="20" style="top:0" aria-hidden="true"></span>
+  <div class="tour-pin" data-tour data-messy-km={messyKm} data-best-km={bestKm}>
+    <div class="wrap tour-grid">
+      <header class="tour-head">
+        <p class="eyebrow eyebrow--night">Démonstration</p>
+        <h2 id="tour-title" class="section-title">
+          Votre journée, <em>démêlée.</em>
+        </h2>
+        <div class="tour-captions" aria-live="polite">
+          <p class="tour-caption" data-phase="0">
+            Six demandes, arrivées par message, dans le désordre.
+          </p>
+          <p class="tour-caption" data-phase="1">
+            L'application cherche le meilleur ordre, en respectant les contraintes de chacun.
+          </p>
+          <p class="tour-caption" data-phase="2">
+            Votre journée est prête&nbsp;: {bestKm}&nbsp;km au lieu de {messyKm}, retour à {back}.
+          </p>
+        </div>
+        <p class="tour-km" aria-hidden="true">
+          <span class="km-value" data-km>
+            {bestKm}
+          </span>
+          <span class="km-unit">km</span>
+          <span class="km-before">au lieu de {messyKm}</span>
+        </p>
+      </header>
+
+      <div class="tour-map">
+        <svg viewBox="0 0 400 320" role="img" aria-labelledby="tour-map-title">
+          <title id="tour-map-title">
+            Carte de la tournée : six rendez-vous autour du domicile, reliés dans le meilleur ordre.
+          </title>
+          <g class="topo">
+            {topo.map((d) => (
+              <path d={d} />
+            ))}
+          </g>
+          <path
+            class="river"
+            d="M-10 182 C 60 160, 96 196, 150 176 S 236 130, 290 150 S 360 176, 410 150"
+          ></path>
+          <path class="route-ghost" d={finalPath} data-route-ghost></path>
+          <path class="route" d={finalPath} data-route></path>
+
+          <g class="home" transform={`translate(${demoHome.x} ${demoHome.y})`}>
+            <circle r="11"></circle>
+            <path d="M-5 1.5 0-3.5 5 1.5V6H-5Z"></path>
+            <text y="-17" text-anchor="middle">
+              Départ · 8h00
+            </text>
+          </g>
+
+          {model.best.order.map((s) => {
+            const l = labels[s.id]!;
+            return (
+              <g class="stop" data-stop={s.id} transform={`translate(${s.x} ${s.y})`}>
+                <circle class="stop-ring" r="10" />
+                <circle class="stop-dot" r="5.5" />
+                <text class="stop-name" x={l.dx} y={l.dy} text-anchor={l.anchor}>
+                  {s.name}
+                </text>
+                <g class="stop-badge" transform="translate(11 -11)">
+                  <circle r="8" />
+                  <text y="3.6" text-anchor="middle">
+                    {orderIndex.get(s.id)}
+                  </text>
+                </g>
+              </g>
+            );
+          })}
+          <g class="traveller" data-traveller>
+            <circle r="6"></circle>
+          </g>
+        </svg>
+      </div>
+
+      <div class="tour-plan" data-plan>
+        <div class="plan-head">
+          <span class="plan-day">Mardi</span>
+          <span class="plan-sum">
+            {model.best.visits.length} rendez-vous · {bestKm} km
+          </span>
+        </div>
+        <ol class="plan-list">
+          {model.best.visits.map((v, i) => (
+            <li class="plan-row" data-row={v.stop.id} style={`--k:${i}`}>
+              <span class="plan-time">{hhmm(v.start)}</span>
+              <span class="plan-body">
+                <strong>{v.stop.name}</strong>
+                <small>
+                  {v.stop.place} · {durations(v.stop.duration)}
+                </small>
+              </span>
+              {v.stop.constraint && <span class="plan-tag">{v.stop.constraint}</span>}
+            </li>
+          ))}
+        </ol>
+        <p class="plan-foot">
+          <Icon name="home" size={18} />
+          Retour à la maison à {back}
+        </p>
+      </div>
+    </div>
+  </div>
+  <span class="fil-a fil-m fil-gut" data-fil="30" data-fil-break style="bottom:0" aria-hidden="true"></span>
+  <span
+    class="fil-a fil-d fil-seam-l"
+    data-fil="30"
+    data-fil-break
+    style="bottom:0"
+    aria-hidden="true"
+  ></span>
+</section>
+
+<script>
+  import { initTour } from '../../scripts/tour';
+  initTour();
+</script>
+
+<style>
+  .tour {
+    position: relative;
+    background: var(--night);
+    color: var(--on-night);
+    padding: 72px 0 88px;
+  }
+
+  .tour::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 45% at 75% 35%, rgb(224 165 74 / 0.1), transparent 70%),
+      radial-gradient(50% 40% at 15% 85%, rgb(91 107 140 / 0.2), transparent 70%);
+  }
+
+  .tour-pin {
+    position: relative;
+    z-index: 2;
+  }
+
+  .tour-grid {
+    display: grid;
+    gap: 22px;
+  }
+
+  .eyebrow--night {
+    color: var(--amber);
+  }
+
+  .tour .section-title {
+    color: var(--on-night);
+  }
+
+  .tour .section-title em {
+    color: var(--amber-soft);
+  }
+
+  .tour-captions {
+    position: relative;
+    margin-top: 16px;
+    min-height: 3.3em;
+  }
+
+  .tour-caption {
+    margin: 0;
+    max-width: 30em;
+    color: var(--on-night-soft);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .tour-km {
+    display: none;
+  }
+
+  .tour-map {
+    position: relative;
+    margin: 0 calc(var(--gutter) * -0.5);
+  }
+
+  .tour-map svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .topo path {
+    fill: none;
+    stroke: rgb(238 240 245 / 0.07);
+    stroke-width: 1;
+  }
+
+  .river {
+    fill: none;
+    stroke: rgb(91 107 140 / 0.35);
+    stroke-width: 7;
+    stroke-linecap: round;
+  }
+
+  .route {
+    fill: var(--amber);
+  }
+
+  .route-ghost {
+    fill: none;
+    stroke: rgb(224 165 74 / 0.12);
+    stroke-width: 7;
+    stroke-linejoin: round;
+  }
+
+  .home circle {
+    fill: var(--amber);
+  }
+  .home path {
+    fill: var(--night);
+  }
+  .home text,
+  .stop-name {
+    fill: var(--on-night);
+    font-family: var(--sans);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    paint-order: stroke;
+    stroke: var(--night);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+  }
+  .home text {
+    fill: var(--amber);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+
+  .stop-ring {
+    fill: rgb(22 33 62 / 0.85);
+    stroke: rgb(238 240 245 / 0.25);
+    stroke-width: 1;
+  }
+
+  .stop-dot {
+    fill: var(--on-night);
+    transition: fill 0.3s;
+  }
+
+  .stop.is-visited .stop-dot {
+    fill: var(--amber);
+  }
+
+  .stop-badge circle {
+    fill: var(--amber);
+  }
+
+  .stop-badge text {
+    fill: var(--night);
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .traveller {
+    opacity: 0;
+  }
+
+  .traveller circle {
+    fill: var(--amber);
+    stroke: var(--night);
+    stroke-width: 2.5;
+  }
+
+  /* ——— Planning ——— */
+  .tour-plan {
+    padding: 18px 18px 14px;
+    border-radius: 26px;
+    background: var(--cream);
+    color: var(--night);
+    box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.6);
+  }
+
+  .plan-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .plan-day {
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .plan-sum {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--slate);
+  }
+
+  .plan-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .plan-row {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 2px 10px;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    transition:
+      background-color 0.3s,
+      opacity 0.5s var(--ease-out),
+      transform 0.5s var(--ease-out);
+  }
+
+  .plan-row.is-current .plan-time {
+    color: var(--amber-ink);
+  }
+
+  .plan-time {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    font-size: 16px;
+  }
+
+  .plan-body {
+    display: grid;
+  }
+
+  .plan-body strong {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .plan-body small {
+    font-size: 14px;
+    color: var(--slate);
+  }
+
+  .plan-tag {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 4px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: rgb(224 165 74 / 0.18);
+    color: var(--amber-ink);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .plan-foot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--slate);
+  }
+
+  /* ——— Version animée (appareils capables) ——— */
+  :global(.tour-live) .tour-km {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin: 6px 0 0;
+  }
+
+  .km-value {
+    font-family: var(--serif);
+    font-size: 54px;
+    line-height: 1;
+    color: var(--amber);
+    font-variant-numeric: tabular-nums;
+    min-width: 2.1ch;
+  }
+
+  .km-unit {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--amber);
+  }
+
+  .km-before {
+    font-size: 15px;
+    color: var(--on-night-soft);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  :global(.tour-done) .km-before {
+    opacity: 1;
+  }
+
+  :global(.tour-live) .tour-caption {
+    position: absolute;
+    inset: 0 auto auto 0;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.45s var(--ease-out),
+      transform 0.45s var(--ease-out);
+  }
+
+  :global(.tour-live) .tour-caption.is-on {
+    opacity: 1;
+    transform: none;
+  }
+
+  :global(.tour-live) .stop-badge,
+  :global(.tour-live) .plan-row {
+    opacity: 0;
+  }
+
+  :global(.tour-live) .plan-row {
+    transform: translateY(8px);
+  }
+
+  :global(.tour-live) .plan-row.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  :global(.tour-live) .stop-badge {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition:
+      opacity 0.3s,
+      transform 0.45s var(--ease-spring);
+  }
+
+  :global(.tour-live) .stop-badge.is-in {
+    opacity: 1;
+  }
+
+  /* Écran épinglé (téléphone) : carte en haut, planning qui monte comme une feuille d'app */
+  :global(.tour-pinned) .tour-pin {
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+  }
+
+  :global(.tour-pinned) .tour-grid {
+    height: 100%;
+    grid-template-rows: auto 1fr;
+    padding-top: 28px;
+  }
+
+  :global(.tour-pinned) .tour-map {
+    min-height: 0;
+    display: grid;
+    align-items: center;
+  }
+
+  :global(.tour-pinned) .tour-map svg {
+    max-height: 100%;
+  }
+
+  :global(.tour-pinned) .tour-plan {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 12px;
+    max-height: 62%;
+    overflow: hidden;
+    transform: translateY(calc(100% + 24px));
+    will-change: transform;
+  }
+
+  .tour:global(.tour-pinned) {
+    padding: 0;
+  }
+
+  @media (max-width: 959px) {
+    :global(.tour-pinned) .section-title {
+      font-size: clamp(36px, 10vw, 52px);
+    }
+    :global(.tour-pinned) .tour-captions {
+      margin-top: 10px;
+    }
+    :global(.tour-pinned) .tour-caption {
+      font-size: 16px;
+    }
+    :global(.tour-pinned) .km-value {
+      font-size: 40px;
+    }
+    :global(.tour-pinned) .plan-row {
+      padding: 7px 0;
+    }
+    :global(.tour-pinned) .plan-tag {
+      display: none;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .tour {
+      padding: 120px 0;
+    }
+
+    .tour-grid {
+      grid-template-columns: 1.25fr 0.75fr;
+      grid-template-areas:
+        'head head'
+        'map plan';
+      column-gap: 48px;
+      row-gap: 28px;
+      align-items: center;
+    }
+
+    .tour-head {
+      grid-area: head;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      column-gap: 40px;
+    }
+
+    .tour-head .eyebrow,
+    .tour-head .section-title,
+    .tour-captions {
+      grid-column: 1;
+    }
+
+    .tour-km {
+      grid-column: 2;
+      grid-row: 2 / span 2;
+      align-self: end;
+    }
+
+    .tour-map {
+      grid-area: map;
+      margin: 0;
+    }
+
+    .tour-plan {
+      grid-area: plan;
+    }
+
+    :global(.tour-pinned) .tour-grid {
+      grid-template-rows: auto minmax(0, 1fr);
+      padding-top: 56px;
+      padding-bottom: 40px;
+    }
+
+    :global(.tour-pinned) .tour-plan {
+      position: relative;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      max-height: none;
+      transform: none;
+    }
+
+    :global(.tour-pinned) .km-value {
+      font-size: 72px;
+    }
+  }
+</style>

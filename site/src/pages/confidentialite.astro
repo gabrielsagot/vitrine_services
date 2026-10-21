@@ -1,0 +1,49 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../config/site';
+export const prerender = true;
+---
+
+<Legal
+  title="Confidentialité"
+  description="Ce que deviennent les informations que vous laissez sur ce site : très peu de choses, et rien d'autre que vous recontacter."
+>
+  <h2>En bref</h2>
+  <p>
+    Ce site ne vous suit pas : pas de cookies publicitaires, pas d'outil de mesure d'audience, pas de partage
+    avec des tiers. Les seules informations recueillies sont celles que vous écrivez dans la conversation de
+    contact.
+  </p>
+
+  <h2>Ce qui est recueilli, et pourquoi</h2>
+  <ul>
+    <li>
+      Votre prénom, le moyen et le moment où vous préférez être recontacté(e), votre numéro ou votre e-mail.
+    </li>
+    <li>Votre message et le modèle composé dans l'atelier, si vous choisissez de les joindre.</li>
+    <li>Le prénom de la personne qui vous a recommandé, si vous êtes arrivé(e) par son lien.</li>
+  </ul>
+  <p>
+    Ces informations servent uniquement à vous recontacter au sujet de votre projet et à préparer votre devis
+    (base légale : votre demande, c'est-à-dire des mesures précontractuelles).
+  </p>
+
+  <h2>Combien de temps</h2>
+  <p>
+    Trois ans au plus après notre dernier échange, puis elles sont supprimées. Si vous devenez client, les
+    règles de conservation des documents comptables s'appliquent à la facturation.
+  </p>
+
+  <h2>Vos droits</h2>
+  <p>
+    Vous pouvez à tout moment demander l'accès à vos informations, leur correction ou leur suppression en
+    écrivant à<a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. Vous pouvez aussi adresser
+    une réclamation à la CNIL (cnil.fr).
+  </p>
+
+  <h2>Liens de parrainage</h2>
+  <p>
+    Quand vous ouvrez un lien de recommandation, une simple visite est comptée pour ce lien, sans aucune
+    information sur vous.
+  </p>
+</Legal>

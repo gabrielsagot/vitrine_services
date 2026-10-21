@@ -1,0 +1,361 @@
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource/instrument-serif/400-italic.css';
+@import '@fontsource-variable/inter/wght.css';
+
+:root {
+  --cream: #f7f6f2;
+  --paper: #fcfbf8;
+  --night: #16213e;
+  --night-2: #1d2a4c;
+  --night-3: #26365f;
+  --slate: #5b6b8c;
+  --slate-2: #8592ad;
+  --amber: #e0a54a;
+  --amber-soft: #f1d29c;
+  --amber-ink: #8a5a14;
+  --line: rgb(22 33 62 / 0.1);
+  --line-strong: rgb(22 33 62 / 0.18);
+  --on-night: #eef0f5;
+  --on-night-soft: rgb(238 240 245 / 0.68);
+
+  --serif: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --gutter: 16px;
+  --max: 1180px;
+  --radius: 22px;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);
+  --shadow-soft: 0 1px 2px rgb(22 33 62 / 0.05), 0 8px 24px -12px rgb(22 33 62 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(22 33 62 / 0.06), 0 24px 60px -24px rgb(22 33 62 / 0.35);
+
+  color-scheme: light;
+}
+
+@media (min-width: 720px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-padding-top: 24px;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--night);
+  font-family: var(--sans);
+  font-size: 18px;
+  line-height: 1.6;
+  font-feature-settings: 'ss01', 'cv11';
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+/* Grain de papier très léger : le côté « atelier » */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.09 0 0 0 0 0.13 0 0 0 0 0.24 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: var(--amber-soft);
+  color: var(--night);
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--max) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.serif {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.section-title {
+  margin: 14px 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(42px, 9.5vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.section-title em {
+  font-style: italic;
+}
+
+.section-lead {
+  margin: 18px 0 0;
+  max-width: 34em;
+  color: var(--slate);
+  text-wrap: pretty;
+}
+
+/* Bouton principal */
+.btn {
+  --btn-bg: var(--night);
+  --btn-fg: var(--cream);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.35s var(--ease-spring),
+    box-shadow 0.35s var(--ease-out),
+    background-color 0.25s;
+  box-shadow: 0 10px 30px -14px rgb(22 33 62 / 0.7);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px -14px rgb(22 33 62 / 0.75);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn .btn-pearl {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 4px rgb(224 165 74 / 0.18);
+  transition: transform 0.4s var(--ease-spring);
+}
+
+.btn:hover .btn-pearl {
+  transform: translateX(3px) scale(1.15);
+}
+
+.btn--amber {
+  --btn-bg: var(--amber);
+  --btn-fg: var(--night);
+  box-shadow: 0 10px 30px -14px rgb(224 165 74 / 0.8);
+}
+
+.btn--amber .btn-pearl {
+  background: var(--night);
+  box-shadow: 0 0 0 4px rgb(22 33 62 / 0.14);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--night);
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+}
+
+.btn--ghost:hover {
+  box-shadow: inset 0 0 0 1.5px var(--night);
+}
+
+.btn--small {
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 15px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 200;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: var(--night);
+  color: var(--cream);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* Apparition douce au défilement (activée seulement si le JS est là) */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--reveal-delay, 0) * 1ms);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Points d'ancrage du fil conducteur (invisibles).
+   .fil-m : seulement sur téléphone et tablette ; .fil-d : seulement sur grand écran.
+   .fil-gut : la « couture » le long du bord gauche ; .fil-gut-in : idem depuis l'intérieur d'un .wrap. */
+.fil-a {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.fil-gut {
+  left: 7px;
+}
+
+.fil-gut-in {
+  left: calc(var(--gutter) * -1 + 7px);
+}
+
+/* Sur grand écran, deux coutures : juste à gauche et juste à droite du contenu. */
+.fil-seam-l {
+  left: 10px;
+}
+
+.fil-seam-r {
+  right: 10px;
+}
+
+.fil-seam-l-in {
+  left: calc(var(--gutter) * -1 + 10px);
+}
+
+.fil-seam-r-in {
+  right: calc(var(--gutter) * -1 + 10px);
+}
+
+@media (min-width: 1250px) {
+  .fil-seam-l {
+    left: calc((100% - var(--max)) / 2 - 34px);
+  }
+
+  .fil-seam-r {
+    right: calc((100% - var(--max)) / 2 - 34px);
+  }
+
+  .fil-seam-l-in {
+    left: -34px;
+  }
+
+  .fil-seam-r-in {
+    right: -34px;
+  }
+}
+
+@media (min-width: 960px) {
+  .fil-m {
+    display: none;
+  }
+}
+
+@media (max-width: 959px) {
+  .fil-d {
+    display: none;
+  }
+}

@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Home from '../components/Home.astro';
+import { pitch, referralLine, site } from '../config/site';
+import { findReferrer } from '../lib/server/referrers';
+
+export const prerender = false;
+
+const slug = (Astro.params.slug ?? '').toLowerCase();
+const referrer = await findReferrer(slug);
+if (!referrer) return Astro.redirect('/', 302);
+
+// La page (et donc son aperçu dans les messageries) est mise en cache quelques minutes.
+Astro.response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=600, stale-while-revalidate=86400');
+---
+
+<Base
+  title={referralLine(referrer.name)}
+  description={`${pitch.title} ${pitch.subtitle} ${pitch.ctaNote} · ${site.brand.name}`}
+  image={`/og/${referrer.slug}.png`}
+>
+  <Home referrer={{ slug: referrer.slug, name: referrer.name }} />
+</Base>

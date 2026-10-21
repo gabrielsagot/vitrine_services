@@ -1,0 +1,37 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../config/site';
+export const prerender = true;
+---
+
+<Legal title="Mentions légales" description="Éditeur, hébergeur et informations légales du site.">
+  <h2>Éditeur du site</h2>
+  <p>
+    {site.owner.fullName}
+    {site.legal.siret ? `, entrepreneur individuel (EI)` : ''}
+    <br />
+    {site.legal.address}
+    <br />
+    {site.legal.siret ? (
+      <>
+        SIRET : {site.legal.siret}
+        <br />
+      </>
+    ) : null}
+    Contact : <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+  </p>
+  <p>Directeur de la publication : {site.owner.fullName}.</p>
+
+  <h2>Hébergement</h2>
+  <p>
+    Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com.
+    <br />
+    Données des demandes de contact : Supabase (serveurs situés dans l'Union européenne).
+  </p>
+
+  <h2>Propriété intellectuelle</h2>
+  <p>
+    Les textes, illustrations, animations et le code de ce site sont la propriété de leur auteur. Les écrans
+    d'applications présentés sont des recréations avec des données fictives.
+  </p>
+</Legal>

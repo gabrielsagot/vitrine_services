@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import Home from '../components/Home.astro';
+import { pitch, site } from '../config/site';
+
+export const prerender = true;
+---
+
+<Base
+  title={`${pitch.title} · ${site.brand.name}, ${site.brand.tagline.toLowerCase()}`}
+  description={`${pitch.subtitle} ${pitch.ctaNote}`}
+>
+  <Home />
+</Base>
