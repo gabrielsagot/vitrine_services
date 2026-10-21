@@ -9,15 +9,16 @@ Tant que Supabase n'est pas branché, le site fonctionne en **mode démo** :
 
 ## 0. Compléter ses informations
 
-Fichier `site/src/config/site.ts` : tout ce qui est marqué **À COMPLÉTER**.
+Fichier `site/src/config/site.ts`.
+
+**Déjà fait :** nom complet, numéro (boutons SMS et WhatsApp), e-mail et photo (`site/public/images/portrait.jpg`, recadrée en carré 640 × 640 px).
+
+**Il reste :**
 
 | Champ | Exemple |
 |---|---|
-| `contact.phoneE164` | `+33612345678` (sert aux boutons SMS et WhatsApp) |
-| `contact.email` | `bonjour@ton-domaine.fr` |
-| `owner.fullName` | Prénom et nom (mentions légales) |
-| `owner.portrait` | `/images/portrait.jpg`, avec la photo déposée dans `site/public/images/` (carrée, 640 × 640 px conseillés) |
-| `legal.siret`, `legal.address` | À la création de la micro-entreprise |
+| `legal.address` | Adresse postale ou domiciliation (mentions légales) |
+| `legal.siret` | À la création de la micro-entreprise |
 | `brand.name` | Le nom de la marque, une fois choisi |
 
 ---
