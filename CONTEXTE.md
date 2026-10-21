@@ -161,7 +161,21 @@ C'est le premier projet concret, qui sert de preuve de savoir-faire.
 
 ---
 
-## 7. Points à approfondir (prochaines étapes)
+## 7. Identité de marque (en construction)
+
+| Élément | Choix |
+|---|---|
+| **Émotions recherchées** | **Confiance et sérénité** + **proximité et chaleur** |
+| **Personnalité** | **L'expert élégant** : sobre, raffiné, précis. Peu de mots, beaucoup de classe. Équilibre visé : élégance experte **et** chaleur rassurante, une marque « haut de gamme accessible ». |
+| **Palette** | Blanc cassé `#F7F6F2` (fond) · Bleu nuit `#16213E` (principal) · Bleu ardoise `#5B6B8C` (secondaire) · Ambre `#E0A54A` (accent) |
+| **Typographie** | **Serif élégante pour les titres** (esprit magazine haut de gamme) + **sans-serif simple et lisible pour le texte** |
+| **Valeurs** (en plus du sur-mesure) | **Écoute** · **Simplicité** · **Accompagnement durable** |
+| **Nom** | ⏸️ **Mis de côté volontairement.** Le porteur de projet veut prendre le temps de la réflexion, car le nom est très important. Il n'est plus sûr de vouloir un nom inventé. |
+| **Mascotte** | ✅ Oui, ni ringarde ni étrange. Pistes visuelles à proposer. |
+
+---
+
+## 8. Points à approfondir (prochaines étapes)
 
 - [ ] **Trouver le nom et l'identité visuelle** de l'activité (chantier prioritaire : le design du site en dépend).
 - [ ] Choisir entre une niche précise ou une offre généraliste.
