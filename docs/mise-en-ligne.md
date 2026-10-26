@@ -11,13 +11,12 @@ Tant que Supabase n'est pas branché, le site fonctionne en **mode démo** :
 
 Fichier `site/src/config/site.ts`.
 
-**Déjà fait :** nom complet, numéro (boutons SMS et WhatsApp), e-mail et photo (`site/public/images/portrait.jpg`, recadrée en carré 640 × 640 px).
+**Déjà fait :** nom complet, adresse postale (`13 rue de la chèvre au loup, Mons`), numéro (boutons SMS et WhatsApp), e-mail et photo (`site/public/images/portrait.jpg`, recadrée en carré 640 × 640 px).
 
 **Il reste :**
 
 | Champ | Exemple |
 |---|---|
-| `legal.address` | Adresse postale ou domiciliation (mentions légales) |
 | `legal.siret` | À la création de la micro-entreprise |
 | `brand.name` | Le nom de la marque, une fois choisi |
 

@@ -26,7 +26,7 @@ export const site = {
     /** À COMPLÉTER à la création de la micro-entreprise. */
     siret: null as string | null,
     /** À COMPLÉTER : adresse postale (ou domiciliation) de l'éditeur. */
-    address: '[Adresse à compléter]',
+    address: '13 rue de la chèvre au loup, Mons',
   },
 } as const;
 
