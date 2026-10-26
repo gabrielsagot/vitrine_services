@@ -455,7 +455,16 @@ export default function Contact({ owner, referrer, direct }: Props) {
           <div class="choices">
             <button type="button" class="btn btn--amber" onClick={send}>
               <span>Envoyer ma demande</span>
-              <span class="btn-pearl" aria-hidden="true" />
+              <svg class="btn-icon" viewBox="0 0 20 20" width="17" height="17" aria-hidden="true">
+                <path
+                  d="M4 10h12M11 5l5 5-5 5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </button>
             <button type="button" class="choice" onClick={restart}>
               Corriger

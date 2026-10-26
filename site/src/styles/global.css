@@ -204,28 +204,22 @@ select {
   transform: translateY(0) scale(0.98);
 }
 
-.btn .btn-pearl {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--amber);
-  box-shadow: 0 0 0 4px rgb(224 165 74 / 0.18);
-  transition: transform 0.4s var(--ease-spring);
+.btn .btn-icon {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  stroke: currentColor;
+  transition: transform 0.3s var(--ease-spring);
 }
 
-.btn:hover .btn-pearl {
-  transform: translateX(3px) scale(1.15);
+.btn:hover .btn-icon {
+  transform: translateX(4px);
 }
 
 .btn--amber {
   --btn-bg: var(--amber);
   --btn-fg: var(--night);
   box-shadow: 0 10px 30px -14px rgb(224 165 74 / 0.8);
-}
-
-.btn--amber .btn-pearl {
-  background: var(--night);
-  box-shadow: 0 0 0 4px rgb(22 33 62 / 0.14);
 }
 
 .btn--ghost {

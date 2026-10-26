@@ -251,7 +251,16 @@ export default function Atelier() {
       <div class="a-cta">
         <a class="btn btn--amber" href="#contact" onClick={send}>
           <span>Parlons-en avec ce modèle</span>
-          <span class="btn-pearl" aria-hidden="true" />
+          <svg class="btn-icon" viewBox="0 0 20 20" width="17" height="17" aria-hidden="true">
+            <path
+              d="M4 10h12M11 5l5 5-5 5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </a>
         <p>Ce n'est qu'un aperçu&nbsp;: la vraie sera encore plus à vous.</p>
       </div>
