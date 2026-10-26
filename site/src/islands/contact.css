@@ -48,6 +48,15 @@
   color: var(--amber-soft);
   font-family: var(--serif);
   font-size: 24px;
+  box-shadow: 0 2px 8px rgb(22 33 62 / 0.12);
+}
+
+.chat-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
 }
 
 .chat-online {
@@ -59,6 +68,7 @@
   border-radius: 50%;
   background: #4caf7a;
   box-shadow: 0 0 0 2.5px var(--paper);
+  z-index: 2;
 }
 
 .chat-log {

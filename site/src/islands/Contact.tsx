@@ -8,6 +8,7 @@ import './contact.css';
 
 interface Props {
   owner: string;
+  portrait?: string | null;
   referrer: { slug: string; name: string } | null;
   direct: { sms: string; whatsapp: string; email: string };
 }
@@ -59,7 +60,7 @@ const Icon = ({ name, size = 20 }: { name: IconName; size?: number }) => (
 
 let uid = 0;
 
-export default function Contact({ owner, referrer, direct }: Props) {
+export default function Contact({ owner, portrait, referrer, direct }: Props) {
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [step, setStep] = useState<Step>('intro');
   const [typing, setTyping] = useState(false);
@@ -285,7 +286,18 @@ export default function Contact({ owner, referrer, direct }: Props) {
     <div class="chat" ref={rootRef}>
       <div class="chat-head">
         <span class="chat-avatar" aria-hidden="true">
-          {owner.charAt(0)}
+          {portrait ? (
+            <img
+              src={portrait}
+              alt={`Portrait de ${owner}`}
+              class="chat-avatar-img"
+              width="44"
+              height="44"
+              loading="lazy"
+            />
+          ) : (
+            owner.charAt(0)
+          )}
           <i class="chat-online" />
         </span>
         <span>
