@@ -19,53 +19,18 @@ const stitch =
     <div class="hero-copy">
       {referrer && (
         <aside class="referral-card hero-in" style="--i:0" aria-label="Recommandation personnelle">
-          <div class="referral-card-inner">
-            <div class="referral-seal" aria-hidden="true">
-              <svg viewBox="0 0 44 44" class="referral-pearl-svg" width="44" height="44">
-                <defs>
-                  <radialGradient id="pearl-glow" cx="35%" cy="30%" r="65%">
-                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55" />
-                    <stop offset="50%" stop-color="#e0a54a" />
-                    <stop offset="100%" stop-color="#b47517" />
-                  </radialGradient>
-                </defs>
-                <circle cx="22" cy="22" r="20" class="seal-halo" />
-                <circle cx="22" cy="22" r="15" fill="url(#pearl-glow)" class="seal-body" />
-                <circle cx="17" cy="16" r="3.2" class="seal-shine" />
-                <g class="seal-eyes">
-                  <ellipse cx="17.8" cy="21.5" rx="1.5" ry="2.2" />
-                  <ellipse cx="26.2" cy="21.5" rx="1.5" ry="2.2" />
-                </g>
-                <path
-                  d="M19 26 Q22 28 25 26"
-                  class="seal-smile"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <span class="seal-pulse" />
+          <span class="referral-avatar" aria-hidden="true">
+            {referrer.name.charAt(0)}
+          </span>
+          <div class="referral-content">
+            <div class="referral-tag">
+              <span class="referral-tag-dot" aria-hidden="true" />
+              <span>Recommandé par {referrer.name}</span>
             </div>
-
-            <div class="referral-body">
-              <div class="referral-meta">
-                <span class="referral-pill">
-                  <span class="referral-pill-dot" />
-                  Invitation de {referrer.name}
-                </span>
-                <span class="referral-offered">Premier échange offert</span>
-              </div>
-
-              <h2 class="referral-heading">
-                <em>{referrer.name}</em> pense que je peux vous aider.
-              </h2>
-
-              <p class="referral-desc">
-                Bienvenue dans l'atelier. Échangeons sur votre métier&nbsp;: le premier diagnostic et le devis
-                sont <strong>100&nbsp;% offerts</strong>, sans aucun engagement.
-              </p>
-            </div>
+            <p class="referral-title">
+              <em>{referrer.name}</em> pense que je peux vous aider.
+            </p>
+            <p class="referral-note">Le devis est offert et sans engagement.</p>
           </div>
         </aside>
       )}
@@ -356,206 +321,99 @@ const stitch =
   }
 
   .referral-card {
-    position: relative;
-    margin: 4px 0 28px;
-    padding: 20px 22px;
-    border-radius: 22px;
-    background: linear-gradient(145deg, #ffffff 0%, var(--paper) 55%, #f9f5ec 100%);
-    box-shadow:
-      0 12px 36px -12px rgb(22 33 62 / 0.12),
-      0 3px 10px -2px rgb(22 33 62 / 0.05),
-      inset 0 0 0 1px rgb(255 255 255 / 0.9),
-      0 0 0 1px rgb(224 165 74 / 0.35);
-    overflow: hidden;
-  }
-
-  /* Surpiqûre artisanale : liseré cousu en pointillés fins */
-  .referral-card::before {
-    content: '';
-    position: absolute;
-    inset: 5px;
-    border: 1px dashed rgb(201 138 43 / 0.32);
-    border-radius: 17px;
-    pointer-events: none;
-  }
-
-  /* Voile ambre doux au coin supérieur */
-  .referral-card::after {
-    content: '';
-    position: absolute;
-    top: -24px;
-    right: -24px;
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgb(224 165 74 / 0.16) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .referral-card-inner {
-    position: relative;
-    z-index: 1;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 16px;
+    margin: 4px 0 24px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: var(--paper);
+    border: 1px solid var(--line-strong);
+    box-shadow:
+      0 1px 2px rgb(22 33 62 / 0.04),
+      0 8px 24px -10px rgb(22 33 62 / 0.1);
   }
 
-  .referral-seal {
-    position: relative;
+  .referral-avatar {
     flex: none;
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--night);
+    color: var(--cream);
     display: grid;
     place-items: center;
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.12);
   }
 
-  .referral-pearl-svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    filter: drop-shadow(0 4px 10px rgb(224 165 74 / 0.45));
-  }
-
-  .seal-halo {
-    fill: rgb(224 165 74 / 0.15);
-  }
-
-  .seal-body {
-    stroke: #ffffff;
-    stroke-width: 1.8;
-  }
-
-  .seal-shine {
-    fill: #ffffff;
-    opacity: 0.65;
-  }
-
-  .seal-eyes {
-    fill: var(--night);
-  }
-
-  .seal-smile {
-    stroke: var(--night);
-  }
-
-  .seal-pulse {
-    position: absolute;
-    inset: 3px;
-    border-radius: 50%;
-    border: 1.5px solid rgb(224 165 74 / 0.5);
-    animation: seal-breathe 2.6s ease-in-out infinite;
-    pointer-events: none;
-  }
-
-  @keyframes seal-breathe {
-    0%,
-    100% {
-      transform: scale(0.95);
-      opacity: 0.7;
-    }
-    50% {
-      transform: scale(1.15);
-      opacity: 0.1;
-    }
-  }
-
-  .referral-body {
+  .referral-content {
     flex: 1;
     min-width: 0;
   }
 
-  .referral-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px 12px;
-    margin-bottom: 6px;
-  }
-
-  .referral-pill {
+  .referral-tag {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 3px 10px 3px 8px;
-    border-radius: 999px;
-    background: rgb(224 165 74 / 0.16);
-    border: 1px solid rgb(224 165 74 / 0.3);
-    color: var(--amber-ink);
+    gap: 6px;
     font-size: 11.5px;
-    font-weight: 650;
-    letter-spacing: 0.03em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
+    color: var(--amber-ink);
   }
 
-  .referral-pill-dot {
+  .referral-tag-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
     background: var(--amber);
-    box-shadow: 0 0 0 2px rgb(255 255 255 / 0.8);
   }
 
-  .referral-offered {
-    font-size: 12.5px;
-    font-weight: 500;
-    color: var(--slate);
-  }
-
-  .referral-heading {
-    margin: 4px 0 6px;
+  .referral-title {
+    margin: 2px 0;
     font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(21px, 4.2vw, 27px);
-    line-height: 1.22;
+    font-size: clamp(20px, 4vw, 24px);
+    line-height: 1.25;
     color: var(--night);
     letter-spacing: -0.01em;
   }
 
-  .referral-heading em {
+  .referral-title em {
     font-style: italic;
     font-weight: 400;
-    color: var(--amber-ink);
-    position: relative;
-    white-space: nowrap;
   }
 
-  .referral-desc {
+  .referral-note {
     margin: 0;
-    font-size: 14.5px;
-    line-height: 1.48;
+    font-size: 13.5px;
     color: var(--slate);
-  }
-
-  .referral-desc strong {
-    color: var(--night);
-    font-weight: 600;
+    line-height: 1.4;
   }
 
   @media (max-width: 600px) {
     .referral-card {
-      padding: 16px 16px 18px;
-      border-radius: 18px;
-      margin-bottom: 22px;
+      gap: 13px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      margin-bottom: 20px;
     }
 
-    .referral-card::before {
-      inset: 4px;
-      border-radius: 14px;
+    .referral-avatar {
+      width: 36px;
+      height: 36px;
+      font-size: 19px;
     }
 
-    .referral-card-inner {
-      gap: 12px;
+    .referral-title {
+      font-size: 18.5px;
     }
 
-    .referral-seal {
-      width: 40px;
-      height: 40px;
-    }
-
-    .referral-desc {
-      font-size: 13.5px;
-      line-height: 1.42;
+    .referral-note {
+      font-size: 13px;
     }
   }
 
