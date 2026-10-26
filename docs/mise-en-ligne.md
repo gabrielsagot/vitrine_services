@@ -72,7 +72,12 @@ Pour rester discrète, la notification ne contient ni numéro ni message, seulem
 - les fonctions serveur tournent à **Paris** (`cdg1`), près de la base Supabase ;
 - `PUBLIC_SUPABASE_URL` et `PUBLIC_SUPABASE_PUBLISHABLE_KEY` sont renseignées ;
 - **toutes les adresses sont privées** (Vercel Authentication) : il faut être connecté à ton compte Vercel pour voir le site ;
+- l'adresse officielle Vercel est désormais configurée : **`https://gabrielsagot.vercel.app`** ;
+- `PUBLIC_SITE_URL` est configuré sur `https://gabrielsagot.vercel.app` ;
 - chaque envoi sur la branche `feat/site-vitrine` crée un nouvel aperçu.
+
+Adresse de production :
+`https://gabrielsagot.vercel.app`
 
 Adresse qui suit toujours la dernière version de la branche :
 `https://vitrine-git-feat-site-vitrine-gabriels-projects-e0c9ddae.vercel.app`
@@ -84,7 +89,6 @@ Adresse qui suit toujours la dernière version de la branche :
 | `SUPABASE_SERVICE_ROLE_KEY` | Clé secrète Supabase (`sb_secret_…`) : enregistrement des demandes |
 | `RESEND_API_KEY`, `CONTACT_EMAIL_FROM`, `CONTACT_EMAIL_TO` | Alerte e-mail |
 | `NTFY_TOPIC` (et `NTFY_TOKEN` si sujet protégé) | Notification sur le téléphone |
-| `PUBLIC_SITE_URL` | Adresse définitive, une fois le domaine choisi |
 
 Après chaque modification de variable, redéploie (bouton **Redeploy**).
 

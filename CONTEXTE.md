@@ -263,7 +263,7 @@ Le code est dans `site/` (voir `site/README.md`). Le guide de mise en ligne est 
 | Accueil (téléphone « cousu » dont l'application change de métier : paysagiste, coiffeur, infirmière) | ✅ |
 | Démo A, « Votre journée, démêlée » : vrai calcul du meilleur ordre (155 km → 73 km), fil emmêlé qui se défait, trajet tracé, planning rangé | ✅ |
 | Ce que je peux faire · Réalisation (anonymisée) · Comment ça se passe · Qui je suis | ✅ |
-| Démo B, « L'atelier » : besoins, couleur et nom, téléphone 3D (Three.js) ou 3D CSS ; l'écran se compose (grande carte de couleur, cartes, liste « Aujourd'hui ») ; sur téléphone, il reste visible en haut pendant les choix | ✅ |
+| Démo B, « L'atelier » : besoins, couleur et nom, téléphone 3D (Three.js) ou 3D CSS ; l'écran se compose (grande carte de couleur, cartes, liste « Aujourd'hui ») ; défile naturellement sur téléphone | ✅ |
 | Contact en conversation, pré-rempli par l'atelier et le parrainage + SMS, WhatsApp et e-mail directs | ✅ |
 | Fil conducteur calligraphique sur toute la page, perle qui ouvre les yeux à la fin | ✅ |
 | Liens `/prenom`, aperçu de lien personnalisé, espace `/admin`, alertes (e-mail + notification + admin) | ✅ (Supabase branché ; Resend et ntfy à brancher) |

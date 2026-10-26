@@ -7,15 +7,6 @@
   position: relative;
 }
 
-.atelier-sentinel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
-}
-
 /* ——— Scène du téléphone ——— */
 .atelier-stage {
   position: relative;
@@ -299,46 +290,23 @@
   color: var(--slate);
 }
 
-/* Téléphone : le téléphone reste visible en haut pendant qu'on fait ses choix (comme un configurateur).
-   Au repos, il flotte sur la page ; une fois collé en haut, il prend un fond pour que les choix glissent dessous. */
+/* Téléphone sur mobile : défile naturellement avec le reste de la page. */
 @media (max-width: 959px) {
   .atelier-stage {
-    position: sticky;
-    top: 0;
-    z-index: 3;
-    height: min(46vh, 400px);
+    position: relative;
+    height: min(52vh, 400px);
     min-height: 320px;
-    margin: 0 calc(var(--gutter) * -1) 10px;
-    padding: 10px var(--gutter) 18px;
-  }
-
-  .atelier-stage::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--cream);
-    box-shadow: 0 18px 22px -20px rgb(22 33 62 / 0.4);
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-  }
-
-  .atelier-stage.is-stuck::before {
-    opacity: 1;
+    margin: 0 0 20px;
+    padding: 10px 0 24px;
   }
 
   .three-host,
   .css-phone {
-    inset: 10px var(--gutter) 24px;
+    inset: 0 0 24px;
   }
 
   .stage-hint {
     bottom: 2px;
-  }
-
-  /* Quand le clavier s'ouvre, le champ se place sous le téléphone collant, pas derrière. */
-  .atelier-controls :is(input, button, a) {
-    scroll-margin-top: calc(min(46vh, 400px) + 16px);
   }
 }
 

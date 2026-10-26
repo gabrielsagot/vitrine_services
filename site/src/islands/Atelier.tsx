@@ -23,9 +23,7 @@ export default function Atelier() {
   const [name, setName] = useState('');
   const [mode, setMode] = useState<Mode>('pending');
   const [spinning, setSpinning] = useState(false);
-  const [stuck, setStuck] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
-  const sentinelRef = useRef<HTMLSpanElement>(null);
   const threeHostRef = useRef<HTMLDivElement>(null);
   const screenHostRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<Screen | null>(null);
@@ -66,17 +64,6 @@ export default function Atelier() {
       screen.dispose();
       phoneRef.current?.dispose();
     };
-  }, []);
-
-  // Sur téléphone, le téléphone reste en haut pendant les choix : on lui donne un fond dès qu'il est « collé ».
-  useEffect(() => {
-    const sentinel = sentinelRef.current;
-    if (!sentinel || !('IntersectionObserver' in window)) return;
-    const io = new IntersectionObserver(([e]) =>
-      setStuck(!e!.isIntersecting && e!.boundingClientRect.top < 0),
-    );
-    io.observe(sentinel);
-    return () => io.disconnect();
   }, []);
 
   useEffect(() => {
@@ -157,12 +144,10 @@ export default function Atelier() {
   return (
     <div class="atelier">
       <div class="atelier-zone">
-        <span class="atelier-sentinel" ref={sentinelRef} aria-hidden="true" />
         <div
-          class={`atelier-stage is-${mode}${spinning ? ' is-spinning' : ''}${stuck ? ' is-stuck' : ''}`}
+          class={`atelier-stage is-${mode}${spinning ? ' is-spinning' : ''}`}
           ref={stageRef}
           onPointerMove={tilt}
-          data-fil-sticky
           aria-hidden="true"
         >
           <span class="fil-a fil-m fil-gut" data-fil="70.5" style={{ top: '8%' }} />
