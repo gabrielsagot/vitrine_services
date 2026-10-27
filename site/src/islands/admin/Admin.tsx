@@ -321,10 +321,12 @@ function Referrers({ db, items, reload }: { db: SupabaseClient; items: ReferrerR
     const text = `Voici ton lien pour me recommander : ${url}`;
     if (navigator.share) {
       try {
-        await navigator.share({ text, url });
+        // Le lien est déjà dans le texte : l'ajouter aussi en `url` l'enverrait deux fois (iPhone, Android).
+        await navigator.share({ text });
         return;
-      } catch {
-        /* partage annulé */
+      } catch (e) {
+        // Partage annulé par l'utilisateur : on s'arrête là, sans copier à sa place.
+        if (e instanceof DOMException && e.name === 'AbortError') return;
       }
     }
     await navigator.clipboard.writeText(url);
