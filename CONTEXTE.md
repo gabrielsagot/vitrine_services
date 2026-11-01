@@ -277,6 +277,20 @@ Le code est dans `site/` (voir `site/README.md`). Le guide de mise en ligne est 
 - nom complet (mentions légales) ;
 - plus tard : nom de marque, domaine et SIRET.
 
+## 10 bis. Suivi des visites des quatre sites (2026-11-01)
+
+Demande du porteur de projet : « tracker au maximum les visites sur chacun des 4 sites » (portfolio, site vitrine, EquiCare, Dram), en même temps qu'une section « Auto-entrepreneuriat » dans le portfolio qui renvoie vers le site vitrine et vers les **modes visiteur** d'EquiCare et de Dram (données d'exemple, rien à installer). Il souhaite **mettre en avant l'univers visuel de ses applications** : EquiCare peut être nommée et montrée (avec des données fictives).
+
+| Élément | Choix |
+|---|---|
+| **Script commun** | `site/public/visites.js`, servi par https://gabrielsagot.vercel.app/visites.js et chargé par les quatre sites (`data-site` = portfolio, vitrine, equicare, dram). Sans cookie, sans service tiers, quelques Ko. |
+| **Réception** | `site/src/pages/api/collect.ts` (Vercel) : ajoute le lieu approximatif donné par Vercel (pays, région, ville, coordonnées), lit le navigateur et l'appareil, et enregistre dans Supabase « Vitrine » (table `visit_events`, migration `20261101120000_visites.sql`). L'adresse IP n'est jamais gardée (empreinte salée qui change chaque jour). |
+| **Ce qui est noté** | Sessions (30 min), visiteur qui revient (identifiant au hasard dans le navigateur, 13 mois), pages vues, temps réellement passé, part de la page lue, chaque clic sur un lien ou un bouton (texte, section, position), liens vers SMS / WhatsApp / e-mail, provenance (site d'origine, `utm_*`), parcours d'un des quatre sites à l'autre (`_vs` ajouté aux liens), appareil, système, navigateur, modèle (Android), écran, langue, fuseau, connexion, mémoire, mode sombre, application installée, vitesse de chargement (LCP, CLS, INP), erreurs JavaScript, étapes de la conversation de contact et choix de l'atelier. Jamais ce qui est tapé dans les champs. |
+| **Applications** | EquiCare et Dram chargent le script en mode manuel : seulement l'écran de connexion / l'accueil et le mode visiteur. Un vrai compte (ou une vraie cave) n'est jamais compté, et son appareil ne l'est plus ensuite. |
+| **Lecture** | Espace `/admin`, onglet **« Visites »** (fonction SQL `visits_overview`) : visiteurs, visites, durée, rebond par site, visites par jour, provenances, villes, pages, clics, appareils, parcours entre sites, dernières visites ; **export CSV** de tout. Données brutes : table `visit_events` et vue `visit_sessions` dans Supabase. |
+| **Cadre** | Mesure de fréquentation faite par le porteur de projet, sans cookie ni tiers, données gardées 25 mois (purge mensuelle `vitrine-purge-visites`, pg_cron), page Confidentialité mise à jour, refus possible avec `?visites=off` (aussi pratique pour ne pas se compter soi-même). Pas de bandeau de consentement : il faudrait en ajouter un pour relier une visite à une personne ou suivre au-delà de ces quatre sites. |
+| **Démos** | Section Réalisation : « Essayer son application » (EquiCare en mode visiteur) et « Et celle d'un collectionneur de whisky » (Dram en mode visiteur). |
+
 ## 11. Points à approfondir (prochaines étapes)
 
 - [ ] **Trouver le nom et l'identité visuelle** de l'activité (chantier prioritaire : le design du site en dépend).
@@ -286,5 +300,5 @@ Le code est dans `site/` (voir `site/README.md`). Le guide de mise en ligne est 
 - [ ] Préparer la création de la micro-entreprise (démarches, statut, compatibilité avec l'alternance).
 - [ ] Présenter l'application de soins équins comme étude de cas / portfolio.
 - [x] Définir le contenu du site vitrine.
-- [ ] Finir de brancher Supabase (clé secrète, compte admin), Resend et ntfy ; Vercel est prêt en aperçu privé (voir `docs/mise-en-ligne.md`).
+- [ ] Brancher Resend (domaine) et ntfy ; Supabase (clé secrète, compte admin) et Vercel sont en place, le site est public sur https://gabrielsagot.vercel.app (voir `docs/mise-en-ligne.md`).
 - [ ] Construire une stratégie de démarchage.

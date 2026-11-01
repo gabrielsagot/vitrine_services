@@ -1,3 +1,4 @@
+import { track } from '../lib/track';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { JSX, Ref } from 'preact';
 import { atelierStore, describeChoice, swatches, type AtelierChoice } from '../lib/atelier';
@@ -122,6 +123,15 @@ export default function Contact({ owner, portrait, referrer, direct }: Props) {
       endRef.current.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'end' });
     }
   }, [bubbles.length, typing, step]);
+
+  // Suivi des visites : chaque étape de la conversation atteinte.
+  useEffect(() => {
+    if (step === 'intro') return;
+    track(
+      `contact : ${step}`,
+      step === 'done' ? { canal: answers.channel ?? null, parrain: referrer?.slug ?? null } : undefined,
+    );
+  }, [step]);
 
   useEffect(() => {
     if (!userActed.current) return;

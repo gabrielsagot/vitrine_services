@@ -70,6 +70,10 @@ const imageUrl = new URL(image, origin).href;
           d.classList.add('reduced');
       })();
     </script>
+    {/* Suivi des visites (pas dans l'espace admin) : voir public/visites.js */}
+    {!Astro.url.pathname.startsWith('/admin') && (
+      <script is:inline async src="/visites.js" data-site="vitrine" />
+    )}
     <slot name="head" />
   </head>
   <body>

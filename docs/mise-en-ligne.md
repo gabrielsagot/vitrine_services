@@ -119,3 +119,13 @@ Mets ensuite `PUBLIC_SITE_URL` à jour et redéploie.
   Il personnalise l'accueil, l'aperçu dans les messageries et le suivi « qui a recommandé qui ».
 - **Visites** : chaque ouverture d'un lien de parrainage est comptée (une fois par visite, sans aucune donnée personnelle).
 - **Aucun cookie, aucune mesure d'audience** : donc pas de bandeau cookies à afficher.
+
+---
+
+## Suivi des visites (2026-11-01)
+
+Rien à faire : la table `visit_events` est créée (migration `site/supabase/migrations/20261101120000_visites.sql`, appliquée), la purge mensuelle est planifiée, et `/api/collect` utilise la clé secrète déjà renseignée dans Vercel.
+
+- Lire les visites : `/admin`, onglet **Visites** (export CSV possible), ou l'éditeur SQL de Supabase (table `visit_events`, vue `visit_sessions`).
+- Ne pas se compter soi-même : ouvrir une fois chaque site avec `?visites=off` sur ses appareils.
+- Facultatif : une fonction serveur d'essai `collect` a été déployée dans Supabase puis neutralisée (elle répond 410) ; elle peut être supprimée (Edge Functions → collect → Delete).

@@ -136,6 +136,37 @@ const changes = [
       Son application a ses couleurs. La vôtre aura les vôtres.
       <small>Écrans recréés avec des données fictives.</small>
     </p>
+    <div class="work-try" data-reveal>
+      <a
+        class="btn"
+        href="https://equi-care-app.vercel.app/?visiteur=1&utm_source=vitrine&utm_medium=realisation&utm_campaign=demo"
+        target="_blank"
+        rel="noopener"
+        data-track="Essayer EquiCare"
+      >
+        <span>Essayer son application</span>
+        <svg class="btn-icon" viewBox="0 0 20 20" width="17" height="17" aria-hidden="true">
+          <path
+            d="M4 10h11M11 5.5 15.5 10 11 14.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </a>
+      <a
+        class="btn btn--ghost"
+        href="https://dram-one.vercel.app/?visiteur=1&utm_source=vitrine&utm_medium=realisation&utm_campaign=demo"
+        target="_blank"
+        rel="noopener"
+        data-track="Essayer Dram"
+      >
+        <span>Et celle d’un collectionneur de whisky</span>
+      </a>
+      <small>Avec des données d’exemple, depuis votre téléphone. Rien à installer.</small>
+    </div>
   </div>
 </section>
 
@@ -400,6 +431,19 @@ const changes = [
     line-height: 1.25;
   }
 
+  .work-try {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .work-try small {
+    flex-basis: 100%;
+    font-size: 13px;
+    color: var(--slate);
+  }
+
   .work-note small {
     display: block;
     margin-top: 8px;
@@ -458,7 +502,8 @@ const changes = [
     }
 
     .work-facts,
-    .work-note {
+    .work-note,
+    .work-try {
       grid-column: 1 / -1;
     }
 
