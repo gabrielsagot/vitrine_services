@@ -235,6 +235,16 @@
       events: batch,
     });
   }
+  // Même site : envoi en text/plain (sendBeacon possible). Autre site (portfolio, EquiCare, Dram) :
+  // JSON avec CORS, car la protection d'Astro refuse les envois « de formulaire » venus d'ailleurs.
+  var SAME_ORIGIN = (function () {
+    try {
+      return new URL(ENDPOINT, location.href).origin === location.origin;
+    } catch (e) {
+      return false;
+    }
+  })();
+
   function flush(useBeacon) {
     if (timer) {
       clearTimeout(timer);
@@ -244,7 +254,7 @@
     var batch = queue.splice(0, 40);
     set('q', queue);
     var body = payload(batch);
-    if (useBeacon && nav.sendBeacon) {
+    if (useBeacon && SAME_ORIGIN && nav.sendBeacon) {
       try {
         if (nav.sendBeacon(ENDPOINT, new Blob([body], { type: 'text/plain' }))) {
           if (queue.length) flush(true);
@@ -257,9 +267,10 @@
     try {
       fetch(ENDPOINT, {
         method: 'POST',
-        mode: 'no-cors',
+        mode: SAME_ORIGIN ? 'same-origin' : 'cors',
+        credentials: 'omit',
         keepalive: body.length < 60000,
-        headers: { 'content-type': 'text/plain' },
+        headers: { 'content-type': SAME_ORIGIN ? 'text/plain' : 'application/json' },
         body: body,
       })
         .then(function () {
