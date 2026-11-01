@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'preact/hooks';
 import { describeChoice, type AtelierChoice } from '../../lib/atelier';
 import { channels, moments, type Channel, type Moment } from '../../lib/contact';
 import { isValidSlug, slugify } from '../../lib/slug';
+import Visits from './Visits';
 import './admin.css';
 
 interface Request {
@@ -143,7 +144,7 @@ function Login({ db }: { db: SupabaseClient }) {
 }
 
 function Dashboard({ db }: { db: SupabaseClient }) {
-  const [tab, setTab] = useState<'requests' | 'referrers'>('requests');
+  const [tab, setTab] = useState<'requests' | 'referrers' | 'visits'>('requests');
   const [requests, setRequests] = useState<Request[]>([]);
   const [referrers, setReferrers] = useState<ReferrerRow[]>([]);
   const [error, setError] = useState('');
@@ -184,6 +185,14 @@ function Dashboard({ db }: { db: SupabaseClient }) {
         >
           Parrains
         </button>
+        <button
+          role="tab"
+          aria-selected={tab === 'visits'}
+          class={tab === 'visits' ? 'is-on' : ''}
+          onClick={() => setTab('visits')}
+        >
+          Visites
+        </button>
         <button class="adm-link" onClick={() => db.auth.signOut()}>
           Se déconnecter
         </button>
@@ -191,8 +200,10 @@ function Dashboard({ db }: { db: SupabaseClient }) {
       {error && <p class="adm-error">{error}</p>}
       {tab === 'requests' ? (
         <Requests db={db} items={requests} referrers={byId} reload={load} />
-      ) : (
+      ) : tab === 'referrers' ? (
         <Referrers db={db} items={referrers} reload={load} />
+      ) : (
+        <Visits db={db} />
       )}
     </div>
   );

@@ -6,13 +6,13 @@ export const prerender = true;
 
 <Legal
   title="Confidentialité"
-  description="Ce que deviennent les informations que vous laissez sur ce site : très peu de choses, et rien d'autre que vous recontacter."
+  description="Ce que deviennent les informations que vous laissez sur ce site : votre demande de contact, et une mesure de fréquentation sans cookie."
 >
   <h2>En bref</h2>
   <p>
-    Ce site ne vous suit pas : pas de cookies publicitaires, pas d'outil de mesure d'audience, pas de partage
-    avec des tiers. Les seules informations recueillies sont celles que vous écrivez dans la conversation de
-    contact.
+    Pas de cookies publicitaires, pas de partage avec des tiers. Deux choses sont recueillies : ce que vous
+    écrivez dans la conversation de contact, et une mesure de fréquentation, faite par mes soins, pour savoir
+    comment le site est visité et l'améliorer.
   </p>
 
   <h2>Ce qui est recueilli, et pourquoi</h2>
@@ -39,6 +39,22 @@ export const prerender = true;
     Vous pouvez à tout moment demander l'accès à vos informations, leur correction ou leur suppression en
     écrivant à <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. Vous pouvez aussi adresser
     une réclamation à la CNIL (cnil.fr).
+  </p>
+
+  <h2>Mesure de fréquentation</h2>
+  <p>
+    Ce site, mon portfolio et les démonstrations de mes applications (EquiCare et Dram, en mode visiteur)
+    comptent leurs visites avec un petit outil à moi, sans cookie ni service tiers. Il note les pages vues, le
+    temps passé et la part de la page lue, les boutons et liens touchés, la page d'où vous arrivez, le type
+    d'appareil, de navigateur et d'écran, la langue, et une localisation approximative (ville) déduite de la
+    connexion. Un identifiant au hasard, gardé dans votre navigateur, permet de reconnaître une visite qui
+    revient ; il n'est relié à aucune information personnelle. Votre adresse IP n'est pas conservée, ni ce que
+    vous tapez dans les champs.
+  </p>
+  <p>
+    Ces données servent uniquement à mesurer la fréquentation et à améliorer les sites ; elles sont gardées 25
+    mois au plus. Pour ne pas être compté(e), ajoutez <code>?visites=off</code> à l'adresse du site (une fois
+    suffit, sur cet appareil).
   </p>
 
   <h2>Liens de parrainage</h2>

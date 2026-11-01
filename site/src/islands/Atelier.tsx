@@ -1,3 +1,4 @@
+import { track } from '../lib/track';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { atelierStore, defaultAppName, describeChoice, modules, swatches } from '../lib/atelier';
 import { iconPaths } from '../lib/icons';
@@ -87,12 +88,14 @@ export default function Atelier() {
 
   const toggle = (id: string) => {
     touch();
+    track(`atelier : ${picked.includes(id) ? 'retire' : 'ajoute'} ${id}`);
     setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
   };
 
   const pickColor = (id: string) => {
     touch();
     if (id === color) return;
+    track(`atelier : couleur ${id}`);
     setColor(id);
     const now = performance.now();
     if (now - lastSpin.current > 2500 && !prefersReduced()) {
